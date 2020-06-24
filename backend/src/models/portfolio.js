@@ -16,16 +16,11 @@ const PortfolioSchema = new Schema({
   IEVersion: String,
   skill: [String],
   animationEvent: [String],
-  period: {
-    startDate: {
-      year: String,
-      month: String,
-    },
-    endDate: {
-      year: String,
-      month: String,
-    },
+  startDate: {
+    year: String,
+    month: String,
   },
+  period: String,
   worker: String,
   url: [String],
 });
