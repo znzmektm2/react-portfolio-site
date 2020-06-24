@@ -1,12 +1,10 @@
 import Router from "koa-router";
 import auth from "./auth";
-import portfolio from "./portfolio";
-import category from "./category";
+import portfolios from "./portfolios";
 
 const api = new Router();
 
 api.use("/auth", auth.routes());
-api.use("/portfolio", portfolio.routes());
-api.use("/category", category.routes());
+api.use("/portfolios", portfolios.routes());
 
 export default api;
