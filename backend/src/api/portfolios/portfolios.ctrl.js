@@ -1,5 +1,8 @@
 import Portfolio from "../../models/portfolio";
+import mongoose from "mongoose";
 import Joi from "@hapi/joi";
+
+const { ObjectId } = mongoose.Types;
 
 // 포트폴리오 뷰페이지 조회시 ctx.state.portfolio에 값 넣기
 export const getPortfolioById = async (ctx, next) => {
@@ -174,6 +177,11 @@ PATCH /api/portfolios/5ef3ba9708f6897274b83b0d
 */
 export const update = async (ctx) => {
   const { id } = ctx.params;
+  // id 형식 검증
+  if (!ObjectId.isValid(id)) {
+    ctx.status = 400; // Bad Request
+    return;
+  }
   // 요청된 객체 검증
   const schema = Joi.object().keys({
     id: Joi.string(),
