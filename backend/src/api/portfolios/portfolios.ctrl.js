@@ -2,8 +2,6 @@ import Portfolio from "../../models/portfolio";
 import mongoose from "mongoose";
 import Joi from "@hapi/joi";
 
-const { ObjectId } = mongoose.Types;
-
 // 포트폴리오 뷰페이지 조회시 ctx.state.portfolio에 값 넣기
 export const getPortfolioById = async (ctx, next) => {
   const { id } = ctx.params;
@@ -177,11 +175,7 @@ PATCH /api/portfolios/5ef3ba9708f6897274b83b0d
 */
 export const update = async (ctx) => {
   const { id } = ctx.params;
-  // id 형식 검증
-  if (!ObjectId.isValid(id)) {
-    ctx.status = 400; // Bad Request
-    return;
-  }
+
   // 요청된 객체 검증
   const schema = Joi.object().keys({
     id: Joi.string(),
@@ -217,9 +211,13 @@ export const update = async (ctx) => {
   }
 
   try {
-    const portfolio = await Portfolio.findByIdAndUpdate(id, ctx.request.body, {
-      new: true,
-    });
+    const portfolio = await Portfolio.findOneAndUpdate(
+      { id: id },
+      ctx.request.body,
+      {
+        returnNewDocument: true,
+      }
+    );
     if (!portfolio) {
       ctx.status = 404;
       return;
@@ -227,5 +225,41 @@ export const update = async (ctx) => {
     ctx.body = portfolio;
   } catch (e) {
     ctx.throw(500, e);
+  }
+};
+
+/* 포트폴리오 스킬 조회
+GET /api/portfolios/category
+*/
+export const category = async (ctx) => {
+  let skillList = [];
+  try {
+    const portfolios = await Portfolio.find();
+    portfolios.map((portfolio) => {
+      portfolio.skill.map((skill) => {
+        skillList.push(skill);
+      });
+    });
+    const category = [...new Set(skillList)];
+    ctx.body = category;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+/* 포트폴리오 이름 조회
+GET /api/portfolios/client
+*/
+export const client = async (ctx) => {
+  let clientList = [];
+  try {
+    const portfolios = await Portfolio.find();
+    portfolios.map((portfolio) => {
+      clientList.push(portfolio.client);
+    });
+    ctx.body = clientList;
+  } catch (e) {
+    ctx.throw(500, e);
+    3;
   }
 };

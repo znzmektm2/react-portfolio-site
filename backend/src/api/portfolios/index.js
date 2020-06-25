@@ -6,6 +6,8 @@ const portfolios = new Router();
 
 portfolios.post("/", checkLoggedIn, portfoliosCtrl.write);
 portfolios.get("/", portfoliosCtrl.list);
+portfolios.get("/category", portfoliosCtrl.category);
+portfolios.get("/client", portfoliosCtrl.client);
 
 const portfolio = new Router();
 portfolio.get("/", portfoliosCtrl.read);
