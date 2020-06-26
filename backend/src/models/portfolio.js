@@ -4,25 +4,27 @@ const PortfolioSchema = new Schema({
   id: String,
   client: String,
   host: String,
-  type: {
-    web: Boolean,
-    singlePage: Boolean,
-  },
-  version: {
-    pc: Boolean,
-    mobile: Boolean,
-  },
+  web: Boolean,
+  singlePage: Boolean,
+  pcVer: Boolean,
+  mobileVer: Boolean,
   responsiveWeb: Boolean,
   IEVersion: String,
   skill: [String],
   animationEvent: [String],
-  startDate: {
-    year: String,
-    month: String,
-  },
+  workYear: String,
+  workMonth: String,
   period: String,
   worker: String,
   url: [String],
+  thumbImage: {
+    name: String,
+    url: String,
+  },
+  contentImage: {
+    name: String,
+    url: String,
+  },
 });
 
 const Portfolio = mongoose.model("Portfolio", PortfolioSchema);

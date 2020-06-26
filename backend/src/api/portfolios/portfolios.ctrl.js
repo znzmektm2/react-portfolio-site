@@ -1,6 +1,7 @@
 import Portfolio from "../../models/portfolio";
-import mongoose from "mongoose";
+import File from "../../models/file";
 import Joi from "@hapi/joi";
+import fs from "fs";
 
 // 포트폴리오 뷰페이지 조회시 ctx.state.portfolio에 값 넣기
 export const getPortfolioById = async (ctx, next) => {
@@ -25,22 +26,16 @@ POST /api/portfolios
   "id": "singlepage-LGUplus-happybean-2019-2",
   "client": "LGU+",
   "host": "네이버 해피빈",
-  "type": {
-    "web": false,
-    "singlePage": true
-  },
-  "version": {
-    "pc": true,
-    "mobile": true
-  },
+  "web": false,
+  "singlePage": true,
+  "pcVer": true,
+  "mobileVer": true
   "responsiveWeb": false,
   "IEVersion": "IE9",
   "skill": ["JavaScript","jQuery","HTML5/CSS3"],
   "animationEvent": ["slider","circle-progress-1.2.2.js"],
-  "startDate": {
-      "year": "2019",
-      "month": "2"
-    },
+  "workYear": 2019,
+  "workMonth": 2,
   "period": "3 days",
   "worker": "me",
   "url": ["https://campaign.happybean.naver.com/lgupluscsr","https://m.campaign.happybean.naver.com/lgupluscsr"]
@@ -52,40 +47,51 @@ export const write = async (ctx) => {
     id: Joi.string().required(),
     client: Joi.string().required(),
     host: Joi.string(),
-    type: {
-      web: Joi.boolean(),
-      singlePage: Joi.boolean(),
-    },
-    version: {
-      pc: Joi.boolean(),
-      mobile: Joi.boolean(),
-    },
+    web: Joi.boolean(),
+    singlePage: Joi.boolean(),
+    pcVer: Joi.boolean(),
+    mobileVer: Joi.boolean(),
     responsiveWeb: Joi.boolean(),
     IEVersion: Joi.string(),
     skill: Joi.array().items(Joi.string()).required(),
     animationEvent: Joi.array().items(Joi.string()),
-    startDate: {
-      year: Joi.string().required(),
-      month: Joi.string().required(),
-    },
+    workYear: Joi.string().required(),
+    workMonth: Joi.string().required(),
     period: Joi.string().required(),
     worker: Joi.string().required(),
     url: Joi.array().items(Joi.string()),
   });
 
   // 검증 실패인 경우 에러 처리
-  const result = schema.validate(ctx.request.body);
+  const requestBody = ctx.request.body;
+
+  const result = schema.validate(requestBody);
   if (result.error) {
     ctx.status = 400; // Bad Request
     ctx.body = result.error;
     return;
   }
 
-  const portfolioAdd = ctx.request.body;
-  const portfolio = new Portfolio(portfolioAdd);
+  const files = ctx.request.files;
+
+  const thumbImage = {
+    name: files.thumbImage.name,
+    url: files.thumbImage.path,
+  };
+  const contentImage = {
+    name: files.contentImage.name,
+    url: files.contentImage.path,
+  };
+
+  const portfolio = new Portfolio({
+    ...requestBody,
+    thumbImage,
+    contentImage,
+  });
+  console.log(requestBody);
   try {
-    await portfolio.save();
-    ctx.body = portfolio;
+    // await portfolio.save();
+    ctx.body = requestBody;
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -147,27 +153,21 @@ export const remove = async (ctx) => {
 };
 
 /* 포트폴리오 업데이트
-PATCH /api/portfolios/5ef3ba9708f6897274b83b0d
+PATCH /api/portfolios/singlepage-LGUplus-happybean-2019-2
 { 
   "id": "singlepage-LGUplus-happybean-2019-2",
   "client": "LGU+",
   "host": "네이버 해피빈",
-  "type": {
-    "web": false,
-    "singlePage": true
-  },
-  "version": {
-    "pc": true,
-    "mobile": true
-  },
+  "web": false,
+  "singlePage": true,
+  "pcVer": true,
+  "mobileVer": true
   "responsiveWeb": false,
   "IEVersion": "IE9",
   "skill": ["JavaScript","jQuery","HTML5/CSS3"],
   "animationEvent": ["slider","circle-progress-1.2.2.js"],
-  "startDate": {
-      "year": "2019",
-      "month": "2"
-    },
+  "workYear": 2019,
+  "workMonth": 2,
   "period": "3 days",
   "worker": "me",
   "url": ["https://campaign.happybean.naver.com/lgupluscsr","https://m.campaign.happybean.naver.com/lgupluscsr"]
@@ -181,22 +181,16 @@ export const update = async (ctx) => {
     id: Joi.string(),
     client: Joi.string(),
     host: Joi.string(),
-    type: {
-      web: Joi.boolean(),
-      singlePage: Joi.boolean(),
-    },
-    version: {
-      pc: Joi.boolean(),
-      mobile: Joi.boolean(),
-    },
+    web: Joi.boolean(),
+    singlePage: Joi.boolean(),
+    pcVer: Joi.boolean(),
+    mobileVer: Joi.boolean(),
     responsiveWeb: Joi.boolean(),
     IEVersion: Joi.string(),
     skill: Joi.array().items(Joi.string()),
     animationEvent: Joi.array().items(Joi.string()),
-    startDate: {
-      year: Joi.string(),
-      month: Joi.string(),
-    },
+    workYear: Joi.string(),
+    workMonth: Joi.string(),
     period: Joi.string(),
     worker: Joi.string(),
     url: Joi.array().items(Joi.string()),
@@ -232,8 +226,8 @@ export const update = async (ctx) => {
 GET /api/portfolios/category
 */
 export const category = async (ctx) => {
-  let skillList = [];
   try {
+    let skillList = [];
     const portfolios = await Portfolio.find();
     portfolios.map((portfolio) => {
       portfolio.skill.map((skill) => {
@@ -251,8 +245,8 @@ export const category = async (ctx) => {
 GET /api/portfolios/client
 */
 export const client = async (ctx) => {
-  let clientList = [];
   try {
+    let clientList = [];
     const portfolios = await Portfolio.find();
     portfolios.map((portfolio) => {
       clientList.push(portfolio.client);
@@ -261,5 +255,20 @@ export const client = async (ctx) => {
   } catch (e) {
     ctx.throw(500, e);
     3;
+  }
+};
+
+import path from "path";
+
+/* 포트폴리오 이미지 업로드
+GET /api/portfolios/file
+*/
+export const fileUpload = async (ctx) => {
+  try {
+    const fileObj = ctx.request.files;
+    console.log(fileObj);
+    ctx.body = { success: "성공" };
+  } catch (e) {
+    throw (500, e);
   }
 };

@@ -8,8 +8,10 @@ portfolios.post("/", checkLoggedIn, portfoliosCtrl.write);
 portfolios.get("/", portfoliosCtrl.list);
 portfolios.get("/category", portfoliosCtrl.category);
 portfolios.get("/client", portfoliosCtrl.client);
+portfolios.post("/fileUpload", portfoliosCtrl.fileUpload);
 
 const portfolio = new Router();
+
 portfolio.get("/", portfoliosCtrl.read);
 portfolio.delete("/", checkLoggedIn, portfoliosCtrl.remove);
 portfolio.patch("/", checkLoggedIn, portfoliosCtrl.update);
