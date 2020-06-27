@@ -1,5 +1,4 @@
 import Portfolio from "../../models/portfolio";
-import File from "../../models/file";
 import Joi from "@hapi/joi";
 import fs from "fs";
 
@@ -90,7 +89,7 @@ export const write = async (ctx) => {
   });
   console.log(requestBody);
   try {
-    // await portfolio.save();
+    await portfolio.save();
     ctx.body = requestBody;
   } catch (e) {
     ctx.throw(500, e);
