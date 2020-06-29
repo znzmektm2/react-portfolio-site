@@ -3,12 +3,33 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
-import { createStore } from "redux";
-import rootReducers from "./modules";
+import { createStore, applyMiddleware } from "redux";
+import rootReducers, { rootSaga } from "./modules";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import createSagaMiddleware from "redux-saga";
+import { tempSetUser, check } from "./modules/user";
 
-const store = createStore(rootReducers, composeWithDevTools());
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(
+  rootReducers,
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
+);
+
+function loaderUser() {
+  try {
+    const user = localStorage.getItem("user");
+    if (!user) return;
+
+    store.dispatch(tempSetUser(user));
+    store.dispatch(check());
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+sagaMiddleware.run(rootSaga);
+loaderUser();
 
 ReactDOM.render(
   <Provider store={store}>
