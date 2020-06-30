@@ -1,10 +1,11 @@
 import React from "react";
+import PageTitle from "./../components/common/PageTitle";
 
 const PortfolioPage = () => {
   return (
-    <div>
-      <div>Portfolio</div>
-    </div>
+    <>
+      <PageTitle>Home</PageTitle>
+    </>
   );
 };
 

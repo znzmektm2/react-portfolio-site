@@ -1,12 +1,15 @@
 import React from "react";
-import HeaderContainer from "../containers/common/HeaderContainer";
+import PageTitle from "./../components/common/PageTitle";
+import CategoryContainer from "../containers/portfolios/CategoryContainer";
+import PortfolioListContainer from "../containers/portfolios/PortfolioListContainer";
 
 const PortfoliosPage = () => {
   return (
-    <div>
-      <HeaderContainer />
-      <div>Portfolios List</div>
-    </div>
+    <>
+      <PageTitle>Portfolios</PageTitle>
+      <CategoryContainer />
+      <PortfolioListContainer />
+    </>
   );
 };
 

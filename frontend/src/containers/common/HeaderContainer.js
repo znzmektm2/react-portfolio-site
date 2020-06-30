@@ -1,15 +1,8 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../modules/user";
-import Header from "../../components/common/Header";
+import { withRouter } from "react-router-dom";
 
 const HeaderContainer = () => {
-  const { user } = useSelector(({ user }) => ({ user: user.user }));
-  const dispatch = useDispatch();
-  const onLogout = () => {
-    dispatch(logout());
-  };
-  return <Header user={user} onLogout={onLogout} />;
+  return <div>HeaderContainer</div>;
 };
 
-export default HeaderContainer;
+export default withRouter(HeaderContainer);

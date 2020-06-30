@@ -1,10 +1,11 @@
 import React from "react";
+import PageTitle from "./../components/common/PageTitle";
 
 const DesignPage = () => {
   return (
-    <div>
-      <div>design</div>
-    </div>
+    <>
+      <PageTitle>Design</PageTitle>
+    </>
   );
 };
 

@@ -1,11 +1,10 @@
 import React from "react";
-import HeaderContainer from "../containers/common/HeaderContainer";
+import PageTitle from "./../components/common/PageTitle";
 
 const HomePage = () => {
   return (
     <div>
-      <HeaderContainer />
-      <div>home</div>
+      <PageTitle>Home</PageTitle>
     </div>
   );
 };

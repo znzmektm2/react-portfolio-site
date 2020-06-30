@@ -33,8 +33,8 @@ POST /api/portfolios
   "IEVersion": "IE9",
   "skill": ["JavaScript","jQuery","HTML5/CSS3"],
   "animationEvent": ["slider","circle-progress-1.2.2.js"],
-  "workYear": 2019,
-  "workMonth": 2,
+  "workYear": "2019",
+  "workMonth": "2",
   "period": "3 days",
   "worker": "me",
   "url": ["https://campaign.happybean.naver.com/lgupluscsr","https://m.campaign.happybean.naver.com/lgupluscsr"]
@@ -63,7 +63,6 @@ export const write = async (ctx) => {
 
   // 검증 실패인 경우 에러 처리
   const requestBody = ctx.request.body;
-
   const result = schema.validate(requestBody);
   if (result.error) {
     ctx.status = 400; // Bad Request
@@ -73,13 +72,17 @@ export const write = async (ctx) => {
 
   const files = ctx.request.files;
 
+  const generateUrl = (path) => {
+    return path.split("\\")[1];
+  };
+
   const thumbImage = {
     name: files.thumbImage.name,
-    url: files.thumbImage.path,
+    url: generateUrl(files.thumbImage.path),
   };
   const contentImage = {
     name: files.contentImage.name,
-    url: files.contentImage.path,
+    url: generateUrl(files.contentImage.path),
   };
 
   const portfolio = new Portfolio({
@@ -87,10 +90,9 @@ export const write = async (ctx) => {
     thumbImage,
     contentImage,
   });
-  console.log(requestBody);
   try {
     await portfolio.save();
-    ctx.body = requestBody;
+    ctx.body = portfolio;
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -110,8 +112,8 @@ export const list = async (ctx) => {
   const { skill, web, singlePage } = ctx.query;
   const query = {
     ...(skill ? { skill: skill } : {}),
-    ...(web ? { "type.web": web } : {}),
-    ...(singlePage ? { "type.singlePage": singlePage } : {}),
+    ...(web ? { web: web } : {}),
+    ...(singlePage ? { singlePage: singlePage } : {}),
   };
 
   try {
@@ -121,9 +123,18 @@ export const list = async (ctx) => {
       .limit(listLimit) // 보이는 개수 제한
       .skip((page - 1) * 10) // 계산한 값의 개수를 제외하고 그 다음 데이터 불러옴
       .lean(); // JSON 형태로 조회
-
+    const portfolioList = [];
+    portfolios.map((portfolio) => {
+      const list = {
+        _id: portfolio._id,
+        id: portfolio.id,
+        client: portfolio.client,
+        thumbImage: portfolio.thumbImage,
+      };
+      portfolioList.push(list);
+    });
     const portfolioCount = await Portfolio.countDocuments(query);
-    ctx.body = portfolios;
+    ctx.body = portfolioList;
     // Last-Page라는 커스텀 HTTP 헤더를 설정
     ctx.set("Last-Page", Math.ceil(portfolioCount / listLimit));
   } catch (e) {
@@ -165,8 +176,8 @@ PATCH /api/portfolios/singlepage-LGUplus-happybean-2019-2
   "IEVersion": "IE9",
   "skill": ["JavaScript","jQuery","HTML5/CSS3"],
   "animationEvent": ["slider","circle-progress-1.2.2.js"],
-  "workYear": 2019,
-  "workMonth": 2,
+  "workYear": "2019",
+  "workMonth": "2",
   "period": "3 days",
   "worker": "me",
   "url": ["https://campaign.happybean.naver.com/lgupluscsr","https://m.campaign.happybean.naver.com/lgupluscsr"]
@@ -239,25 +250,6 @@ export const category = async (ctx) => {
     ctx.throw(500, e);
   }
 };
-
-/* 포트폴리오 이름 조회
-GET /api/portfolios/client
-*/
-export const client = async (ctx) => {
-  try {
-    let clientList = [];
-    const portfolios = await Portfolio.find();
-    portfolios.map((portfolio) => {
-      clientList.push(portfolio.client);
-    });
-    ctx.body = clientList;
-  } catch (e) {
-    ctx.throw(500, e);
-    3;
-  }
-};
-
-import path from "path";
 
 /* 포트폴리오 이미지 업로드
 GET /api/portfolios/file

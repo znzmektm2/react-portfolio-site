@@ -1,8 +1,10 @@
 import React from "react";
+import PageTitle from "./../components/common/PageTitle";
 
 const WritePage = () => {
   return (
-    <div>
+    <>
+      <PageTitle>Write</PageTitle>
       <div>
         <input type="text" name="id" placeholder="id" />
         <br />
@@ -45,7 +47,7 @@ const WritePage = () => {
         <br />
         <button type="submit">보내기</button>
       </div>
-    </div>
+    </>
   );
 };
 

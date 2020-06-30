@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import LoginForm from "../../components/login/LoginForm";
+import AdminForm from "../../components/admin/AdminForm";
 import { useDispatch, useSelector } from "react-redux";
 import { changeField, initializeForm, login } from "../../modules/auth";
 import { check } from "../../modules/user";
+import { logout } from "../../modules/user";
 
-const LoginContainer = ({ history }) => {
+const AdminContainer = ({ history }) => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const { password, authError, auth, user } = useSelector(({ auth, user }) => ({
@@ -23,6 +24,10 @@ const LoginContainer = ({ history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(login(password));
+  };
+
+  const onLogout = () => {
+    dispatch(logout());
   };
 
   useEffect(() => {
@@ -44,7 +49,6 @@ const LoginContainer = ({ history }) => {
 
   useEffect(() => {
     if (user) {
-      history.push("/");
       try {
         localStorage.setItem("user", JSON.stringify(user));
       } catch (e) {
@@ -54,13 +58,15 @@ const LoginContainer = ({ history }) => {
   }, [history, user]);
 
   return (
-    <LoginForm
+    <AdminForm
       password={password}
       onChange={onChange}
       onSubmit={onSubmit}
+      onLogout={onLogout}
+      user={user}
       error={error}
     />
   );
 };
 
-export default withRouter(LoginContainer);
+export default withRouter(AdminContainer);
