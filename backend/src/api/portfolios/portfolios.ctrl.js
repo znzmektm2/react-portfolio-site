@@ -110,15 +110,28 @@ export const list = async (ctx) => {
   }
 
   const { skill, web, singlePage } = ctx.query;
-  const query = {
-    ...(skill ? { skill: skill } : {}),
-    ...(web ? { web: web } : {}),
-    ...(singlePage ? { singlePage: singlePage } : {}),
-  };
+  let skillArray = [];
+  if (skill) {
+    skillArray = skill.split(",");
+  }
+  console.log(skillArray);
+  const query =
+    skill || web || singlePage
+      ? {
+          ...(skill && { skill: { $in: skillArray } }),
+          $or: [
+            web ? { web: true } : { web: false },
+            singlePage ? { singlePage: true } : { singlePage: false },
+          ],
+        }
+      : {};
+
+  console.log(query);
 
   try {
     const listLimit = 10; // 보이는 개수 설정
     const portfolios = await Portfolio.find(query)
+
       .sort({ _id: -1 }) // 내림차순 정렬
       .limit(listLimit) // 보이는 개수 제한
       .skip((page - 1) * 10) // 계산한 값의 개수를 제외하고 그 다음 데이터 불러옴
