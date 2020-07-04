@@ -5,10 +5,8 @@ import { category } from "../../modules/portfolios";
 import { withRouter } from "react-router-dom";
 
 const CategoryContainer = ({ history }) => {
-  const [typeCheckbox, setTypeCheckbox] = useState([]);
   const [skillCheckbox, setSkillCheckbox] = useState([]);
-  const [typeQueryState, setTypeQueryState] = useState("");
-  const [skillQueryState, setSkillQueryState] = useState("");
+  const [typeCheckbox, setTypeCheckbox] = useState([]);
   const dispatch = useDispatch();
   const { categories, error, loading } = useSelector(
     ({ portfolios, loading }) => ({
@@ -18,71 +16,55 @@ const CategoryContainer = ({ history }) => {
     })
   );
 
-  const onClick = useCallback(
+  // 스킬 체크박스 클릭시
+  const clickSkillCheckbox = useCallback(
     (e) => {
       const isChecked = e.target.checked;
       const thisValue = e.target.value;
-      // type에 따른 클릭
-      if (thisValue === "web" || thisValue === "singlePage") {
-        let typeQuery = "";
-        // 체크 되었을 때
-        if (isChecked) {
-          const type = [...typeCheckbox, `&${thisValue}=true`];
-          setTypeCheckbox(type);
-          typeQuery = type.join("");
-        }
-        // 체크 해제되었을 때
-        else {
-          const typeFilter = typeCheckbox.filter(
-            (c) => c !== `&${thisValue}=true`
-          );
-          setTypeCheckbox(typeFilter);
-          typeQuery = typeFilter.join("");
-        }
-        setTypeQueryState(typeQuery);
-      }
-      // skill에 따른 클릭
-      else {
-        let skillQuery = "";
-        // 체크 되었을 때
-        if (isChecked) {
-          const addSkill = [...skillCheckbox, thisValue];
-          const skill = [...new Set(addSkill)];
-          setSkillCheckbox(skill);
-          skillQuery = `&skill=${skill}`;
-        }
-        // 체크 해제되었을 때
-        else {
-          const skill = skillCheckbox.filter((c) => c !== thisValue);
-          setSkillCheckbox(skill);
-          console.log(skill);
-          if (skill.length === 0) {
-            skillQuery = "";
-          } else {
-            skillQuery = `&skill=${skill}`;
-          }
-        }
-        setSkillQueryState(skillQuery);
-      }
+
+      setSkillCheckbox(
+        isChecked
+          ? [...skillCheckbox, thisValue]
+          : skillCheckbox.filter((c) => c !== thisValue)
+      );
     },
-    [typeCheckbox, skillCheckbox]
+    [skillCheckbox]
+  );
+
+  // 타입 체크박스 클릭시
+  const clickTypeCheckbox = useCallback(
+    (e) => {
+      const isChecked = e.target.checked;
+      const thisValue = e.target.value;
+
+      setTypeCheckbox(
+        isChecked
+          ? [...typeCheckbox, thisValue]
+          : typeCheckbox.filter((c) => c !== thisValue)
+      );
+    },
+    [typeCheckbox]
   );
 
   useEffect(() => {
     dispatch(category());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    const query = skillQueryState + typeQueryState;
-    history.push(`/portfolios?${query.substring(1)}`);
-  }, [history, skillQueryState, typeQueryState]);
+    let skillQuery = skillCheckbox.length === 0 ? "" : `skill=${skillCheckbox}`;
+
+    const typeQuery = typeCheckbox.map((t) => `&${t}=true`).join("");
+
+    history.push(`/portfolios?${skillQuery + typeQuery}`);
+  }, [history, skillCheckbox, typeCheckbox]);
 
   return (
     <Category
       categories={categories}
       error={error}
       loading={loading}
-      onClick={onClick}
+      clickSkillCheckbox={clickSkillCheckbox}
+      clickTypeCheckbox={clickTypeCheckbox}
     />
   );
 };

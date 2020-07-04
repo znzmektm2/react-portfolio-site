@@ -28,7 +28,7 @@ POST /api/portfolios
   "web": false,
   "singlePage": true,
   "pcVer": true,
-  "mobileVer": true
+  "mobileVer": true,
   "responsiveWeb": false,
   "IEVersion": "IE9",
   "skill": ["JavaScript","jQuery","HTML5/CSS3"],
@@ -90,6 +90,7 @@ export const write = async (ctx) => {
     thumbImage,
     contentImage,
   });
+  console.log(portfolio);
   try {
     await portfolio.save();
     ctx.body = portfolio;
@@ -184,7 +185,7 @@ PATCH /api/portfolios/singlepage-LGUplus-happybean-2019-2
   "web": false,
   "singlePage": true,
   "pcVer": true,
-  "mobileVer": true
+  "mobileVer": true,
   "responsiveWeb": false,
   "IEVersion": "IE9",
   "skill": ["JavaScript","jQuery","HTML5/CSS3"],

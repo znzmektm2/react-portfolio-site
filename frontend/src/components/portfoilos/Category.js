@@ -50,7 +50,13 @@ const CategoryBlock = styled.div`
   }
 `;
 
-const Category = ({ categories, error, loading, onClick }) => {
+const Category = ({
+  categories,
+  error,
+  loading,
+  clickSkillCheckbox,
+  clickTypeCheckbox,
+}) => {
   if (error) {
     return <div>에러가 발생했습니다.</div>;
   }
@@ -66,7 +72,7 @@ const Category = ({ categories, error, loading, onClick }) => {
                   type="checkbox"
                   name={category}
                   value={`${category}`}
-                  onClick={onClick}
+                  onClick={clickSkillCheckbox}
                 />
                 <label htmlFor={category}>{category}</label>
               </li>
@@ -77,7 +83,12 @@ const Category = ({ categories, error, loading, onClick }) => {
       <CategoryBlock>
         <ul>
           <li key="web">
-            <input type="checkbox" name="web" value="web" onClick={onClick} />
+            <input
+              type="checkbox"
+              name="web"
+              value="web"
+              onClick={clickTypeCheckbox}
+            />
             <label htmlFor="web">WEB</label>
           </li>
           <li key="singlepage">
@@ -85,7 +96,7 @@ const Category = ({ categories, error, loading, onClick }) => {
               type="checkbox"
               name="singlePage"
               value="singlePage"
-              onClick={onClick}
+              onClick={clickTypeCheckbox}
             />
             <label htmlFor="singlePage">SinglePage</label>
           </li>
