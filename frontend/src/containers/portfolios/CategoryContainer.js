@@ -51,11 +51,12 @@ const CategoryContainer = ({ history }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    let skillQuery = skillCheckbox.length === 0 ? "" : `skill=${skillCheckbox}`;
-
+    const skillQuery =
+      skillCheckbox.length === 0 ? "" : `&skill=${skillCheckbox}`;
     const typeQuery = typeCheckbox.map((t) => `&${t}=true`).join("");
+    const query = (skillQuery + typeQuery).substring(1);
 
-    history.push(`/portfolios?${skillQuery + typeQuery}`);
+    history.push(`/portfolios?${query}`);
   }, [history, skillCheckbox, typeCheckbox]);
 
   return (
