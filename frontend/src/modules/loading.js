@@ -15,7 +15,7 @@ export const finishLoading = createAction(
 
 const initialState = {};
 
-const loading = handleActions(
+export default handleActions(
   {
     [START_LOADING]: (state, action) => ({
       ...state,
@@ -28,5 +28,3 @@ const loading = handleActions(
   },
   initialState
 );
-
-export default loading;

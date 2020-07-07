@@ -1,10 +1,12 @@
 import React from "react";
 import PageTitle from "./../components/common/PageTitle";
+import PortfolioContainer from "../containers/portfolio/PortfolioContainer";
 
 const PortfolioPage = () => {
   return (
     <>
-      <PageTitle>Home</PageTitle>
+      <PageTitle>Portfolio</PageTitle>
+      <PortfolioContainer />
     </>
   );
 };

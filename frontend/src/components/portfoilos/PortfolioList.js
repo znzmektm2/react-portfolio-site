@@ -32,6 +32,9 @@ const PortfolioBlock = styled.div`
           text-align: center;
           background: rgba(0, 0, 0, 0.3);
         }
+        img {
+          width: 100%;
+        }
       }
     }
   }
@@ -53,7 +56,7 @@ const PortfolioList = ({
         <ul>
           {portfolioList.map((list) => (
             <li key={list._id}>
-              <Link to={`/portfolios/${list.id}`}>
+              <Link to={`/portfolio/${list.id}`}>
                 <span>{list.client}</span>
                 <img src={list.thumbImage.url} alt={list.thumbImage.name} />
               </Link>

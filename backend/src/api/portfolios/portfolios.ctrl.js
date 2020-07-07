@@ -6,16 +6,17 @@ import fs from "fs";
 export const getPortfolioById = async (ctx, next) => {
   const { id } = ctx.params;
   try {
-    const portfolio = await Portfolio.find({ id: id });
+    const portfolio = await Portfolio.findOne({ id: id });
     // 포트폴리오가 존재하지 않을 때
     if (!portfolio) {
       ctx.status = 404;
       return;
     }
+    console.log(portfolio);
     ctx.state.portfolio = portfolio;
     return next();
   } catch (e) {
-    throw (500, e);
+    ctx.throw(500, e);
   }
 };
 
@@ -274,6 +275,6 @@ export const fileUpload = async (ctx) => {
     console.log(fileObj);
     ctx.body = { success: "성공" };
   } catch (e) {
-    throw (500, e);
+    ctx.throw(500, e);
   }
 };
