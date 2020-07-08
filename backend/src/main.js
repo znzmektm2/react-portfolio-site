@@ -10,7 +10,6 @@ import serve from "koa-static";
 import path from "path";
 
 const { PORT, MONGO_URI } = process.env;
-console.log(MONGO_URI);
 mongoose
   .connect(MONGO_URI, { useNewUrlParser: true, useFindAndModify: false })
   .then(() => {

@@ -16,26 +16,35 @@ const Portfolio = ({ portfolio, error, loading, user }) => {
   const {
     id,
     client,
+    host,
+    web,
+    singlePage,
+    IEVersion,
     skill,
+    animationEvent,
     workYear,
     workMonth,
     period,
     worker,
     contentImage,
-    IEVersion,
   } = portfolio;
   const url = `../${contentImage.url}`;
+  const skillArray = skill.join(", ");
   return (
     <div>
       <ul>
         <li>id : {id}</li>
         <li>client : {client}</li>
-        <li>skill : {skill}</li>
+        <li>{host !== "null" && `host : ${host}`}</li>
+        <li>{web && `web : ${web}`}</li>
+        <li>{singlePage && `singlePage : ${singlePage}`}</li>
+        <li>IEVersion : {IEVersion}</li>
+        <li>skill : {skillArray}</li>
+        <li>animationEvent : {animationEvent}</li>
         <li>workYear : {workYear}</li>
         <li>workMonth : {workMonth}</li>
         <li>period : {period}</li>
         <li>worker : {worker}</li>
-        <li>IEVersion : {IEVersion}</li>
         <li>
           contentImage : <br />
           <img src={url} alt={contentImage.name} />

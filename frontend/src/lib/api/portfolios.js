@@ -1,8 +1,11 @@
 import client from "./client";
 import qs from "qs";
 
-export const writePortFolio = ({ id }) =>
-  client.post("/api/portfolios", { id });
+export const writePortFolio = (formData) =>
+  client.post("/api/portfolios", formData);
+
+export const writeFileUpload = (file) =>
+  client.post("/api/portfolios/fileUpload", file);
 
 export const readPortFolio = (id) => client.get(`/api/portfolios/${id}`);
 
