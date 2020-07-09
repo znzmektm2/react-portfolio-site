@@ -72,7 +72,10 @@ const Portfolio = ({ portfolio, error, loading, user }) => {
           <span>CLIENT</span>
           {client}
         </li>
-        <li>{host !== "null" && `<span>HOST</span>${host}`}</li>
+        <li>
+          {host !== "null" && <span>host</span>}
+          {host !== "null" && host}
+        </li>
         <li>
           <span>TYPE</span>
           {web && "Web"}
