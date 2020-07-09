@@ -21,10 +21,10 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
 }));
-export const idCheck = createAction(CHECK_ID);
+export const checkId = createAction(CHECK_ID);
 export const writePortfolio = createAction(WRITE_PORTFOLIO);
 
-const checkIdSaga = createRequestSaga(CHECK_ID, portfoliosAPI.idCheck);
+const checkIdSaga = createRequestSaga(CHECK_ID, portfoliosAPI.checkId);
 const writePortfolioSaga = createRequestSaga(
   WRITE_PORTFOLIO,
   portfoliosAPI.writePortFolio
@@ -37,8 +37,8 @@ export function* writeSaga() {
 
 const initialState = {
   id: "",
-  checkId: null,
-  checkIdError: null,
+  haveId: null,
+  haveIdError: null,
   client: "",
   host: "",
   web: true,
@@ -80,16 +80,18 @@ export default handleActions(
     }),
     [CHECK_ID]: (state) => ({
       ...state,
-      checkId: null,
-      checkIdError: null,
+      haveId: null,
+      haveIdError: null,
     }),
-    [CHECK_ID_SUCCESS]: (state, { payload: checkId }) => ({
+    [CHECK_ID_SUCCESS]: (state, { payload: haveId }) => ({
       ...state,
-      checkId: checkId,
+      haveId,
+      haveIdError: null,
     }),
-    [CHECK_ID_FAILURE]: (state, { payload: checkIdError }) => ({
+    [CHECK_ID_FAILURE]: (state, { payload: haveIdError }) => ({
       ...state,
-      checkIdError: checkIdError,
+      haveId: null,
+      haveIdError,
     }),
   },
   initialState

@@ -1,4 +1,34 @@
 import React from "react";
+import styled from "styled-components";
+
+const PortfolioBlock = styled.div`
+  margin: 0 auto;
+  width: 1200px;
+  li {
+    font-size: 1.1rem;
+    font-family: "trump-gothic-pro";
+    color: #b1b1b1;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    span {
+      display: inline-block;
+      margin-right: 20px;
+      color: #454545;
+      font-weight: bold;
+      border-bottom: 1px solid #7b7b7b;
+    }
+    a {
+      margin-right: 5px;
+      display: inline-block;
+      margin-right: 20px;
+      color: #6ea4b9;
+      border-bottom: 1px solid #6ea4b9;
+    }
+    img {
+      margin-top: 10px;
+    }
+  }
+`;
 
 const Portfolio = ({ portfolio, error, loading, user }) => {
   // 에러 발생시
@@ -32,34 +62,67 @@ const Portfolio = ({ portfolio, error, loading, user }) => {
     contentImage,
   } = portfolio;
 
+  const skillArray = skill.join(", ");
+  const animationEventArray = animationEvent.join(", ");
+
   return (
-    <div>
+    <PortfolioBlock>
       <ul>
-        <li>client : {client}</li>
-        <li>{host !== "null" && `host : ${host}`}</li>
-        <li>{web && `web : ${web}`}</li>
-        <li>{singlePage && `singlePage : ${singlePage}`}</li>
-        <li>{pcVer && `pcVer : ${pcVer}`}</li>
-        <li>{mobileVer && `mobileVer : ${mobileVer}`}</li>
-        <li>{responsiveWeb && `responsiveWeb : ${responsiveWeb}`}</li>
-        <li>IEVersion : {IEVersion}</li>
-        <li>skill : {skill}</li>
-        <li>animationEvent : {animationEvent}</li>
-        <li>workYear : {workYear}</li>
-        <li>workMonth : {workMonth}</li>
-        <li>period : {period}</li>
-        <li>worker : {worker}</li>
         <li>
-          url :
-          <a target="_blank" rel="noopener noreferrer" href={url}>
-            {url}
-          </a>
+          <span>CLIENT</span>
+          {client}
+        </li>
+        <li>{host !== "null" && `<span>HOST</span>${host}`}</li>
+        <li>
+          <span>TYPE</span>
+          {web && "Web"}
+          {singlePage && "singlePage"}
+        </li>
+        <li>
+          <span>VERSION</span>
+          {pcVer && "PC version"}
+          {mobileVer && "Mobile Version"}
+          {responsiveWeb && "반응형 웹"}
+        </li>
+        <li>
+          <span>IE VERSION</span>
+          {IEVersion}
+        </li>
+        <li>
+          <span>SKILL</span>
+          {skillArray}
+        </li>
+        <li>
+          <span>ANIMATION EVENT</span>
+          {animationEventArray}
+        </li>
+        <li>
+          <span>WHEN</span>
+          {workYear} {workMonth}
+        </li>
+        <li>
+          <span>PERIOD</span>
+          {period}
+        </li>
+        <li>
+          <span>WORKER</span>
+          {worker}
+        </li>
+        <li>
+          <span>URL</span>
+          {url.map((d) => {
+            return (
+              <a target="_blank" rel="noopener noreferrer" href={d} key={d}>
+                {d}
+              </a>
+            );
+          })}
         </li>
         <li>
           <img src={`../${contentImage.url}`} alt={contentImage.name} />
         </li>
       </ul>
-    </div>
+    </PortfolioBlock>
   );
 };
 

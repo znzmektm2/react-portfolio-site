@@ -4,9 +4,7 @@ import qs from "qs";
 export const writePortFolio = (formData) =>
   client.post("/api/portfolios", formData);
 
-export const idCheck = (id) => {
-  client.get(`/api/portfolios/idCheck?id=${id}`);
-};
+export const checkId = (id) => client.get(`/api/portfolios/idCheck/${id}`);
 
 export const readPortFolio = (id) => client.get(`/api/portfolios/${id}`);
 

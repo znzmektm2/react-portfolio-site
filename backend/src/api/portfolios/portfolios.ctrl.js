@@ -19,6 +19,19 @@ export const getPortfolioById = async (ctx, next) => {
   }
 };
 
+/* id 값 중복 조회
+GET /api/portfolio/idCheck?id=ccej
+*/
+export const idCheck = async (ctx) => {
+  const { id } = ctx.params;
+  try {
+    const haveID = await Portfolio.findOne({ id: id });
+    haveID ? (ctx.body = true) : (ctx.body = false);
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
 /* 포트폴리오 작성
 POST /api/portfolios
 { 
@@ -65,9 +78,9 @@ export const write = async (ctx) => {
   const requestBody = ctx.request.body;
   console.log(requestBody);
   const result = schema.validate(requestBody);
+
   if (result.error) {
     ctx.status = 400; // Bad Request
-    console.log(result.error);
     ctx.body = result.error;
     return;
   }
@@ -87,6 +100,10 @@ export const write = async (ctx) => {
   const generateUrl = (path) => {
     return path.split("\\")[1];
   };
+
+  for (var f in files) {
+    console.log(f);
+  }
   const thumbImage = {
     name: files.thumbImage.name,
     url: generateUrl(files.thumbImage.path),
@@ -108,23 +125,6 @@ export const write = async (ctx) => {
   try {
     await portfolio.save();
     ctx.body = portfolio;
-  } catch (e) {
-    ctx.throw(500, e);
-  }
-};
-
-/* id 값 중복 조회
-GET /api/portfolio/idCheck/:ccej
-*/
-export const idCheck = async (ctx) => {
-  const id = ctx.query.id;
-  console.log(id);
-  try {
-    const haveID = await Portfolio.findOne({ id: id });
-    haveID
-      ? (ctx.body = { id: "아이디 중복" })
-      : (ctx.body = { id: "사용가능" });
-    console.log(haveID);
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -159,7 +159,7 @@ export const list = async (ctx) => {
       : {};
 
   try {
-    const listLimit = 6; // 보이는 개수 설정
+    const listLimit = 20; // 보이는 개수 설정
     const portfolios = await Portfolio.find(query)
       .sort({ _id: -1 }) // 내림차순 정렬
       .limit(listLimit) // 보이는 개수 제한

@@ -6,7 +6,7 @@ const AdminPage = () => {
   return (
     <>
       <PageTitle>Admin</PageTitle>
-      <AdminContainer />;
+      <AdminContainer />
     </>
   );
 };

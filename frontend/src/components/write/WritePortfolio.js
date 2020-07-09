@@ -1,11 +1,24 @@
 import React from "react";
+import styled from "styled-components";
+
+const WritePortfolioBlock = styled.div`
+  margin: 0 auto;
+  width: 1200px;
+  .red {
+    font-size: 0.9rem;
+    color: red;
+  }
+  .green {
+    font-size: 0.9rem;
+    color: green;
+  }
+`;
 
 const WritePortfolio = ({
   onChangeField,
   onCheckId,
   id,
-  checkId,
-  checkIdError,
+  haveId,
   client,
   hostValue,
   web,
@@ -25,6 +38,7 @@ const WritePortfolio = ({
   setContentImageFile,
   onPublish,
   portfolio,
+  portfolioError,
 }) => {
   const onChange = (e) => {
     const name = e.target.name;
@@ -51,7 +65,7 @@ const WritePortfolio = ({
 
   const setThumbImage = (e) => {
     e.preventDefault();
-    setThumbImageFile(e.target.name, e.target.files[0]);
+    setThumbImageFile(e.target.files[0]);
   };
 
   const setContentImage = (e) => {
@@ -60,7 +74,7 @@ const WritePortfolio = ({
   };
 
   return (
-    <>
+    <WritePortfolioBlock>
       <input
         type="text"
         name="id"
@@ -68,8 +82,12 @@ const WritePortfolio = ({
         value={id}
         onChange={onChange}
       />
-      {checkId && <span>아이디 중복</span>}
-      {checkIdError && <span>아이디 사용가능</span>}
+      {haveId !== null &&
+        (haveId ? (
+          <span className="red">아이디 중복</span>
+        ) : (
+          <span className="green">아이디 사용가능</span>
+        ))}
       <br />
       <input
         type="text"
@@ -195,8 +213,9 @@ const WritePortfolio = ({
       <br />
       <input type="file" name="contentImage" onChange={setContentImage} />
       <br />
+      {portfolioError && <p className="red">내용을 채워주세요</p>}
       <button onClick={onPublish}>보내기</button>
-    </>
+    </WritePortfolioBlock>
   );
 };
 

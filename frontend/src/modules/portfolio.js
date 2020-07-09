@@ -12,7 +12,7 @@ const [
 ] = createRequestActionTypes("portfolio/READ_PORTFOLIO");
 const UNLOAD_PORTFOLIO = "portfolio/UNLOAD_PORTFOLIO";
 
-export const readportfolio = createAction(READ_PORTFOLIO, (id) => id);
+export const readportfolio = createAction(READ_PORTFOLIO);
 export const unloadPortfolio = createAction(UNLOAD_PORTFOLIO);
 
 const readPortfolioSaga = createRequestSaga(
@@ -31,6 +31,11 @@ const initailState = {
 
 export default handleActions(
   {
+    [READ_PORTFOLIO]: (state) => ({
+      ...state,
+      portfolio: null,
+      error: null,
+    }),
     [READ_PORTFOLIO_SUCCESS]: (state, { payload: portfolio }) => ({
       ...state,
       portfolio,

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const PortfolioBlock = styled.div`
+const PortfolioListBlock = styled.div`
   margin: 3rem 0;
   ul {
     margin: 0 auto;
@@ -51,7 +51,7 @@ const PortfolioList = ({
   }
 
   return (
-    <PortfolioBlock>
+    <PortfolioListBlock>
       {!loading && portfolioList && (
         <ul>
           {portfolioList.map((list) => (
@@ -64,7 +64,7 @@ const PortfolioList = ({
           ))}
         </ul>
       )}
-    </PortfolioBlock>
+    </PortfolioListBlock>
   );
 };
 

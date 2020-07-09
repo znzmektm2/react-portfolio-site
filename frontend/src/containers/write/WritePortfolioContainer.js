@@ -1,7 +1,11 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeField, idCheck, initialize } from "../../modules/write";
-import { writePortfolio } from "../../modules/write";
+import {
+  changeField,
+  checkId,
+  writePortfolio,
+  initialize,
+} from "../../modules/write";
 import { withRouter } from "react-router-dom";
 import WritePortfolio from "./../../components/write/WritePortfolio";
 
@@ -9,8 +13,7 @@ const WritePortfolioContainer = ({ history }) => {
   const dispatch = useDispatch();
   const {
     id,
-    checkId,
-    checkIdError,
+    haveId,
     client,
     hostValue,
     web,
@@ -30,8 +33,7 @@ const WritePortfolioContainer = ({ history }) => {
     portfolioError,
   } = useSelector(({ write }) => ({
     id: write.id,
-    checkId: write.checkId,
-    checkIdError: write.checkIdError,
+    haveId: write.haveId,
     client: write.client,
     hostValue: write.host,
     web: write.web,
@@ -62,7 +64,7 @@ const WritePortfolioContainer = ({ history }) => {
 
   const onCheckId = useCallback(
     (id) => {
-      dispatch(idCheck(id));
+      dispatch(checkId(id));
     },
     [dispatch]
   );
@@ -93,29 +95,33 @@ const WritePortfolioContainer = ({ history }) => {
     formData.append("thumbImage", thumbImage);
     formData.append("contentImage", contentImage);
 
+    if (haveId) {
+      alert("중복된 아이디입니다");
+      return;
+    }
+
     dispatch(writePortfolio(formData));
   };
 
+  console.log(thumbImage);
+
   useEffect(() => {
-    // if (portfolio) {
-    //   const { id } = portfolio;
-    //   history.push(`/portfolio/${id}`);
-    // }
+    if (portfolio) {
+      history.push(`/portfolio/${portfolio.id}`);
+    }
     if (portfolioError) {
       console.log(portfolioError);
     }
-
     return () => {
-      // dispatch(initialize());
+      dispatch(initialize());
     };
-  }, [dispatch, history, portfolio, portfolioError, checkIdError]);
+  }, [dispatch, history, portfolio, portfolioError]);
   return (
     <WritePortfolio
       onChangeField={onChangeField}
       onCheckId={onCheckId}
       id={id}
-      checkId={checkId}
-      checkIdError={checkIdError}
+      haveId={haveId}
       client={client}
       hostValue={hostValue}
       web={web}
@@ -135,6 +141,7 @@ const WritePortfolioContainer = ({ history }) => {
       setContentImageFile={setContentImageFile}
       onPublish={onPublish}
       portfolio={portfolio}
+      portfolioError={portfolioError}
     />
   );
 };
