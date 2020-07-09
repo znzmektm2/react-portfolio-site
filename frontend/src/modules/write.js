@@ -7,62 +7,55 @@ import { takeLatest } from "redux-saga/effects";
 
 const INITIALIZE = "write/INITIALIZE";
 const CHANGE_FIELD = "write/CHANGE_FIELD";
+const [CHECK_ID, CHECK_ID_SUCCESS, CHECK_ID_FAILURE] = createRequestActionTypes(
+  "write/CHECK_ID"
+);
 const [
   WRITE_PORTFOLIO,
   WRITE_PORTFOLIO_SUCCESS,
   WRITE_PORTFOLIO_FAILURE,
 ] = createRequestActionTypes("write/WRITE_PORTFOLIO");
 
-const [
-  WRITE_FILE_UPLOAD,
-  WRITE_FILE_UPLOAD_SUCCESS,
-  WRITE_FILE_UPLOAD_FAILURE,
-] = createRequestActionTypes("write/WRITE_FILE_UPLOAD");
-
 export const initialize = createAction(INITIALIZE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
 }));
+export const idCheck = createAction(CHECK_ID);
 export const writePortfolio = createAction(WRITE_PORTFOLIO);
 
-export const writeFileUpload = createAction(WRITE_FILE_UPLOAD);
-
+const checkIdSaga = createRequestSaga(CHECK_ID, portfoliosAPI.idCheck);
 const writePortfolioSaga = createRequestSaga(
   WRITE_PORTFOLIO,
   portfoliosAPI.writePortFolio
 );
-const writeFileUploadSaga = createRequestSaga(
-  WRITE_FILE_UPLOAD,
-  portfoliosAPI.writeFileUpload
-);
+
 export function* writeSaga() {
+  yield takeLatest(CHECK_ID, checkIdSaga);
   yield takeLatest(WRITE_PORTFOLIO, writePortfolioSaga);
-  yield takeLatest(WRITE_FILE_UPLOAD, writeFileUploadSaga);
 }
 
 const initialState = {
   id: "",
+  checkId: null,
+  checkIdError: null,
   client: "",
   host: "",
-  web: false,
+  web: true,
   singlePage: false,
-  pcVer: false,
+  pcVer: true,
   mobileVer: false,
   responsiveWeb: false,
   IEVersion: "",
-  skill: [],
-  animationEvent: [],
+  skill: "",
+  animationEvent: "",
   workYear: "",
   workMonth: "",
   period: "",
   worker: "",
-  url: [],
+  url: "",
   portfolio: null,
   portfolioError: null,
-  fileUplaod: null,
-  fileUplaodError: null,
-  originalPortfolioId: null,
 };
 
 export default handleActions(
@@ -85,18 +78,18 @@ export default handleActions(
       ...state,
       portfolioError,
     }),
-    [WRITE_FILE_UPLOAD]: (state) => ({
+    [CHECK_ID]: (state) => ({
       ...state,
-      fileUplaod: null,
-      fileUplaodError: null,
+      checkId: null,
+      checkIdError: null,
     }),
-    [WRITE_FILE_UPLOAD_SUCCESS]: (state, { payload: fileUplaod }) => ({
+    [CHECK_ID_SUCCESS]: (state, { payload: checkId }) => ({
       ...state,
-      fileUplaod,
+      checkId: checkId,
     }),
-    [WRITE_FILE_UPLOAD_FAILURE]: (state, { payload: fileUplaodError }) => ({
+    [CHECK_ID_FAILURE]: (state, { payload: checkIdError }) => ({
       ...state,
-      fileUplaodError,
+      checkIdError: checkIdError,
     }),
   },
   initialState

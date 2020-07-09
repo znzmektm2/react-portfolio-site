@@ -2,9 +2,10 @@ import React from "react";
 
 const WritePortfolio = ({
   onChangeField,
-  setThumbImageFile,
-  setContentImageFile,
+  onCheckId,
   id,
+  checkId,
+  checkIdError,
   client,
   hostValue,
   web,
@@ -20,18 +21,18 @@ const WritePortfolio = ({
   period,
   worker,
   url,
+  setThumbImageFile,
+  setContentImageFile,
   onPublish,
+  portfolio,
 }) => {
   const onChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-
-    if (name === "skill" || name === "animationEvent" || name === "url") {
-      const array = value.split(",");
-      onChangeField({ key: name, value: array });
-      return;
-    }
     onChangeField({ key: name, value: value });
+    if (name === "id") {
+      onCheckId(value);
+    }
   };
 
   const onChangeRadiobox = (e) => {
@@ -50,17 +51,11 @@ const WritePortfolio = ({
 
   const setThumbImage = (e) => {
     e.preventDefault();
-    // const formData = new FormData();
-    // formData.append("file", e.target.files[0]);
-
-    setThumbImageFile(e.target.files[0]);
+    setThumbImageFile(e.target.name, e.target.files[0]);
   };
 
   const setContentImage = (e) => {
     e.preventDefault();
-    // const formData = new FormData();
-    // formData.append("file", e.target.files[0]);
-
     setContentImageFile(e.target.files[0]);
   };
 
@@ -73,6 +68,8 @@ const WritePortfolio = ({
         value={id}
         onChange={onChange}
       />
+      {checkId && <span>아이디 중복</span>}
+      {checkIdError && <span>아이디 사용가능</span>}
       <br />
       <input
         type="text"
@@ -194,7 +191,7 @@ const WritePortfolio = ({
         onChange={onChange}
       />
       <br />
-      <input type="file" name="thumbImage" onChange={setThumbImage} />
+      <input type="file" name="ThumbImage" onChange={setThumbImage} />
       <br />
       <input type="file" name="contentImage" onChange={setContentImage} />
       <br />

@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeField, initialize } from "../../modules/write";
-import { writePortfolio, writeFileUpload } from "../../modules/write";
+import { changeField, idCheck, initialize } from "../../modules/write";
+import { writePortfolio } from "../../modules/write";
 import { withRouter } from "react-router-dom";
 import WritePortfolio from "./../../components/write/WritePortfolio";
 
@@ -9,6 +9,8 @@ const WritePortfolioContainer = ({ history }) => {
   const dispatch = useDispatch();
   const {
     id,
+    checkId,
+    checkIdError,
     client,
     hostValue,
     web,
@@ -26,9 +28,10 @@ const WritePortfolioContainer = ({ history }) => {
     url,
     portfolio,
     portfolioError,
-    originalPortfolioId,
   } = useSelector(({ write }) => ({
     id: write.id,
+    checkId: write.checkId,
+    checkIdError: write.checkIdError,
     client: write.client,
     hostValue: write.host,
     web: write.web,
@@ -57,42 +60,40 @@ const WritePortfolioContainer = ({ history }) => {
     [dispatch]
   );
 
-  const setThumbImageFile = (file) => {
-    setThumbImage(file);
-  };
+  const onCheckId = useCallback(
+    (id) => {
+      dispatch(idCheck(id));
+    },
+    [dispatch]
+  );
 
-  const setContentImageFile = (file) => {
-    setContentImage(file);
-  };
+  const setThumbImageFile = useCallback((file) => setThumbImage(file), []);
+  const setContentImageFile = useCallback((file) => setContentImage(file), []);
 
   const onPublish = () => {
     const host = hostValue ? hostValue : "null";
-    const formData = {
-      id,
-      client,
-      host,
-      web,
-      singlePage,
-      pcVer,
-      mobileVer,
-      responsiveWeb,
-      IEVersion,
-      skill,
-      animationEvent,
-      workYear,
-      workMonth,
-      period,
-      worker,
-      url,
-    };
-    const file = new FormData();
+    const formData = new FormData();
 
-    file.append("thumbImage", thumbImage);
-    file.append("contentImage", contentImage);
-    file.append("id", id);
+    formData.append("id", id);
+    formData.append("client", client);
+    formData.append("host", host);
+    formData.append("web", web);
+    formData.append("singlePage", singlePage);
+    formData.append("pcVer", pcVer);
+    formData.append("mobileVer", mobileVer);
+    formData.append("responsiveWeb", responsiveWeb);
+    formData.append("IEVersion", IEVersion);
+    formData.append("skill", skill);
+    formData.append("animationEvent", animationEvent);
+    formData.append("workYear", workYear);
+    formData.append("workMonth", workMonth);
+    formData.append("period", period);
+    formData.append("worker", worker);
+    formData.append("url", url);
+    formData.append("thumbImage", thumbImage);
+    formData.append("contentImage", contentImage);
 
     dispatch(writePortfolio(formData));
-    dispatch(writeFileUpload(file));
   };
 
   useEffect(() => {
@@ -107,13 +108,14 @@ const WritePortfolioContainer = ({ history }) => {
     return () => {
       // dispatch(initialize());
     };
-  }, [dispatch, history, portfolio, portfolioError]);
+  }, [dispatch, history, portfolio, portfolioError, checkIdError]);
   return (
     <WritePortfolio
       onChangeField={onChangeField}
-      setThumbImageFile={setThumbImageFile}
-      setContentImageFile={setContentImageFile}
+      onCheckId={onCheckId}
       id={id}
+      checkId={checkId}
+      checkIdError={checkIdError}
       client={client}
       hostValue={hostValue}
       web={web}
@@ -129,10 +131,10 @@ const WritePortfolioContainer = ({ history }) => {
       period={period}
       worker={worker}
       url={url}
-      portfolio={portfolio}
-      portfolioError={portfolioError}
-      originalPortfolioId={originalPortfolioId}
+      setThumbImageFile={setThumbImageFile}
+      setContentImageFile={setContentImageFile}
       onPublish={onPublish}
+      portfolio={portfolio}
     />
   );
 };

@@ -19,6 +19,7 @@ const readPortfolioSaga = createRequestSaga(
   READ_PORTFOLIO,
   portfoliosAPI.readPortFolio
 );
+
 export function* portfolioSaga() {
   yield takeLatest(READ_PORTFOLIO, readPortfolioSaga);
 }

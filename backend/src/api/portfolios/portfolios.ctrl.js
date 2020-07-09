@@ -12,7 +12,6 @@ export const getPortfolioById = async (ctx, next) => {
       ctx.status = 404;
       return;
     }
-    console.log(portfolio);
     ctx.state.portfolio = portfolio;
     return next();
   } catch (e) {
@@ -53,13 +52,13 @@ export const write = async (ctx) => {
     mobileVer: Joi.boolean(),
     responsiveWeb: Joi.boolean(),
     IEVersion: Joi.string(),
-    skill: Joi.array().items(Joi.string()).required(),
-    animationEvent: Joi.array().items(Joi.string()),
+    skill: Joi.string().required(),
+    animationEvent: Joi.string().required(),
     workYear: Joi.string().required(),
     workMonth: Joi.string().required(),
     period: Joi.string().required(),
     worker: Joi.string().required(),
-    url: Joi.array().items(Joi.string()),
+    url: Joi.string().required(),
   });
 
   // 검증 실패인 경우 에러 처리
@@ -73,13 +72,59 @@ export const write = async (ctx) => {
     return;
   }
 
+  // skill, animationEvent, url 배열 만들기
+  const makeArray = (data) => {
+    let dataArray = [...new Set(data.replace(/ /g, "").split(","))];
+    return dataArray;
+  };
+
+  const skill = makeArray(requestBody.skill);
+  const animationEvent = makeArray(requestBody.animationEvent);
+  const url = makeArray(requestBody.url);
+
+  // 파일 객체 담기
+  const files = ctx.request.files;
+  const generateUrl = (path) => {
+    return path.split("\\")[1];
+  };
+  const thumbImage = {
+    name: files.thumbImage.name,
+    url: generateUrl(files.thumbImage.path),
+  };
+  const contentImage = {
+    name: files.contentImage.name,
+    url: generateUrl(files.contentImage.path),
+  };
+
   const portfolio = new Portfolio({
     ...requestBody,
+    skill,
+    animationEvent,
+    url,
+    thumbImage,
+    contentImage,
   });
-  // console.log(portfolio);
+  console.log(portfolio);
   try {
     await portfolio.save();
     ctx.body = portfolio;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+/* id 값 중복 조회
+GET /api/portfolio/idCheck/:ccej
+*/
+export const idCheck = async (ctx) => {
+  const id = ctx.query.id;
+  console.log(id);
+  try {
+    const haveID = await Portfolio.findOne({ id: id });
+    haveID
+      ? (ctx.body = { id: "아이디 중복" })
+      : (ctx.body = { id: "사용가능" });
+    console.log(haveID);
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -101,7 +146,7 @@ export const list = async (ctx) => {
   if (skill) {
     skillArray = skill.split(",");
   }
-  console.log(skillArray);
+
   const query =
     skill || web || singlePage
       ? {
@@ -113,15 +158,12 @@ export const list = async (ctx) => {
         }
       : {};
 
-  console.log(query);
-
   try {
-    const listLimit = 10; // 보이는 개수 설정
+    const listLimit = 6; // 보이는 개수 설정
     const portfolios = await Portfolio.find(query)
-
       .sort({ _id: -1 }) // 내림차순 정렬
       .limit(listLimit) // 보이는 개수 제한
-      .skip((page - 1) * 10) // 계산한 값의 개수를 제외하고 그 다음 데이터 불러옴
+      .skip((page - 1) * listLimit) // 계산한 값의 개수를 제외하고 그 다음 데이터 불러옴
       .lean(); // JSON 형태로 조회
     const portfolioList = [];
     portfolios.map((portfolio) => {
@@ -134,40 +176,9 @@ export const list = async (ctx) => {
       portfolioList.push(list);
     });
     const portfolioCount = await Portfolio.countDocuments(query);
-    ctx.body = portfolioList;
     // Last-Page라는 커스텀 HTTP 헤더를 설정
     ctx.set("Last-Page", Math.ceil(portfolioCount / listLimit));
-  } catch (e) {
-    ctx.throw(500, e);
-  }
-};
-
-/* 포트폴리오 이미지 업로드
-GET /api/portfolios/fileUpload
-*/
-export const fileUpload = async (ctx) => {
-  const id = ctx.request.body.id;
-  const files = ctx.request.files;
-  const generateUrl = (path) => {
-    return path.split("\\")[1];
-  };
-  const thumbImage = {
-    name: files.thumbImage.name,
-    url: generateUrl(files.thumbImage.path),
-  };
-  const contentImage = {
-    name: files.contentImage.name,
-    url: generateUrl(files.contentImage.path),
-  };
-
-  try {
-    const portfolio = await Portfolio.insertFileById(
-      id,
-      thumbImage,
-      contentImage
-    );
-    console.log("portfolio ", portfolio);
-    ctx.body = portfolio;
+    ctx.body = portfolioList;
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -268,14 +279,14 @@ GET /api/portfolios/category
 */
 export const category = async (ctx) => {
   try {
-    let skillList = [];
+    let skillArray = [];
     const portfolios = await Portfolio.find();
     portfolios.map((portfolio) => {
       portfolio.skill.map((skill) => {
-        skillList.push(skill);
+        skillArray.push(skill);
       });
     });
-    const category = [...new Set(skillList)];
+    const category = [...new Set(skillArray)];
     ctx.body = category;
   } catch (e) {
     ctx.throw(500, e);

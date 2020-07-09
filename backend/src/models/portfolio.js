@@ -27,13 +27,5 @@ const PortfolioSchema = new Schema({
   },
 });
 
-PortfolioSchema.statics.insertFileById = function (
-  id,
-  thumbImage,
-  contentImage
-) {
-  return this.updateOne({ id }, { $set: { thumbImage, contentImage } });
-};
-
 const Portfolio = mongoose.model("Portfolio", PortfolioSchema);
 export default Portfolio;

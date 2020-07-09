@@ -5,9 +5,9 @@ import checkLoggedIn from "../../lib/checkLoggedIn";
 const portfolios = new Router();
 
 portfolios.post("/", checkLoggedIn, portfoliosCtrl.write);
+portfolios.get("/idCheck", portfoliosCtrl.idCheck);
 portfolios.get("/", portfoliosCtrl.list);
 portfolios.get("/category", portfoliosCtrl.category);
-portfolios.post("/fileUpload", portfoliosCtrl.fileUpload);
 
 const portfolio = new Router();
 

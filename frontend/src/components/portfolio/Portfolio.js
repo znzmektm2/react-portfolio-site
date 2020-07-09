@@ -14,11 +14,13 @@ const Portfolio = ({ portfolio, error, loading, user }) => {
   }
 
   const {
-    id,
     client,
     host,
     web,
     singlePage,
+    pcVer,
+    mobileVer,
+    responsiveWeb,
     IEVersion,
     skill,
     animationEvent,
@@ -26,28 +28,35 @@ const Portfolio = ({ portfolio, error, loading, user }) => {
     workMonth,
     period,
     worker,
+    url,
     contentImage,
   } = portfolio;
-  const url = `../${contentImage.url}`;
-  const skillArray = skill.join(", ");
+
   return (
     <div>
       <ul>
-        <li>id : {id}</li>
         <li>client : {client}</li>
         <li>{host !== "null" && `host : ${host}`}</li>
         <li>{web && `web : ${web}`}</li>
         <li>{singlePage && `singlePage : ${singlePage}`}</li>
+        <li>{pcVer && `pcVer : ${pcVer}`}</li>
+        <li>{mobileVer && `mobileVer : ${mobileVer}`}</li>
+        <li>{responsiveWeb && `responsiveWeb : ${responsiveWeb}`}</li>
         <li>IEVersion : {IEVersion}</li>
-        <li>skill : {skillArray}</li>
+        <li>skill : {skill}</li>
         <li>animationEvent : {animationEvent}</li>
         <li>workYear : {workYear}</li>
         <li>workMonth : {workMonth}</li>
         <li>period : {period}</li>
         <li>worker : {worker}</li>
         <li>
-          contentImage : <br />
-          <img src={url} alt={contentImage.name} />
+          url :
+          <a target="_blank" rel="noopener noreferrer" href={url}>
+            {url}
+          </a>
+        </li>
+        <li>
+          <img src={`../${contentImage.url}`} alt={contentImage.name} />
         </li>
       </ul>
     </div>
