@@ -100,10 +100,6 @@ export const write = async (ctx) => {
   const generateUrl = (path) => {
     return path.split("\\")[1];
   };
-
-  for (var f in files) {
-    console.log(f);
-  }
   const thumbImage = {
     name: files.thumbImage.name,
     url: generateUrl(files.thumbImage.path),
@@ -197,7 +193,7 @@ DELETE /api/portfolios/:id
 export const remove = async (ctx) => {
   const { id } = ctx.params;
   try {
-    await Portfolio.remove({ id: id });
+    await Portfolio.deleteOne({ id: id });
     ctx.status = 204; // No Content
   } catch (e) {
     ctx.throw(500, e);
@@ -230,8 +226,8 @@ export const update = async (ctx) => {
 
   // 요청된 객체 검증
   const schema = Joi.object().keys({
-    id: Joi.string(),
-    client: Joi.string(),
+    id: Joi.string().required(),
+    client: Joi.string().required(),
     host: Joi.string(),
     web: Joi.boolean(),
     singlePage: Joi.boolean(),
@@ -239,27 +235,71 @@ export const update = async (ctx) => {
     mobileVer: Joi.boolean(),
     responsiveWeb: Joi.boolean(),
     IEVersion: Joi.string(),
-    skill: Joi.array().items(Joi.string()),
-    animationEvent: Joi.array().items(Joi.string()),
-    workYear: Joi.string(),
-    workMonth: Joi.string(),
-    period: Joi.string(),
-    worker: Joi.string(),
-    url: Joi.array().items(Joi.string()),
+    skill: Joi.string().required(),
+    animationEvent: Joi.string().required(),
+    workYear: Joi.string().required(),
+    workMonth: Joi.string().required(),
+    period: Joi.string().required(),
+    worker: Joi.string().required(),
+    url: Joi.string().required(),
   });
 
   // 검증 실패인 경우 에러 처리
-  const result = schema.validate(ctx.request.body);
+  const requestBody = ctx.request.body;
+  console.log(requestBody);
+  const result = schema.validate(requestBody);
+
   if (result.error) {
     ctx.status = 400; // Bad Request
     ctx.body = result.error;
     return;
   }
 
+  // skill, animationEvent, url 배열 만들기
+  const makeArray = (data) => {
+    let dataArray = [...new Set(data.replace(/ /g, "").split(","))];
+    return dataArray;
+  };
+
+  const skill = makeArray(requestBody.skill);
+  const animationEvent = makeArray(requestBody.animationEvent);
+  const url = makeArray(requestBody.url);
+
+  // 파일 객체 담기
+  const files = ctx.request.files;
+  let generateUrl;
+  let thumbImage;
+  let contentImage;
+
+  const isTrue = Object.keys(files).length > 0;
+  console.log(isTrue);
+  if (isTrue) {
+    generateUrl = (path) => {
+      return path.split("\\")[1];
+    };
+    thumbImage = {
+      name: files.thumbImage.name,
+      url: generateUrl(files.thumbImage.path),
+    };
+    contentImage = {
+      name: files.contentImage.name,
+      url: generateUrl(files.contentImage.path),
+    };
+  }
+
+  const updatePortfolio = {
+    ...requestBody,
+    skill,
+    animationEvent,
+    url,
+    ...(isTrue && { thumbImage, contentImage }),
+  };
+
+  console.log(updatePortfolio);
   try {
     const portfolio = await Portfolio.findOneAndUpdate(
       { id: id },
-      ctx.request.body,
+      updatePortfolio,
       {
         returnNewDocument: true,
       }
@@ -268,7 +308,7 @@ export const update = async (ctx) => {
       ctx.status = 404;
       return;
     }
-    ctx.body = portfolio;
+    ctx.body = updatePortfolio;
   } catch (e) {
     ctx.throw(500, e);
   }

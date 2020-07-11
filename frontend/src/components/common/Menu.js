@@ -3,6 +3,9 @@ import { NavLink, withRouter } from "react-router-dom";
 import styled from "styled-components";
 
 const MenuBlock = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   ul {
     li {
       font-family: "goku";

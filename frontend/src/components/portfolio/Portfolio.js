@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Button from "../common/Button";
 
 const PortfolioBlock = styled.div`
   margin: 0 auto;
@@ -30,7 +31,7 @@ const PortfolioBlock = styled.div`
   }
 `;
 
-const Portfolio = ({ portfolio, error, loading, user }) => {
+const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
   // 에러 발생시
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -38,7 +39,7 @@ const Portfolio = ({ portfolio, error, loading, user }) => {
     }
   }
 
-  // 로딩중이거나, 아직 포트폴리오 데이터가 없을 시
+  // 로딩중이거나, 아직 데이터가 없을 시
   if (loading || !portfolio) {
     return null;
   }
@@ -67,6 +68,12 @@ const Portfolio = ({ portfolio, error, loading, user }) => {
 
   return (
     <PortfolioBlock>
+      {user && (
+        <>
+          <Button onClick={onEdit}>수정</Button>
+          <Button onClick={onRemove}>삭제</Button>
+        </>
+      )}
       <ul>
         <li>
           <span>CLIENT</span>

@@ -26,7 +26,8 @@ const AdminContainer = ({ history }) => {
     dispatch(login(password));
   };
 
-  const onLogout = () => {
+  const onLogout = (e) => {
+    e.preventDefault();
     dispatch(logout());
   };
 

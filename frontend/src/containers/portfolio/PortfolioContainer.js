@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Portfolio from "./../../components/portfolio/Portfolio";
 import { readportfolio, unloadPortfolio } from "../../modules/portfolio";
+import { setOriginalPortfolio } from "../../modules/write";
+import { removePortFolio } from "./../../lib/api/portfolios";
 
-const PortfolioContainer = ({ match }) => {
+const PortfolioContainer = ({ match, history }) => {
   const { id } = match.params;
   const dispatch = useDispatch();
   const { portfolio, error, loading, user } = useSelector(
@@ -24,12 +26,28 @@ const PortfolioContainer = ({ match }) => {
     };
   }, [dispatch, id]);
 
+  const onEdit = () => {
+    dispatch(setOriginalPortfolio(portfolio));
+    history.push("/write");
+  };
+
+  const onRemove = async () => {
+    try {
+      await removePortFolio(id);
+      history.push("/portfolios");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Portfolio
       portfolio={portfolio}
       error={error}
       loading={loading}
       user={user}
+      onEdit={onEdit}
+      onRemove={onRemove}
     />
   );
 };

@@ -7,7 +7,7 @@ import PortfoliosPage from "./pages/PortfoliosPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import AboutPage from "./pages/AboutPage";
 import HomePage from "./pages/HomePage";
-import Menu from "./containers/common/Menu";
+import Menu from "./components/common/Menu";
 
 const App = () => {
   return (

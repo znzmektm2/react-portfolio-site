@@ -7,14 +7,19 @@ import { portfolios } from "../../modules/portfolios";
 
 const PortfolioListContainer = ({ location }) => {
   const dispatch = useDispatch();
-  const { portfolioList, portfoliosError, lastPage, loading } = useSelector(
-    ({ portfolios, loading }) => ({
-      portfolioList: portfolios.portfolios,
-      portfoliosError: portfolios.portfoliosError,
-      lastPage: portfolios.lastPage,
-      loading: loading["portfolios/CATEGORY"],
-    })
-  );
+  const {
+    portfolioList,
+    portfoliosError,
+    lastPage,
+    loading,
+    user,
+  } = useSelector(({ portfolios, loading, user }) => ({
+    portfolioList: portfolios.portfolios,
+    portfoliosError: portfolios.portfoliosError,
+    lastPage: portfolios.lastPage,
+    loading: loading["portfolios/CATEGORY"],
+    user: user.user,
+  }));
 
   useEffect(() => {
     const { skill, web, singlePage } = qs.parse(location.search, {
@@ -29,6 +34,7 @@ const PortfolioListContainer = ({ location }) => {
       portfoliosError={portfoliosError}
       lastPage={lastPage}
       loading={loading}
+      user={user}
     />
   );
 };

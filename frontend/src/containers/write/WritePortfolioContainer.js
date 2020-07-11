@@ -5,6 +5,7 @@ import {
   checkId,
   writePortfolio,
   initialize,
+  updatePortfolio,
 } from "../../modules/write";
 import { withRouter } from "react-router-dom";
 import WritePortfolio from "./../../components/write/WritePortfolio";
@@ -29,9 +30,13 @@ const WritePortfolioContainer = ({ history }) => {
     period,
     worker,
     url,
+    contentImageInfo,
+    thumbImageInfo,
     portfolio,
     portfolioError,
-  } = useSelector(({ write }) => ({
+    originalPortfolioId,
+    loading,
+  } = useSelector(({ write, loading }) => ({
     id: write.id,
     haveId: write.haveId,
     client: write.client,
@@ -49,9 +54,12 @@ const WritePortfolioContainer = ({ history }) => {
     period: write.period,
     worker: write.worker,
     url: write.url,
+    contentImageInfo: write.contentImage,
+    thumbImageInfo: write.thumbImage,
     portfolio: write.portfolio,
     portfolioError: write.portfolioError,
     originalPortfolioId: write.originalPortfolioId,
+    loading: loading["write/WRITE_PORTFOLIO"],
   }));
 
   const [thumbImage, setThumbImage] = useState("");
@@ -92,29 +100,34 @@ const WritePortfolioContainer = ({ history }) => {
     formData.append("period", period);
     formData.append("worker", worker);
     formData.append("url", url);
-    formData.append("thumbImage", thumbImage);
-    formData.append("contentImage", contentImage);
+    if (thumbImage && contentImage) {
+      formData.append("thumbImage", thumbImage);
+      formData.append("contentImage", contentImage);
+    }
 
-    if (haveId) {
+    if (!originalPortfolioId || haveId) {
       alert("중복된 아이디입니다");
+      return;
+    }
+
+    if (originalPortfolioId) {
+      dispatch(updatePortfolio({ originalPortfolioId, formData }));
       return;
     }
 
     dispatch(writePortfolio(formData));
   };
 
-  console.log(thumbImage);
-
   useEffect(() => {
     if (portfolio) {
       history.push(`/portfolio/${portfolio.id}`);
+      return () => {
+        dispatch(initialize());
+      };
     }
     if (portfolioError) {
       console.log(portfolioError);
     }
-    return () => {
-      dispatch(initialize());
-    };
   }, [dispatch, history, portfolio, portfolioError]);
   return (
     <WritePortfolio
@@ -137,11 +150,16 @@ const WritePortfolioContainer = ({ history }) => {
       period={period}
       worker={worker}
       url={url}
+      thumbImageInfo={thumbImageInfo}
+      contentImageInfo={contentImageInfo}
       setThumbImageFile={setThumbImageFile}
       setContentImageFile={setContentImageFile}
       onPublish={onPublish}
       portfolio={portfolio}
       portfolioError={portfolioError}
+      originalPortfolioId={originalPortfolioId}
+      loading={loading}
+      isEdit={!!originalPortfolioId}
     />
   );
 };

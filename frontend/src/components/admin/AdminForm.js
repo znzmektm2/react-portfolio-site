@@ -1,51 +1,16 @@
 import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-
-const StyledButton = styled.button`
-  line-height: 1.5rem;
-  vertical-align: middle;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 0.25rem 1rem;
-  color: white;
-  outline: none;
-  cursor: pointer;
-  background: #aaa;
-  &:hover {
-    background: #ddd;
-  }
-`;
-
-const StyledLink = styled(Link)`
-  line-height: 1.5rem;
-  vertical-align: middle;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 0.25rem 1rem;
-  color: white;
-  outline: none;
-  cursor: pointer;
-  background: #aaa;
-  &:hover {
-    background: #ddd;
-  }
-`;
+import Button from "../common/Button";
 
 const AdminForm = ({ password, onChange, onSubmit, onLogout, user, error }) => {
   if (error) {
-    console.log(error);
+    return <div>{error}</div>;
   }
   return (
     <div>
       {user ? (
         <div>
-          <StyledLink to="/home">홈으로 이동</StyledLink>
-          <StyledButton onClick={onLogout}>로그아웃</StyledButton>
+          <Button to="/home">홈으로 이동</Button>
+          <Button onClick={onLogout}>로그아웃</Button>
         </div>
       ) : (
         <form onSubmit={onSubmit}>
@@ -57,8 +22,7 @@ const AdminForm = ({ password, onChange, onSubmit, onLogout, user, error }) => {
             value={password}
           />
           <br />
-          {error && <div>{error}</div>}
-          <StyledButton onClick={onSubmit}>로그인</StyledButton>
+          <Button onClick={onSubmit}>로그인</Button>
         </form>
       )}
     </div>

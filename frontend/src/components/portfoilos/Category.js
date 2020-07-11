@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const CategoryBlock = styled.div`
-  margin-bottom: -1px;
-  padding: 1rem;
-  border: 1px solid #aaa;
-
   ul {
+    &:first-child {
+      border-top: 1px solid #aaa;
+    }
+    border-bottom: 1px solid #aaa;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,26 +61,27 @@ const Category = ({
     return <div>에러가 발생했습니다.</div>;
   }
 
+  // 로딩중이거나, 아직 데이터가 없을 시
+  if (loading || !categories) {
+    return null;
+  }
+
   return (
     <>
       <CategoryBlock>
-        {!loading && categories && (
-          <ul>
-            {categories.map((category) => (
-              <li key={category}>
-                <input
-                  type="checkbox"
-                  name={category}
-                  value={`${category}`}
-                  onClick={clickSkillCheckbox}
-                />
-                <label htmlFor={category}>{category}</label>
-              </li>
-            ))}
-          </ul>
-        )}
-      </CategoryBlock>
-      <CategoryBlock>
+        <ul>
+          {categories.map((category) => (
+            <li key={category}>
+              <input
+                type="checkbox"
+                name={category}
+                value={`${category}`}
+                onClick={clickSkillCheckbox}
+              />
+              <label htmlFor={category}>{category}</label>
+            </li>
+          ))}
+        </ul>
         <ul>
           <li key="web">
             <input

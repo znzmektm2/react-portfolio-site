@@ -31,17 +31,14 @@ const initailState = {
 
 export default handleActions(
   {
-    [READ_PORTFOLIO]: (state) => ({
-      ...state,
-      portfolio: null,
-      error: null,
-    }),
     [READ_PORTFOLIO_SUCCESS]: (state, { payload: portfolio }) => ({
       ...state,
       portfolio,
+      error: null,
     }),
     [READ_PORTFOLIO_FAILURE]: (state, { payload: error }) => ({
       ...state,
+      portfolio: null,
       error,
     }),
     [UNLOAD_PORTFOLIO]: (state) => initailState,
