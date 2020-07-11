@@ -40,10 +40,8 @@ const WritePortfolio = ({
   setThumbImageFile,
   setContentImageFile,
   onPublish,
-  portfolio,
   portfolioError,
   originalPortfolioId,
-  loading,
 }) => {
   const onChange = (e) => {
     const name = e.target.name;
@@ -111,6 +109,19 @@ const WritePortfolio = ({
     setContentImageFile(thisFile);
   };
 
+  const checkDuplicatedId = () => {
+    if (haveId === null) {
+      return;
+    }
+    if (id === originalPortfolioId) {
+      return <span className="green">현재 아이디</span>;
+    }
+    if (haveId) {
+      return <span className="red">아이디 중복</span>;
+    }
+    return <span className="green">아이디 사용가능</span>;
+  };
+
   return (
     <WritePortfolioBlock>
       <input
@@ -120,12 +131,7 @@ const WritePortfolio = ({
         value={id}
         onChange={onChange}
       />
-      {haveId !== null &&
-        (haveId ? (
-          <span className="red">아이디 중복</span>
-        ) : (
-          <span className="green">아이디 사용가능</span>
-        ))}
+      {checkDuplicatedId()}
       <br />
       <input
         type="text"

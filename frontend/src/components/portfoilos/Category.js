@@ -40,7 +40,7 @@ const CategoryBlock = styled.div`
         left: 0;
         width: 30px;
         height: 30px;
-        background: url(./images/icon_img.png) 0 -31px no-repeat;
+        background: url(/images/icon_img.png) 0 -31px no-repeat;
         background-size: 30px 61px;
       }
       input:checked + label:before {

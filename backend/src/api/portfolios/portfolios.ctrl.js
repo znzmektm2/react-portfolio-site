@@ -44,13 +44,13 @@ POST /api/portfolios
   "mobileVer": true,
   "responsiveWeb": false,
   "IEVersion": "IE9",
-  "skill": ["JavaScript","jQuery","HTML5/CSS3"],
-  "animationEvent": ["slider","circle-progress-1.2.2.js"],
+  "skill": "JavaScript, jQuery, HTML5/CSS3",
+  "animationEvent": "slider, circle-progress-1.2.2.js",
   "workYear": "2019",
   "workMonth": "2",
   "period": "3 days",
   "worker": "me",
-  "url": ["https://campaign.happybean.naver.com/lgupluscsr","https://m.campaign.happybean.naver.com/lgupluscsr"]
+  "url": "https://campaign.happybean.naver.com/lgupluscsr, https://m.campaign.happybean.naver.com/lgupluscsr"
 }
 */
 export const write = async (ctx) => {
@@ -181,7 +181,7 @@ export const list = async (ctx) => {
 };
 
 /* 포트폴리오 뷰페이지 조회
-GET /api/portfolios/singlepage-LGUplus-happybean-2019-2
+GET /api/portfolios/id
 */
 export const read = async (ctx, next) => {
   ctx.body = ctx.state.portfolio;
@@ -201,7 +201,7 @@ export const remove = async (ctx) => {
 };
 
 /* 포트폴리오 업데이트
-PATCH /api/portfolios/singlepage-LGUplus-happybean-2019-2
+PATCH /api/portfolios/:id
 { 
   "id": "singlepage-LGUplus-happybean-2019-2",
   "client": "LGU+",
@@ -212,13 +212,13 @@ PATCH /api/portfolios/singlepage-LGUplus-happybean-2019-2
   "mobileVer": true,
   "responsiveWeb": false,
   "IEVersion": "IE9",
-  "skill": ["JavaScript","jQuery","HTML5/CSS3"],
-  "animationEvent": ["slider","circle-progress-1.2.2.js"],
+  "skill": "JavaScript, jQuery, HTML5/CSS3",
+  "animationEvent": "slider, circle-progress-1.2.2.js",
   "workYear": "2019",
   "workMonth": "2",
   "period": "3 days",
   "worker": "me",
-  "url": ["https://campaign.happybean.naver.com/lgupluscsr","https://m.campaign.happybean.naver.com/lgupluscsr"]
+  "url": "https://campaign.happybean.naver.com/lgupluscsr, https://m.campaign.happybean.naver.com/lgupluscsr"
 }
 */
 export const update = async (ctx) => {
@@ -246,9 +246,7 @@ export const update = async (ctx) => {
 
   // 검증 실패인 경우 에러 처리
   const requestBody = ctx.request.body;
-  console.log(requestBody);
   const result = schema.validate(requestBody);
-
   if (result.error) {
     ctx.status = 400; // Bad Request
     ctx.body = result.error;
@@ -267,48 +265,42 @@ export const update = async (ctx) => {
 
   // 파일 객체 담기
   const files = ctx.request.files;
-  let generateUrl;
-  let thumbImage;
-  let contentImage;
-
-  const isTrue = Object.keys(files).length > 0;
-  console.log(isTrue);
-  if (isTrue) {
-    generateUrl = (path) => {
-      return path.split("\\")[1];
-    };
-    thumbImage = {
-      name: files.thumbImage.name,
-      url: generateUrl(files.thumbImage.path),
-    };
-    contentImage = {
-      name: files.contentImage.name,
-      url: generateUrl(files.contentImage.path),
-    };
-  }
+  let generateUrl = (path) => {
+    return path.split("\\")[1];
+  };
 
   const updatePortfolio = {
     ...requestBody,
     skill,
     animationEvent,
     url,
-    ...(isTrue && { thumbImage, contentImage }),
+    ...(files.thumbImage && {
+      thumbImage: {
+        name: files.thumbImage.name,
+        url: generateUrl(files.thumbImage.path),
+      },
+    }),
+    ...(files.contentImage && {
+      contentImage: {
+        name: files.contentImage.name,
+        url: generateUrl(files.contentImage.path),
+      },
+    }),
   };
 
-  console.log(updatePortfolio);
   try {
     const portfolio = await Portfolio.findOneAndUpdate(
       { id: id },
       updatePortfolio,
       {
-        returnNewDocument: true,
+        new: true,
       }
     );
     if (!portfolio) {
       ctx.status = 404;
       return;
     }
-    ctx.body = updatePortfolio;
+    ctx.body = portfolio;
   } catch (e) {
     ctx.throw(500, e);
   }

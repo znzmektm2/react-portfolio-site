@@ -35,8 +35,7 @@ const WritePortfolioContainer = ({ history }) => {
     portfolio,
     portfolioError,
     originalPortfolioId,
-    loading,
-  } = useSelector(({ write, loading }) => ({
+  } = useSelector(({ write }) => ({
     id: write.id,
     haveId: write.haveId,
     client: write.client,
@@ -59,7 +58,6 @@ const WritePortfolioContainer = ({ history }) => {
     portfolio: write.portfolio,
     portfolioError: write.portfolioError,
     originalPortfolioId: write.originalPortfolioId,
-    loading: loading["write/WRITE_PORTFOLIO"],
   }));
 
   const [thumbImage, setThumbImage] = useState("");
@@ -100,12 +98,10 @@ const WritePortfolioContainer = ({ history }) => {
     formData.append("period", period);
     formData.append("worker", worker);
     formData.append("url", url);
-    if (thumbImage && contentImage) {
-      formData.append("thumbImage", thumbImage);
-      formData.append("contentImage", contentImage);
-    }
+    thumbImage && formData.append("thumbImage", thumbImage);
+    contentImage && formData.append("contentImage", contentImage);
 
-    if (!originalPortfolioId || haveId) {
+    if (originalPortfolioId !== id && haveId) {
       alert("중복된 아이디입니다");
       return;
     }
@@ -119,6 +115,10 @@ const WritePortfolioContainer = ({ history }) => {
   };
 
   useEffect(() => {
+    if (!originalPortfolioId) {
+      dispatch(initialize());
+    }
+
     if (portfolio) {
       history.push(`/portfolio/${portfolio.id}`);
       return () => {
@@ -128,7 +128,7 @@ const WritePortfolioContainer = ({ history }) => {
     if (portfolioError) {
       console.log(portfolioError);
     }
-  }, [dispatch, history, portfolio, portfolioError]);
+  }, [dispatch, history, portfolio, portfolioError, originalPortfolioId]);
   return (
     <WritePortfolio
       onChangeField={onChangeField}
@@ -155,10 +155,8 @@ const WritePortfolioContainer = ({ history }) => {
       setThumbImageFile={setThumbImageFile}
       setContentImageFile={setContentImageFile}
       onPublish={onPublish}
-      portfolio={portfolio}
       portfolioError={portfolioError}
       originalPortfolioId={originalPortfolioId}
-      loading={loading}
       isEdit={!!originalPortfolioId}
     />
   );

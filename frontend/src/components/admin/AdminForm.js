@@ -2,9 +2,6 @@ import React from "react";
 import Button from "../common/Button";
 
 const AdminForm = ({ password, onChange, onSubmit, onLogout, user, error }) => {
-  if (error) {
-    return <div>{error}</div>;
-  }
   return (
     <div>
       {user ? (
@@ -22,6 +19,7 @@ const AdminForm = ({ password, onChange, onSubmit, onLogout, user, error }) => {
             value={password}
           />
           <br />
+          {error && <div>{error}</div>}
           <Button onClick={onSubmit}>로그인</Button>
         </form>
       )}
