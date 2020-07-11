@@ -27,7 +27,7 @@ app.use(
   koaBody({
     formLimit: "1mb",
     formidable: {
-      uploadDir: "./uploads", // upload directory
+      uploadDir: "./src/uploads", // upload directory
       maxFileSize: 200 * 1024 * 1024, //Upload file size
       keepExtensions: true, // keep file extensions
     },
@@ -35,7 +35,7 @@ app.use(
     urlencoded: true,
   })
 );
-app.use(serve("./uploads"));
+app.use(serve("./src/uploads"));
 
 // 라우터 설정
 router.use("/api", api.routes());

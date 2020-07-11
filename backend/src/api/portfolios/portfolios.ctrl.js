@@ -1,6 +1,7 @@
 import Portfolio from "../../models/portfolio";
 import Joi from "@hapi/joi";
 import fs from "fs";
+import path from "path";
 
 // 포트폴리오 뷰페이지 조회시 ctx.state.portfolio에 값 넣기
 export const getPortfolioById = async (ctx, next) => {
@@ -97,8 +98,9 @@ export const write = async (ctx) => {
 
   // 파일 객체 담기
   const files = ctx.request.files;
+  console.log(files);
   const generateUrl = (path) => {
-    return path.split("\\")[1];
+    return path.split("\\")[2];
   };
   const thumbImage = {
     name: files.thumbImage.name,
@@ -117,7 +119,7 @@ export const write = async (ctx) => {
     thumbImage,
     contentImage,
   });
-  console.log(portfolio);
+  console.log("portfolio ", portfolio);
   try {
     await portfolio.save();
     ctx.body = portfolio;
@@ -266,7 +268,7 @@ export const update = async (ctx) => {
   // 파일 객체 담기
   const files = ctx.request.files;
   let generateUrl = (path) => {
-    return path.split("\\")[1];
+    return path.split("\\")[2];
   };
 
   const updatePortfolio = {
@@ -289,6 +291,28 @@ export const update = async (ctx) => {
   };
 
   try {
+    const originalPortfolio = await Portfolio.findOne({ id: requestBody.id });
+    console.log("thumbImage.url", originalPortfolio.thumbImage.url);
+    fs.unlink(
+      path.join(
+        __dirname,
+        "../../\\/uploads",
+        originalPortfolio.thumbImage.url
+      ),
+      function (err) {
+        if (err) throw err;
+        console.log("file deleted");
+      }
+    );
+
+    fs.unlink(
+      path.join(__dirname, "../../uploads", originalPortfolio.contentImage.url),
+      function (err) {
+        if (err) throw err;
+        console.log("file deleted");
+      }
+    );
+
     const portfolio = await Portfolio.findOneAndUpdate(
       { id: id },
       updatePortfolio,
@@ -300,6 +324,9 @@ export const update = async (ctx) => {
       ctx.status = 404;
       return;
     }
+
+    console.log("updatePortfolio ", updatePortfolio);
+    console.log("portfolio ", portfolio);
     ctx.body = portfolio;
   } catch (e) {
     ctx.throw(500, e);
