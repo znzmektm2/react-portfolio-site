@@ -19,7 +19,7 @@ const WritePortfolio = ({
   onChangeField,
   onCheckId,
   id,
-  haveId,
+  hasId,
   client,
   hostValue,
   web,
@@ -110,13 +110,13 @@ const WritePortfolio = ({
   };
 
   const checkDuplicatedId = () => {
-    if (haveId === null) {
+    if (hasId === null) {
       return;
     }
     if (id === originalPortfolioId) {
       return <span className="green">현재 아이디</span>;
     }
-    if (haveId) {
+    if (hasId) {
       return <span className="red">아이디 중복</span>;
     }
     return <span className="green">아이디 사용가능</span>;

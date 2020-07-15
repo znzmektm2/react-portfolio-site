@@ -14,7 +14,7 @@ const WritePortfolioContainer = ({ history }) => {
   const dispatch = useDispatch();
   const {
     id,
-    haveId,
+    hasId,
     client,
     hostValue,
     web,
@@ -37,7 +37,7 @@ const WritePortfolioContainer = ({ history }) => {
     originalPortfolioId,
   } = useSelector(({ write }) => ({
     id: write.id,
-    haveId: write.haveId,
+    hasId: write.hasId,
     client: write.client,
     hostValue: write.host,
     web: write.web,
@@ -101,7 +101,7 @@ const WritePortfolioContainer = ({ history }) => {
     thumbImage && formData.append("thumbImage", thumbImage);
     contentImage && formData.append("contentImage", contentImage);
 
-    if (originalPortfolioId !== id && haveId) {
+    if (originalPortfolioId !== id && hasId) {
       alert("중복된 아이디입니다");
       return;
     }
@@ -134,7 +134,7 @@ const WritePortfolioContainer = ({ history }) => {
       onChangeField={onChangeField}
       onCheckId={onCheckId}
       id={id}
-      haveId={haveId}
+      hasId={hasId}
       client={client}
       hostValue={hostValue}
       web={web}

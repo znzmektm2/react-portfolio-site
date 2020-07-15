@@ -53,8 +53,8 @@ export function* writeSaga() {
 
 const initialState = {
   id: "",
-  haveId: null,
-  haveIdError: null,
+  hasId: null,
+  hasIdError: null,
   client: "",
   host: "",
   web: true,
@@ -96,18 +96,18 @@ export default handleActions(
     }),
     [CHECK_ID]: (state) => ({
       ...state,
-      haveId: null,
-      haveIdError: null,
+      hasId: null,
+      hasIdError: null,
     }),
-    [CHECK_ID_SUCCESS]: (state, { payload: haveId }) => ({
+    [CHECK_ID_SUCCESS]: (state, { payload: hasId }) => ({
       ...state,
-      haveId,
-      haveIdError: null,
+      hasId,
+      hasIdError: null,
     }),
-    [CHECK_ID_FAILURE]: (state, { payload: haveIdError }) => ({
+    [CHECK_ID_FAILURE]: (state, { payload: hasIdError }) => ({
       ...state,
-      haveId: null,
-      haveIdError,
+      hasId: null,
+      hasIdError,
     }),
     [SET_ORIGINAL_PORTFOLIO]: (state, { payload: portfolio }) => ({
       ...state,

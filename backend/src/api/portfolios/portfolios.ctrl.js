@@ -26,8 +26,8 @@ GET /api/portfolio/idCheck?id=ccej
 export const idCheck = async (ctx) => {
   const { id } = ctx.params;
   try {
-    const haveID = await Portfolio.findOne({ id: id });
-    haveID ? (ctx.body = true) : (ctx.body = false);
+    const hasId = await Portfolio.findOne({ id: id });
+    hasId ? (ctx.body = true) : (ctx.body = false);
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -77,7 +77,6 @@ export const write = async (ctx) => {
 
   // 검증 실패인 경우 에러 처리
   const requestBody = ctx.request.body;
-  console.log(requestBody);
   const result = schema.validate(requestBody);
 
   if (result.error) {
@@ -98,9 +97,10 @@ export const write = async (ctx) => {
 
   // 파일 객체 담기
   const files = ctx.request.files;
-  console.log(files);
+
   const generateUrl = (path) => {
-    return path.split("\\")[2];
+    const pathSplit = path.split("\\");
+    return pathSplit[pathSplit.length - 1];
   };
   const thumbImage = {
     name: files.thumbImage.name,
@@ -267,8 +267,12 @@ export const update = async (ctx) => {
 
   // 파일 객체 담기
   const files = ctx.request.files;
+  const addedThumbImage = files.thumbImage;
+  const addedContentImage = files.contentImage;
+
   let generateUrl = (path) => {
-    return path.split("\\")[2];
+    const pathSplit = path.split("\\");
+    return pathSplit[pathSplit.length - 1];
   };
 
   const updatePortfolio = {
@@ -276,42 +280,43 @@ export const update = async (ctx) => {
     skill,
     animationEvent,
     url,
-    ...(files.thumbImage && {
+    ...(addedThumbImage && {
       thumbImage: {
-        name: files.thumbImage.name,
-        url: generateUrl(files.thumbImage.path),
+        name: addedThumbImage.name,
+        url: generateUrl(addedThumbImage.path),
       },
     }),
-    ...(files.contentImage && {
+    ...(addedContentImage && {
       contentImage: {
-        name: files.contentImage.name,
-        url: generateUrl(files.contentImage.path),
+        name: addedContentImage.name,
+        url: generateUrl(addedContentImage.path),
       },
     }),
   };
 
   try {
     const originalPortfolio = await Portfolio.findOne({ id: requestBody.id });
-    console.log("thumbImage.url", originalPortfolio.thumbImage.url);
-    fs.unlink(
-      path.join(
-        __dirname,
-        "../../\\/uploads",
-        originalPortfolio.thumbImage.url
-      ),
-      function (err) {
-        if (err) throw err;
-        console.log("file deleted");
-      }
-    );
+    addedThumbImage &&
+      fs.unlink(
+        path.join(__dirname, "../../uploads", originalPortfolio.thumbImage.url),
+        (err) => {
+          if (err) throw err;
+          console.log("file deleted");
+        }
+      );
 
-    fs.unlink(
-      path.join(__dirname, "../../uploads", originalPortfolio.contentImage.url),
-      function (err) {
-        if (err) throw err;
-        console.log("file deleted");
-      }
-    );
+    addedContentImage &&
+      fs.unlink(
+        path.join(
+          __dirname,
+          "../../uploads",
+          originalPortfolio.contentImage.url
+        ),
+        (err) => {
+          if (err) throw err;
+          console.log("file deleted");
+        }
+      );
 
     const portfolio = await Portfolio.findOneAndUpdate(
       { id: id },
