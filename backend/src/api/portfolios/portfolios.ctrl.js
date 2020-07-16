@@ -351,7 +351,7 @@ export const category = async (ctx) => {
       });
     });
     const category = [...new Set(skillArray)];
-    ctx.body = category;
+    skillArray.length === 0 ? (ctx.body = null) : (ctx.body = category);
   } catch (e) {
     ctx.throw(500, e);
   }

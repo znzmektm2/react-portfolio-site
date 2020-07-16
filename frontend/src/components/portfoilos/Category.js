@@ -63,7 +63,7 @@ const Category = ({
 
   // 로딩중이거나, 아직 데이터가 없을 시
   if (loading || !categories) {
-    return null;
+    return <div>데이터가 없습니다.</div>;
   }
 
   return (
