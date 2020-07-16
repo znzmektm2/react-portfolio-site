@@ -29,38 +29,42 @@ app.use(
       uploadDir: __dirname + "\\uploads", // upload directory
       maxFileSize: 200 * 1024 * 1024, //Upload file size
       keepExtensions: true, // keep file extensions
-      onFileBegin: (name, file) => {
-        const addedFileName = file.name;
-        const splitAddedFileName = addedFileName.split(".");
-        const fileLists = fs.readdirSync(__dirname + "\\uploads\\");
-        const number = [];
+      // 중복된 파일명 숫자 붙이기
+      onFileBegin: (uploadName, uploadFile) => {
+        const file = uploadFile.name;
+        const splitFile = file.split(".");
+        const name = splitFile[0];
+        const extension = splitFile[1];
+        const fileList = fs.readdirSync(__dirname + "\\uploads\\");
+        const numArr = [];
         let uploadFileName;
 
-        if (fs.existsSync(__dirname + "\\uploads\\" + addedFileName)) {
-          console.log("existsSync - true");
-          for (const index in fileLists) {
-            const savedFileName = fileLists[index];
-            const splitSavedFileName = savedFileName.split(".");
-            const onlyName = splitSavedFileName[0];
-            if (onlyName.indexOf(splitAddedFileName[0]) > -1) {
-              if (onlyName.split("_")[1] === undefined) {
-                number.push(0);
+        // 파일명이 있는 경우
+        if (fs.existsSync(__dirname + "\\uploads\\" + file)) {
+          for (const index in fileList) {
+            const savedFile = fileList[index];
+            const splitSavedFile = savedFile.split(".");
+            const savedName = splitSavedFile[0];
+            // 파일명이 포함되는 경우
+            if (savedName.indexOf(name) > -1) {
+              // 중복된 파일이 1개일 경우
+              if (savedName.split("_")[1] === undefined) {
+                numArr.push(0);
                 continue;
               }
-              number.push(onlyName.split("_")[1]);
+              // 파일명 끝 숫자만 배열에 넣기
+              numArr.push(savedName.split("_")[1]);
             }
           }
           uploadFileName =
-            splitAddedFileName[0] +
-            "_" +
-            (Math.max.apply(null, number) + 1) +
-            "." +
-            splitAddedFileName[1];
-        } else {
-          uploadFileName = addedFileName;
+            name + "_" + (Math.max.apply(null, numArr) + 1) + "." + extension;
+        }
+        // 파일명이 없는 경우
+        else {
+          uploadFileName = file;
         }
 
-        file.path = __dirname + `\\uploads\\${uploadFileName}`;
+        uploadFile.path = __dirname + `\\uploads\\${uploadFileName}`;
       },
     },
     multipart: true,

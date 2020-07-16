@@ -195,7 +195,34 @@ DELETE /api/portfolios/:id
 export const remove = async (ctx) => {
   const { id } = ctx.params;
   try {
+    const originalPortfolio = await Portfolio.findOne({ id: id });
+
+    fs.unlink(
+      path.join(__dirname, "../../uploads", originalPortfolio.thumbImage.url),
+      (err) => {
+        if (err) throw err;
+        console.log(
+          "ThumbImage -",
+          originalPortfolio.thumbImage.url,
+          "deleted"
+        );
+      }
+    );
+
+    fs.unlink(
+      path.join(__dirname, "../../uploads", originalPortfolio.contentImage.url),
+      (err) => {
+        if (err) throw err;
+        console.log(
+          "ContentImage -",
+          originalPortfolio.contentImage.url,
+          "deleted"
+        );
+      }
+    );
+
     await Portfolio.deleteOne({ id: id });
+
     ctx.status = 204; // No Content
   } catch (e) {
     ctx.throw(500, e);
@@ -296,12 +323,17 @@ export const update = async (ctx) => {
 
   try {
     const originalPortfolio = await Portfolio.findOne({ id: requestBody.id });
+
     addedThumbImage &&
       fs.unlink(
         path.join(__dirname, "../../uploads", originalPortfolio.thumbImage.url),
         (err) => {
           if (err) throw err;
-          console.log("file deleted");
+          console.log(
+            "ThumbImage -",
+            originalPortfolio.thumbImage.url,
+            "deleted"
+          );
         }
       );
 
@@ -314,7 +346,11 @@ export const update = async (ctx) => {
         ),
         (err) => {
           if (err) throw err;
-          console.log("file deleted");
+          console.log(
+            "ContentImag - ",
+            originalPortfolio.contentImage.url,
+            "deleted"
+          );
         }
       );
 
