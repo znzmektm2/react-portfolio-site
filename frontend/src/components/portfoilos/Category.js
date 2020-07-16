@@ -61,9 +61,15 @@ const Category = ({
     return <div>에러가 발생했습니다.</div>;
   }
 
-  // 로딩중이거나, 아직 데이터가 없을 시
-  if (loading || !categories) {
-    return <div>데이터가 없습니다.</div>;
+  if (!categories) {
+    // 로딩중이면서 카테고리가 없을 시
+    if (loading) {
+      return null;
+    }
+    // 로딩중이 아니면서 카테고리가 없을 시
+    if (!loading) {
+      return <div>데이터가 없습니다.</div>;
+    }
   }
 
   return (

@@ -35,7 +35,8 @@ const WritePortfolioContainer = ({ history }) => {
     portfolio,
     portfolioError,
     originalPortfolioId,
-  } = useSelector(({ write }) => ({
+    user,
+  } = useSelector(({ write, user }) => ({
     id: write.id,
     hasId: write.hasId,
     client: write.client,
@@ -58,6 +59,7 @@ const WritePortfolioContainer = ({ history }) => {
     portfolio: write.portfolio,
     portfolioError: write.portfolioError,
     originalPortfolioId: write.originalPortfolioId,
+    user: user.user,
   }));
 
   const [thumbImage, setThumbImage] = useState("");
@@ -115,6 +117,9 @@ const WritePortfolioContainer = ({ history }) => {
   };
 
   useEffect(() => {
+    if (!user) {
+      history.push("/portfolios");
+    }
     if (!originalPortfolioId) {
       dispatch(initialize());
     }
