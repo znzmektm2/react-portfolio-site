@@ -45,15 +45,14 @@ app.use(
             const savedFile = fileList[index];
             const splitSavedFile = savedFile.split(".");
             const savedName = splitSavedFile[0];
-            // 파일명이 포함되는 경우
-            if (savedName.indexOf(name) > -1) {
-              // 중복된 파일이 1개일 경우
-              if (savedName.split("_")[1] === undefined) {
-                numArr.push(0);
-                continue;
-              }
+            // 중첩된 파일명이 여러개일 경우
+            if (savedName.indexOf(name + "_") > -1) {
               // 파일명 끝 숫자만 배열에 넣기
               numArr.push(savedName.split("_")[1]);
+            }
+            // 중첩된 파일명이 1개일 경우
+            else {
+              numArr.push(0);
             }
           }
           uploadFileName =

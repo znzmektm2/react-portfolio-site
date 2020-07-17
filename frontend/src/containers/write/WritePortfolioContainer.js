@@ -126,14 +126,15 @@ const WritePortfolioContainer = ({ history }) => {
 
     if (portfolio) {
       history.push(`/portfolio/${portfolio.id}`);
-      return () => {
-        dispatch(initialize());
-      };
     }
     if (portfolioError) {
       console.log(portfolioError);
     }
-  }, [dispatch, history, portfolio, portfolioError, originalPortfolioId]);
+
+    return () => {
+      dispatch(initialize());
+    };
+  }, [dispatch, user, history, portfolio, portfolioError, originalPortfolioId]);
   return (
     <WritePortfolio
       onChangeField={onChangeField}

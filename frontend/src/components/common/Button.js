@@ -3,10 +3,7 @@ import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
 const buttonStyle = css`
-  &:first-child {
-    margin-left: 0;
-  }
-  margin: 0.5rem;
+  margin: 0.5rem 0;
   line-height: 1.5rem;
   vertical-align: middle;
   border: none;
@@ -20,6 +17,9 @@ const buttonStyle = css`
   background: #aaa;
   &:hover {
     background: #ddd;
+  }
+  & + & {
+    margin-left: 1rem;
   }
 `;
 
