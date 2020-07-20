@@ -118,7 +118,7 @@ const WritePortfolioContainer = ({ history }) => {
 
   useEffect(() => {
     if (!user) {
-      history.push("/portfolios");
+      history.go(-1);
     }
     if (!originalPortfolioId) {
       dispatch(initialize());
@@ -164,6 +164,7 @@ const WritePortfolioContainer = ({ history }) => {
       portfolioError={portfolioError}
       originalPortfolioId={originalPortfolioId}
       isEdit={!!originalPortfolioId}
+      user={user}
     />
   );
 };

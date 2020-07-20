@@ -42,6 +42,7 @@ const WritePortfolio = ({
   onPublish,
   portfolioError,
   originalPortfolioId,
+  user,
 }) => {
   const onChange = (e) => {
     const name = e.target.name;
@@ -121,6 +122,10 @@ const WritePortfolio = ({
     }
     return <span className="green">아이디 사용가능</span>;
   };
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <WritePortfolioBlock>

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const TitleBlock = styled.div`
+  margin: 20rem 0;
   padding: 4rem 0;
   text-align: center;
   h2 {

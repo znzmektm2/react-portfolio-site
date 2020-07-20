@@ -134,6 +134,8 @@ GET /api/portfolios?skill=JavaScript&web=true
 export const list = async (ctx) => {
   const page = parseInt(ctx.query.page || "1", 10);
 
+  console.log("page ", page);
+
   if (page < 1) {
     ctx.status = 400; // Bad Request
     return;
@@ -157,7 +159,7 @@ export const list = async (ctx) => {
       : {};
 
   try {
-    const listLimit = 20; // 보이는 개수 설정
+    const listLimit = 6; // 보이는 개수 설정
     const portfolios = await Portfolio.find(query)
       .sort({ _id: -1 }) // 내림차순 정렬
       .limit(listLimit) // 보이는 개수 제한

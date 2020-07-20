@@ -8,7 +8,6 @@ import * as portfoliosAPI from "./../lib/api/portfolios";
 const [CATEGORY, CATEGORY_SUCCESS, CATEGORY_FAILURE] = createRequestActionTypes(
   "portfolios/CATEGORY"
 );
-
 const [
   PORTFOLIOS,
   PORTFOLIOS_SUCCESS,
@@ -18,10 +17,11 @@ const [
 export const category = createAction(CATEGORY);
 export const portfolios = createAction(
   PORTFOLIOS,
-  ({ skill, web, singlePage }) => ({
+  ({ skill, web, singlePage, page }) => ({
     skill,
     web,
     singlePage,
+    page,
   })
 );
 
@@ -34,6 +34,8 @@ export function* portfoliosSaga() {
 }
 
 const initialState = {
+  scrollTop: 0,
+  scrollTo: false,
   category: null,
   categoryError: null,
   portfolios: null,
