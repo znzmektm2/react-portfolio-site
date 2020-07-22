@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Category from "./../../components/portfoilos/Category";
-import { category } from "../../modules/portfolios";
+import { category, initializePortfolios } from "../../modules/portfolios";
 import { withRouter } from "react-router-dom";
 
 const CategoryContainer = ({ history }) => {
@@ -27,8 +27,9 @@ const CategoryContainer = ({ history }) => {
           ? [...skillCheckbox, thisValue]
           : skillCheckbox.filter((c) => c !== thisValue)
       );
+      dispatch(initializePortfolios());
     },
-    [skillCheckbox]
+    [skillCheckbox, dispatch]
   );
 
   // 타입 체크박스 클릭시
@@ -42,8 +43,9 @@ const CategoryContainer = ({ history }) => {
           ? [...typeCheckbox, thisValue]
           : typeCheckbox.filter((c) => c !== thisValue)
       );
+      dispatch(initializePortfolios());
     },
-    [typeCheckbox]
+    [typeCheckbox, dispatch]
   );
 
   useEffect(() => {

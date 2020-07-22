@@ -6,7 +6,6 @@ const AdminForm = ({ password, onChange, onSubmit, onLogout, user, error }) => {
     <div>
       {user ? (
         <div>
-          <Button to="/home">홈으로 이동</Button>
           <Button onClick={onLogout}>로그아웃</Button>
         </div>
       ) : (

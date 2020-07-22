@@ -15,7 +15,7 @@ export const removePortFolio = (id) => client.delete(`/api/portfolios/${id}`);
 
 export const category = () => client.get("/api/portfolios/category");
 
-export const list = ({ skill, web, singlePage, page }) => {
+export const list = ({ skill, web, singlePage, page } = {}) => {
   const queryString = qs.stringify({ skill, web, singlePage, page });
   return client.get(`/api/portfolios?${queryString}`);
 };

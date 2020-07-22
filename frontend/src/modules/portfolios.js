@@ -13,6 +13,8 @@ const [
   PORTFOLIOS_SUCCESS,
   PORTFOLIOS_FAILURE,
 ] = createRequestActionTypes("portfolios/PORTFOLIOS");
+const INITIALIZE_PORTFOLOIOS = "portfolios/INITIALIZE_PORTFOLOIOS";
+const CURRENT_PAGE = "portfolios/CURRENT_PAGE";
 
 export const category = createAction(CATEGORY);
 export const portfolios = createAction(
@@ -23,6 +25,11 @@ export const portfolios = createAction(
     singlePage,
     page,
   })
+);
+export const initializePortfolios = createAction(INITIALIZE_PORTFOLOIOS);
+export const currentPage = createAction(
+  CURRENT_PAGE,
+  (currentPage) => currentPage
 );
 
 const categorySaga = createRequestSaga(CATEGORY, portfoliosAPI.category);
@@ -38,8 +45,9 @@ const initialState = {
   scrollTo: false,
   category: null,
   categoryError: null,
-  portfolios: null,
+  portfolios: [],
   portfoliosError: null,
+  currentPage: 1,
   lastPage: 1,
 };
 
@@ -54,15 +62,28 @@ export default handleActions(
       ...state,
       categoryError,
     }),
-    [PORTFOLIOS_SUCCESS]: (state, { payload: portfolios, meta: response }) => ({
+    [PORTFOLIOS_SUCCESS]: (state, { payload: portfolio, meta: response }) => ({
       ...state,
       portfoliosError: null,
-      portfolios,
+      portfolios: state.portfolios
+        .concat(portfolio)
+        .reduce(
+          (acc, cur) => [...acc.filter((obj) => obj.id !== cur.id), cur],
+          []
+        ),
       lastPage: parseInt(response.headers["last-page"], 10),
     }),
     [PORTFOLIOS_FAILURE]: (state, { payload: portfoliosError }) => ({
       ...state,
       portfoliosError,
+    }),
+    [INITIALIZE_PORTFOLOIOS]: (state) => ({
+      ...state,
+      portfolios: [],
+    }),
+    [CURRENT_PAGE]: (state, { payload: currentPage }) => ({
+      ...state,
+      currentPage,
     }),
   },
   initialState
