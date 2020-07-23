@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const CategoryBlock = styled.div`
@@ -52,11 +52,22 @@ const CategoryBlock = styled.div`
 
 const Category = ({
   categories,
+  skillCheckbox,
+  typeCheckbox,
   error,
   loading,
   clickSkillCheckbox,
   clickTypeCheckbox,
 }) => {
+  useEffect(() => {
+    const skill = Array.from(document.getElementsByClassName("skill"));
+    const type = Array.from(document.getElementsByClassName("type"));
+    // skill.map((m) => {
+    //   m.checked = true;
+    //   console.log(m);
+    // });
+  }, [categories]);
+
   if (error) {
     return <div>에러가 발생했습니다.</div>;
   }
@@ -72,6 +83,8 @@ const Category = ({
     }
   }
 
+  document.getElementsByClassName("lazy");
+
   return (
     <>
       <CategoryBlock>
@@ -83,6 +96,7 @@ const Category = ({
                 name={category}
                 value={`${category}`}
                 onClick={clickSkillCheckbox}
+                className="skillInput"
               />
               <label htmlFor={category}>{category}</label>
             </li>
@@ -92,20 +106,22 @@ const Category = ({
           <li key="web">
             <input
               type="checkbox"
-              name="web"
-              value="web"
+              name="WEB"
+              value="WEB"
               onClick={clickTypeCheckbox}
+              className="typeInput"
             />
-            <label htmlFor="web">WEB</label>
+            <label htmlFor="WEB">WEB</label>
           </li>
           <li key="singlepage">
             <input
               type="checkbox"
-              name="singlePage"
-              value="singlePage"
+              name="SinglePage"
+              value="SinglePage"
               onClick={clickTypeCheckbox}
+              className="typeInput"
             />
-            <label htmlFor="singlePage">SinglePage</label>
+            <label htmlFor="SinglePage">SinglePage</label>
           </li>
         </ul>
       </CategoryBlock>
