@@ -8,6 +8,7 @@ import * as portfoliosAPI from "./../lib/api/portfolios";
 const [CATEGORY, CATEGORY_SUCCESS, CATEGORY_FAILURE] = createRequestActionTypes(
   "portfolios/CATEGORY"
 );
+const INITIALIZE_CHECKBOX = "portfolios/INITIALIZE_CHECKBOX";
 const CHECKED_CATEGORY = "portfolios/CHECKED_CATEGORY";
 const [
   PORTFOLIOS,
@@ -22,6 +23,7 @@ export const checkedCategory = createAction(
   CHECKED_CATEGORY,
   ({ key, value }) => ({ key, value })
 );
+export const initializeCheckbox = createAction(INITIALIZE_CHECKBOX);
 export const portfolios = createAction(
   PORTFOLIOS,
   ({ skill, web, singlePage, page }) => ({
@@ -46,8 +48,6 @@ export function* portfoliosSaga() {
 }
 
 const initialState = {
-  scrollTop: 0,
-  scrollTo: false,
   category: null,
   categoryError: null,
   skillCheckbox: [],
@@ -73,6 +73,11 @@ export default handleActions(
       ...state,
       [key]: value,
     }),
+    [INITIALIZE_CHECKBOX]: (state) => ({
+      ...state,
+      skillCheckbox: [],
+      typeCheckbox: [],
+    }),
     [PORTFOLIOS_SUCCESS]: (state, { payload: portfolio, meta: response }) => ({
       ...state,
       portfoliosError: null,
@@ -91,7 +96,9 @@ export default handleActions(
     [INITIALIZE_PORTFOLOIOS]: (state) => ({
       ...state,
       portfolios: [],
+      portfoliosError: null,
       currentPage: 1,
+      lastPage: 1,
     }),
     [CURRENT_PAGE]: (state, { payload: currentPage }) => ({
       ...state,

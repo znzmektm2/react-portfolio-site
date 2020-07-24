@@ -145,6 +145,7 @@ export const list = async (ctx) => {
     skillArray = skill.split(",");
   }
 
+  console.log(skill, web, singlePage);
   const query =
     skill || web || singlePage
       ? {
@@ -177,7 +178,6 @@ export const list = async (ctx) => {
     // Last-Page라는 커스텀 HTTP 헤더를 설정
     ctx.set("Last-Page", Math.ceil(portfolioCount / listLimit));
     ctx.body = portfolioList;
-    console.log("portfolioList--------", portfolioList);
   } catch (e) {
     ctx.throw(500, e);
   }

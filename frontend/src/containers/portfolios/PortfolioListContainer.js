@@ -6,26 +6,26 @@ import PortfolioList from "./../../components/portfoilos/PortfolioList";
 import useIntersectionObserver from "./../../lib/useIntersectionObserver";
 import {
   portfolios,
-  initializePortfolios,
   currentPage,
+  initializePortfolios,
 } from "../../modules/portfolios";
 
-const PortfolioListContainer = ({ location }) => {
+const PortfolioListContainer = ({ location, history }) => {
   const dispatch = useDispatch();
   const targetRef = useRef(null);
   const {
     portfolioList,
     portfoliosError,
     portfolioLoading,
-    crtPage,
+    page,
     lastPage,
     user,
   } = useSelector(({ portfolios, loading, user }) => ({
     portfolioList: portfolios.portfolios,
     portfoliosError: portfolios.portfoliosError,
     portfolioLoading: loading["portfolios/PORTFOLIOS"],
+    page: portfolios.currentPage,
     lastPage: portfolios.lastPage,
-    crtPage: portfolios.currentPage,
     user: user.user,
   }));
 
@@ -49,37 +49,42 @@ const PortfolioListContainer = ({ location }) => {
 
   // 포트폴리오 API 호출
   const searchPortfolio = useCallback(() => {
-    dispatch(currentPage(1));
     loadPortfolio();
-  }, [dispatch, loadPortfolio]);
-
-  // 뒤로가기 시 데이터를 유지하기 위해 처음에만 데이터를 불러옴
-  useEffect(() => {
-    if (!portfolioList.length) {
-      searchPortfolio();
-    }
-  }, [portfolioList]);
+  }, [loadPortfolio]);
 
   // 다음 페이지 포트폴리오 API 호츌
   const loadMorePortfolio = useCallback(async () => {
     if (portfolioList.length > 0) {
-      dispatch(currentPage(crtPage + 1));
-
-      loadPortfolio(crtPage + 1);
+      dispatch(currentPage(page + 1));
+      loadPortfolio(page + 1);
     }
-  }, [portfolioList]);
+  }, [dispatch, portfolioList.length, page, loadPortfolio]);
 
   // 맨 아래로 내렸을 때를 감지하는 이벤트
   useIntersectionObserver({
     target: targetRef.current,
     onIntersect: (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && !portfolioLoading && crtPage < lastPage) {
+        if (entry.isIntersecting && !portfolioLoading && page < lastPage) {
           loadMorePortfolio();
         }
       });
     },
   });
+
+  // 포트폴리오 메뉴 클릭시 포트폴리오 초기화
+  useEffect(() => {
+    if (!location.search && history.action === "PUSH") {
+      dispatch(initializePortfolios());
+    }
+  }, [location.search, history.action, dispatch]);
+
+  // 뒤로가기 시 포트폴리오 API 호출 막기
+  useEffect(() => {
+    if (!portfolioList.length) {
+      searchPortfolio();
+    }
+  }, [portfolioList.length, searchPortfolio]);
 
   return (
     <PortfolioList

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const CategoryBlock = styled.div`
@@ -52,22 +52,11 @@ const CategoryBlock = styled.div`
 
 const Category = ({
   categories,
-  skillCheckbox,
-  typeCheckbox,
   error,
   loading,
   clickSkillCheckbox,
   clickTypeCheckbox,
 }) => {
-  useEffect(() => {
-    const skill = Array.from(document.getElementsByClassName("skill"));
-    const type = Array.from(document.getElementsByClassName("type"));
-    // skill.map((m) => {
-    //   m.checked = true;
-    //   console.log(m);
-    // });
-  }, [categories]);
-
   if (error) {
     return <div>에러가 발생했습니다.</div>;
   }
@@ -106,22 +95,22 @@ const Category = ({
           <li key="web">
             <input
               type="checkbox"
-              name="WEB"
-              value="WEB"
+              name="web"
+              value="web"
               onClick={clickTypeCheckbox}
               className="typeInput"
             />
-            <label htmlFor="WEB">WEB</label>
+            <label htmlFor="web">Web</label>
           </li>
           <li key="singlepage">
             <input
               type="checkbox"
-              name="SinglePage"
-              value="SinglePage"
+              name="singlePage"
+              value="singlePage"
               onClick={clickTypeCheckbox}
               className="typeInput"
             />
-            <label htmlFor="SinglePage">SinglePage</label>
+            <label htmlFor="singlePage">SinglePage</label>
           </li>
         </ul>
       </CategoryBlock>
