@@ -8,8 +8,6 @@ import * as portfoliosAPI from "./../lib/api/portfolios";
 const [CATEGORY, CATEGORY_SUCCESS, CATEGORY_FAILURE] = createRequestActionTypes(
   "portfolios/CATEGORY"
 );
-const INITIALIZE_CHECKBOX = "portfolios/INITIALIZE_CHECKBOX";
-const CHECKED_CATEGORY = "portfolios/CHECKED_CATEGORY";
 const [
   PORTFOLIOS,
   PORTFOLIOS_SUCCESS,
@@ -19,11 +17,6 @@ const INITIALIZE_PORTFOLOIOS = "portfolios/INITIALIZE_PORTFOLOIOS";
 const CURRENT_PAGE = "portfolios/CURRENT_PAGE";
 
 export const category = createAction(CATEGORY);
-export const checkedCategory = createAction(
-  CHECKED_CATEGORY,
-  ({ key, value }) => ({ key, value })
-);
-export const initializeCheckbox = createAction(INITIALIZE_CHECKBOX);
 export const portfolios = createAction(
   PORTFOLIOS,
   ({ skill, web, singlePage, page }) => ({
@@ -50,8 +43,6 @@ export function* portfoliosSaga() {
 const initialState = {
   category: null,
   categoryError: null,
-  skillCheckbox: [],
-  typeCheckbox: [],
   portfolios: [],
   portfoliosError: null,
   currentPage: 1,
@@ -68,15 +59,6 @@ export default handleActions(
     [CATEGORY_FAILURE]: (state, { payload: categoryError }) => ({
       ...state,
       categoryError,
-    }),
-    [CHECKED_CATEGORY]: (state, { payload: { key, value } }) => ({
-      ...state,
-      [key]: value,
-    }),
-    [INITIALIZE_CHECKBOX]: (state) => ({
-      ...state,
-      skillCheckbox: [],
-      typeCheckbox: [],
     }),
     [PORTFOLIOS_SUCCESS]: (state, { payload: portfolio, meta: response }) => ({
       ...state,

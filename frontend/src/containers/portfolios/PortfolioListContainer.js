@@ -79,7 +79,7 @@ const PortfolioListContainer = ({ location, history }) => {
     }
   }, [location.search, history.action, dispatch]);
 
-  // 뒤로가기 시 포트폴리오 API 호출 막기
+  // 포트폴리오가 없을 경우 API 호출(뒤로가기 시 포트폴리오 API 호출 막기)
   useEffect(() => {
     if (!portfolioList.length) {
       searchPortfolio();
