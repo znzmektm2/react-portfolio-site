@@ -16,10 +16,6 @@ const CategoryContainer = ({ history, location }) => {
       loading: loading["portfolios/CATEGORY"],
     })
   );
-  const skillInputArr = Array.from(
-    document.getElementsByClassName("skillInput")
-  );
-  const typeInputArr = Array.from(document.getElementsByClassName("typeInput"));
 
   // 스킬 체크박스 클릭 이벤트
   const clickSkillCheckbox = useCallback(
@@ -73,7 +69,7 @@ const CategoryContainer = ({ history, location }) => {
       ? typeCheckbox.map((t) => `&${t}=true`).join("")
       : "";
 
-    if (query.length !== 0) {
+    if (!!skillCheckbox || !!typeCheckbox) {
       history.push(`/portfolios?${query.substring(1)}`);
     }
   }, [skillCheckbox, typeCheckbox, history]);
@@ -105,6 +101,7 @@ const CategoryContainer = ({ history, location }) => {
     }
   }, [location.search, history.action]);
 
+  // 체크박스 체크하는 함수
   const applyCheckbox = useCallback((inputArr, queryArr) => {
     return inputArr.map((input) => {
       input.checked = false;
@@ -119,6 +116,12 @@ const CategoryContainer = ({ history, location }) => {
     const { skill, web, singlePage } = qs.parse(location.search, {
       ignoreQueryPrefix: true,
     });
+    const skillInputArr = Array.from(
+      document.getElementsByClassName("skillInput")
+    );
+    const typeInputArr = Array.from(
+      document.getElementsByClassName("typeInput")
+    );
 
     applyCheckbox(skillInputArr, !!skill ? skill.split(",") : []);
     applyCheckbox(typeInputArr, [!!web && "web", !!singlePage && "singlePage"]);
