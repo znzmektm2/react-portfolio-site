@@ -7,12 +7,12 @@ import PortfoliosPage from "./pages/PortfoliosPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import AboutPage from "./pages/AboutPage";
 import HomePage from "./pages/HomePage";
-import Menu from "./components/common/Menu";
+import Header from "./components/common/Header";
 
 const App = () => {
   return (
     <div>
-      <Menu />
+      <Header />
       <Route component={HomePage} path={["/home", "/"]} exact />
       <Route component={PortfoliosPage} path="/portfolios" />
       <Route component={PortfolioPage} path="/portfolio/:id" />

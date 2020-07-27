@@ -2,18 +2,15 @@
   font-family: "goku";
   font-weight: 400;
   font-style: normal;
-  src: url(/fonts/Goku.eot);
-  src: url(/fonts/Goku.eot?#iefix) format("embedded-opentype"),
-    url(/fonts/Goku.woff2) format("woff2"), url(/fonts/Goku.woff) format("woff"),
+  src: url(/fonts/Goku.woff2) format("woff2"),
+    url(/fonts/Goku.woff) format("woff"),
     url(/fonts/Goku.ttf) format("truetype");
 }
 @font-face {
   font-family: "KoPub Batang";
   font-weight: 400;
   font-style: normal;
-  src: url(/fonts/KoPubBatang-Regular.eot);
-  src: url(/fonts/KoPubBatang-Regular?#iefix) format("embedded-opentype"),
-    url(/fonts/KoPubBatang-Regular.woff2) format("woff2"),
+  src: url(/fonts/KoPubBatang-Regular.woff2) format("woff2"),
     url(/fonts/KoPubBatang-Regular.woff) format("woff"),
     url(/fonts/KoPubBatang-Regular.ttf) format("truetype");
 }
@@ -21,9 +18,7 @@
   font-family: "Roboto";
   font-weight: 400;
   font-style: normal;
-  src: url(/fonts/Roboto-Regular.eot);
-  src: url(/fonts/Roboto-Regular?#iefix) format("embedded-opentype"),
-    url(/fonts/Roboto-Regular.woff2) format("woff2"),
+  src: url(/fonts/Roboto-Regular.woff2) format("woff2"),
     url(/fonts/Roboto-Regular.woff) format("woff"),
     url(/fonts/Roboto-Regular.ttf) format("truetype");
 }
@@ -31,11 +26,17 @@
   font-family: "trump-gothic-pro";
   font-weight: 400;
   font-style: normal;
-  src: url(/fonts/TrumpGothicPro.eot);
-  src: url(/fonts/TrumpGothicPro?#iefix) format("embedded-opentype"),
-    url(/fonts/TrumpGothicPro.woff2) format("woff2"),
+  src: url(/fonts/TrumpGothicPro.woff2) format("woff2"),
     url(/fonts/TrumpGothicPro.woff) format("woff"),
     url(/fonts/TrumpGothicPro.ttf) format("truetype");
+}
+@font-face {
+  font-family: "LibreBarcode128Text-Regular";
+  font-weight: 400;
+  font-style: normal;
+  src: url(/fonts/LibreBarcode128Text-Regular.woff2) format("woff2"),
+    url(/fonts/LibreBarcode128Text-Regular.woff) format("woff"),
+    url(/fonts/LibreBarcode128Text-Regular.ttf) format("truetype");
 }
 
 html {
@@ -44,6 +45,10 @@ html {
   overflow-x: hidden;
 }
 body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   min-height: 100%;
   font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
     "Droid Sans", "Helvetica Neue", sans-serif;
@@ -110,5 +115,28 @@ em {
 }
 
 #root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   min-height: 100%;
+}
+
+.ease-in-out_03s {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.ease-in-out_02s {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+.translate1 {
+  -webkit-transform: translate(0, -100%);
+  -moz-transform: translate(0, -100%);
+  -ms-transform: translate(0, -100%);
+  transform: translate(0, -100%);
 }

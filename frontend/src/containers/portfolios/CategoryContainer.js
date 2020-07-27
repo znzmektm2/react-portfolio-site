@@ -103,7 +103,7 @@ const CategoryContainer = ({ history, location }) => {
 
   // 체크박스 체크하는 함수
   const applyCheckbox = useCallback((inputArr, queryArr) => {
-    return inputArr.map((input) => {
+    inputArr.map((input) => {
       input.checked = false;
       return queryArr.map(
         (query) => input.value === query && (input.checked = true)

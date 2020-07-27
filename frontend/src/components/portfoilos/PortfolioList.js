@@ -29,12 +29,16 @@ const PortfolioListBlock = styled.div`
       overflow: hidden;
       box-sizing: border-box;
       opacity: 0;
-      -webkit-transition: all 0.7s ease-in-out;
-      -moz-transition: all 0.7s ease-in-out;
-      -o-transition: all 0.7s ease-in-out;
-      transition: all 0.7s ease-in-out;
+      transform: translate(0px, 60px);
+      -ms-transform: translate(0px, 60px);
+      -webkit-transition: all 1s ease-in-out;
+      -moz-transition: all 1s ease-in-out;
+      -o-transition: all 1s ease-in-out;
+      transition: all 1s ease-in-out;
       &.appear {
         opacity: 1;
+        transform: translate(0px, 0px);
+        -ms-transform: translate(0px, 0px);
       }
       a {
         position: relative;

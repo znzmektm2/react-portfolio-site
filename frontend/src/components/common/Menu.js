@@ -1,59 +1,36 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import styled from "styled-components";
+import Responsive from "./Responsive";
 
-const MenuBlock = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  ul {
-    li {
-      font-family: "goku";
-      font-size: "2rem";
-    }
-  }
-`;
-
-const Menu = () => {
-  const activeStyle = {
-    color: "#aaa",
-  };
-
+const Menu = ({ handleClick }) => {
   return (
-    <MenuBlock>
-      <ul>
-        <li>
-          <NavLink exact to="/" activeStyle={activeStyle}>
-            HOME
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/about" activeStyle={activeStyle}>
-            ABOUT
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/portfolios" activeStyle={activeStyle}>
-            PORTFOLIOS
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/write" activeStyle={activeStyle}>
-            WRITE
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/design" activeStyle={activeStyle}>
-            DESIGN
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/admin" activeStyle={activeStyle}>
-            ADMIN
-          </NavLink>
-        </li>
-      </ul>
-    </MenuBlock>
+    <div className="menu">
+      <div className="bg"></div>
+      <Responsive className="navLinkWrap">
+        <ul>
+          <li>
+            <NavLink exact to="/" onClick={handleClick}>
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/about" onClick={handleClick}>
+              About
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/portfolios" onClick={handleClick}>
+              Portfolios
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/design" onClick={handleClick}>
+              Design
+            </NavLink>
+          </li>
+        </ul>
+      </Responsive>
+    </div>
   );
 };
 
