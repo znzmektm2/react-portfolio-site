@@ -11,7 +11,7 @@ import Header from "./components/common/Header";
 
 const App = () => {
   return (
-    <div>
+    <>
       <Header />
       <Route component={HomePage} path={["/home", "/"]} exact />
       <Route component={PortfoliosPage} path="/portfolios" />
@@ -20,7 +20,7 @@ const App = () => {
       <Route component={WritePage} path="/write" />
       <Route component={DesignPage} path="/design" />
       <Route component={AdminPage} path="/admin" />
-    </div>
+    </>
   );
 };
 

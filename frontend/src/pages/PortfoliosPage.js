@@ -6,7 +6,7 @@ import PortfolioListContainer from "../containers/portfolios/PortfolioListContai
 const PortfoliosPage = () => {
   return (
     <>
-      <PageTitle>Portfolios</PageTitle>
+      <PageTitle subTitle="All about my">Portfolios</PageTitle>
       <CategoryContainer />
       <PortfolioListContainer />
     </>

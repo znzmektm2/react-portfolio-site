@@ -5,7 +5,7 @@ import PortfolioContainer from "../containers/portfolio/PortfolioContainer";
 const PortfolioPage = () => {
   return (
     <>
-      <PageTitle>Portfolio</PageTitle>
+      <PageTitle subTitle="All about my">Portfolio</PageTitle>
       <PortfolioContainer />
     </>
   );

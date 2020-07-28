@@ -4,7 +4,7 @@ import PageTitle from "./../components/common/PageTitle";
 const DesignPage = () => {
   return (
     <>
-      <PageTitle>Design</PageTitle>
+      <PageTitle subTitle="A small selection of my">Design</PageTitle>
     </>
   );
 };

@@ -5,7 +5,7 @@ import WritePortfolioContainer from "./../containers/write/WritePortfolioContain
 const WritePage = () => {
   return (
     <>
-      <PageTitle>Write</PageTitle>
+      <PageTitle subTitle="Write">Write</PageTitle>
       <WritePortfolioContainer />
     </>
   );

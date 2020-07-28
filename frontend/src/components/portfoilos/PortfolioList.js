@@ -3,13 +3,10 @@ import styled from "styled-components";
 import Button from "../common/Button";
 import useIO from "./../../lib/useIO";
 import ImageList from "./../common/ImageList";
+import Responsive from "./../common/Responsive";
 
 const PortfolioListBlock = styled.div`
   padding: 2rem 0 10rem;
-  .pageWrapper {
-    margin: 0 auto;
-    width: 1200px;
-  }
   .writeButtonArea {
     overflow: hidden;
     a {
@@ -24,8 +21,8 @@ const PortfolioListBlock = styled.div`
       display: inline-block;
       vertical-align: middle;
       padding: 1rem;
-      width: 33.33%;
-      height: 410.63px;
+      width: 25%;
+      height: 390.5px;
       overflow: hidden;
       box-sizing: border-box;
       opacity: 0;
@@ -113,7 +110,7 @@ const PortfolioList = forwardRef((props, ref) => {
 
   return (
     <PortfolioListBlock>
-      <div className="pageWrapper">
+      <Responsive>
         {user && (
           <div className="writeButtonArea">
             <Button to="/write">새 글 작성하기</Button>
@@ -132,9 +129,8 @@ const PortfolioList = forwardRef((props, ref) => {
             />
           ))}
         </ul>
-      </div>
-      {/* {portfolioLoading && <div>로딩중 입니다..</div>} */}
-      <div ref={ref} />
+        <div ref={ref} />
+      </Responsive>
     </PortfolioListBlock>
   );
 });
