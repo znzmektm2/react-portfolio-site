@@ -6,7 +6,7 @@ const ImageList = ({ id, client, src, srcSet, alt, isLazy = false }) => (
   <>
     <li className={isLazy ? "lazy" : ""}>
       <Link to={`/portfolio/${id}`}>
-        <span>{client}</span>
+        <div className="barcodeTxt">{id}</div>
         <img
           src={src}
           alt={alt}
@@ -14,6 +14,11 @@ const ImageList = ({ id, client, src, srcSet, alt, isLazy = false }) => (
           data-srcset={srcSet}
           data-src={src}
         />
+        <div className="listText">
+          <h3>{id}</h3>
+          <h4>{client}</h4>
+          <span>VIEW MORE</span>
+        </div>
       </Link>
     </li>
   </>

@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const ResposiveBlock = styled.div`
-  position: relative;
   margin: 0 auto;
   padding: 0 125px;
   max-width: 1780px;

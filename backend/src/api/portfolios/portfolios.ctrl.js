@@ -119,7 +119,6 @@ export const write = async (ctx) => {
     thumbImage,
     contentImage,
   });
-  console.log("portfolio ", portfolio);
   try {
     await portfolio.save();
     ctx.body = portfolio;
@@ -145,7 +144,6 @@ export const list = async (ctx) => {
     skillArray = skill.split(",");
   }
 
-  console.log(skill, web, singlePage);
   const query =
     skill || web || singlePage
       ? {
@@ -158,7 +156,7 @@ export const list = async (ctx) => {
       : {};
 
   try {
-    const listLimit = 4; // 보이는 개수 설정
+    const listLimit = 6; // 보이는 개수 설정
     const portfolios = await Portfolio.find(query)
       .sort({ _id: -1 }) // 내림차순 정렬
       .limit(listLimit) // 보이는 개수 제한
@@ -277,6 +275,7 @@ export const update = async (ctx) => {
   // 검증 실패인 경우 에러 처리
   const requestBody = ctx.request.body;
   const result = schema.validate(requestBody);
+
   if (result.error) {
     ctx.status = 400; // Bad Request
     ctx.body = result.error;
@@ -323,7 +322,9 @@ export const update = async (ctx) => {
   };
 
   try {
-    const originalPortfolio = await Portfolio.findOne({ id: requestBody.id });
+    const originalPortfolio = await Portfolio.findOne({
+      id: id,
+    });
 
     addedThumbImage &&
       fs.unlink(

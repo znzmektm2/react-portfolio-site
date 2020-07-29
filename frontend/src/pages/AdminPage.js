@@ -4,10 +4,10 @@ import PageTitle from "./../components/common/PageTitle";
 
 const AdminPage = () => {
   return (
-    <>
+    <div className="page">
       <PageTitle subTitle="Admin">Admin</PageTitle>
       <AdminContainer />
-    </>
+    </div>
   );
 };
 

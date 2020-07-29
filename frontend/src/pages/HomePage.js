@@ -3,7 +3,7 @@ import PageTitle from "./../components/common/PageTitle";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="page">
       <PageTitle>Home</PageTitle>
     </div>
   );

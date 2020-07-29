@@ -91,7 +91,6 @@ export default handleActions(
     }),
     [WRITE_PORTFOLIO_FAILURE]: (state, { payload: portfolioError }) => ({
       ...state,
-      portfolio: null,
       portfolioError,
     }),
     [CHECK_ID]: (state) => ({

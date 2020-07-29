@@ -6,60 +6,135 @@ import ImageList from "./../common/ImageList";
 import Responsive from "./../common/Responsive";
 
 const PortfolioListBlock = styled.div`
-  padding: 2rem 0 10rem;
+  padding: 4rem 0 10rem;
   .writeButtonArea {
     overflow: hidden;
     a {
       float: right;
+      margin-right: 0;
     }
   }
   ul {
-    margin: 0.5rem -1rem 5rem;
+    margin: 0.5rem -2rem 5rem 0;
     align-items: center;
     justify-content: center;
-    li {
+    > li {
       display: inline-block;
       vertical-align: middle;
-      padding: 1rem;
-      width: 25%;
-      height: 390.5px;
+      padding: 2rem;
+      width: 50%;
+      line-height: 0;
+      opacity: 0;
       overflow: hidden;
       box-sizing: border-box;
-      opacity: 0;
-      transform: translate(0px, 60px);
-      -ms-transform: translate(0px, 60px);
       -webkit-transition: all 1s ease-in-out;
       -moz-transition: all 1s ease-in-out;
       -o-transition: all 1s ease-in-out;
       transition: all 1s ease-in-out;
       &.appear {
         opacity: 1;
-        transform: translate(0px, 0px);
-        -ms-transform: translate(0px, 0px);
       }
       a {
         position: relative;
         width: 100%;
         height: 100%;
         color: #fff;
-        line-height: 0;
-        font-size: 0;
-        span {
+        border: 1px solid #e2e2e2;
+        &:after {
+          content: "";
+          display: block;
+          height: 0;
+          padding-bottom: 50%;
+        }
+        .barcodeTxt {
           position: absolute;
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          font-size: 1.5rem;
-          line-height: 5rem;
+          left: -34%;
+          top: -68.5%;
+          width: 50%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          font-family: "LibreBarcode128Text-Regular";
+          font-size: 1.8rem;
+          line-height: 3rem;
+          color: #ffffffeb;
+          letter-spacing: -0.5px;
           text-align: center;
-          background: rgba(0, 0, 0, 0.3);
+          transform: rotate(-45deg);
           z-index: 1;
+          &:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #364f611a;
+            z-index: -1;
+          }
         }
         img {
           position: absolute;
           top: 0;
           left: 0;
-          width: 100%;
+          width: 50%;
+        }
+        .listText {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 50%;
+          height: 100%;
+          padding: 3.5rem 2rem 2rem 2rem;
+          h3 {
+            position: relative;
+            display: inline-block;
+            font-family: "goku";
+            font-size: 3rem;
+            line-height: 3.1rem;
+            color: #354e60;
+            font-weight: 400;
+            letter-spacing: -1px;
+            :after {
+              content: "";
+              position: absolute;
+              left: 0;
+              bottom: -1.5rem;
+              width: 50%;
+              height: 3px;
+              background: #354e60;
+            }
+          }
+          h4 {
+            margin-top: 3rem;
+            font-family: "KoPub Batang", serif;
+            font-size: 1em;
+            line-height: 2rem;
+            color: #354e60;
+          }
+          span {
+            position: absolute;
+            right: 4rem;
+            bottom: 3rem;
+            width: 50%;
+            text-align: center;
+            font-family: "trump-gothic-pro";
+            font-size: 1rem;
+            line-height: 2.5em;
+            color: #181829;
+            letter-spacing: 2px;
+            background: #fff;
+            border: 1px solid;
+            border-image-slice: 1;
+            border-image-source: -webkit-linear-gradient(
+              -90deg,
+              #fd000077,
+              #ed193177,
+              #fd0c6877,
+              #cb018f77
+            );
+          }
         }
       }
     }
@@ -116,8 +191,7 @@ const PortfolioList = forwardRef((props, ref) => {
             <Button to="/write">새 글 작성하기</Button>
           </div>
         )}
-
-        <ul>
+        <ul className="portfolioList">
           {portfolioList.map((list) => (
             <ImageList
               key={list._id}

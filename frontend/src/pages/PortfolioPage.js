@@ -4,10 +4,9 @@ import PortfolioContainer from "../containers/portfolio/PortfolioContainer";
 
 const PortfolioPage = () => {
   return (
-    <>
-      <PageTitle subTitle="All about my">Portfolio</PageTitle>
+    <div className="page">
       <PortfolioContainer />
-    </>
+    </div>
   );
 };
 

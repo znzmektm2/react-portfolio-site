@@ -2,7 +2,6 @@ import React, { useState, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import Menu from "./Menu";
 import styled from "styled-components";
-import Responsive from "./Responsive";
 
 const HeaderBlock = styled.header`
   .logo {
@@ -33,10 +32,10 @@ const HeaderBlock = styled.header`
     border-image-slice: 1;
     border-image-source: -webkit-linear-gradient(
       -90deg,
-      #ff3000,
-      #ed0200,
-      #ff096c,
-      #d50082
+      #fd0000cc,
+      #ed1931cc,
+      #fd0c68cc,
+      #cb018fcc
     );
     overflow: hidden;
     z-index: 5;
@@ -47,7 +46,7 @@ const HeaderBlock = styled.header`
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(180deg, #ff3000, #ed0200, #ff096c, #d50082);
+      background: linear-gradient(180deg, #fd0000, #ed1931, #fd0c68, #cb018f);
       transform: translate3d(0, 105%, 0);
       opacity: 0;
     }
@@ -58,7 +57,7 @@ const HeaderBlock = styled.header`
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(180deg, #ff3000, #ed0200, #ff096c, #d50082);
+      background: linear-gradient(180deg, #fd0000, #ed1931, #fd0c68, #cb018f);
       transform: translate3d(0, -105%, 0);
       transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
       opacity: 1;
@@ -82,8 +81,8 @@ const HeaderBlock = styled.header`
     &:hover {
       cursor: pointer;
       &:before {
-        transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
         transform: translateZ(0);
+        transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
         opacity: 1;
       }
       &:after {
@@ -96,69 +95,9 @@ const HeaderBlock = styled.header`
       }
     }
   }
-  .menuWrap {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transform: translate3d(0, -100%, 0);
-    transition-delay: 0.8s;
-    z-index: 4;
-    .resposiveBlock {
-      padding: 50px 125px;
-      height: 100%;
-      .menu {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        ul {
-          li {
-            padding: 0.2rem 0;
-            overflow: hidden;
-            a {
-              position: relative;
-              font-family: "goku";
-              font-size: 4.6rem;
-              line-height: 5.4rem;
-              color: #fff;
-              transform: translate3d(0, -115%, 0);
-              transition-delay: 0.8s;
-              animation: 0.3s cubic-bezier(0.5, 0, 0.4, 1) 0s normal forwards 1
-                fadeOut;
-              @keyframes fadeOut {
-                0% {
-                  opacity: 1;
-                }
-                100% {
-                  opacity: 0;
-                }
-              }
-              &.active {
-                color: #ff1f44;
-                background: -webkit-linear-gradient(
-                  -90deg,
-                  #ff3000,
-                  #ed0200,
-                  #ff096c,
-                  #d50082
-                );
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
 
   .bg {
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 25%;
     height: 100%;
@@ -173,7 +112,7 @@ const HeaderBlock = styled.header`
       left: 0;
       width: 1px;
       height: 100%;
-      background: #aaa;
+      background: #c8c9b9;
       opacity: 0.15;
       transform: translate3d(0, -100%, 0);
       transition: transform 1.1s cubic-bezier(0.2, 0.9, 0.1, 1);
@@ -198,61 +137,72 @@ const HeaderBlock = styled.header`
   /* 메뉴 클릭시 */
   &.active {
     z-index: 5;
-    .menuWrap {
-      transform: translate3d(0, 0%, 0);
-      transition: transform 1.1s cubic-bezier(0.6, 0.1, 0.1, 1);
-      .resposiveBlock {
-        .menu {
-          ul {
-            li {
-              a {
-                /* opacity: 1; */
-                transform: translate3d(0, 0%, 0);
-                transition: transform 1.1s cubic-bezier(0.2, 0.5, 0.2, 1) 0.8s;
-                animation: 1s cubic-bezier(0.2, 0.5, 0.2, 1) 0.8s normal
-                  forwards 1 fadein;
-                @keyframes fadein {
-                  0% {
-                    opacity: 0;
-                  }
-                  100% {
-                    opacity: 1;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
     .logo {
       h1 {
         a {
-          color: #fff;
+          color: #c8c9b9;
         }
       }
     }
     .navBtn {
       div {
-        padding: 1.25rem 1.313rem;
+        padding: 1.344rem 1.313rem;
         span {
           background: #fff;
-          height: 2px;
+          height: 1px;
           width: 16px;
           &:nth-child(1) {
-            -webkit-transform: translateY(5px) rotate(45deg);
-            -ms-transform: translateY(5px) rotate(45deg);
-            -o-transform: translateY(5px) rotate(45deg);
-            transform: translateY(5px) rotate(45deg);
+            -webkit-transform: translateY(4px) rotate(45deg);
+            -ms-transform: translateY(4px) rotate(45deg);
+            -o-transform: translateY(4px) rotate(45deg);
+            transform: translateY(4px) rotate(45deg);
           }
           &:nth-child(2) {
             opacity: 0;
           }
           &:nth-child(3) {
-            -webkit-transform: translateY(-5px) rotate(-45deg);
-            -ms-transform: translateY(-5px) rotate(-45deg);
-            -o-transform: translateY(-5px) rotate(-45deg);
-            transform: translateY(-5px) rotate(-45deg);
+            -webkit-transform: translateY(-4px) rotate(-45deg);
+            -ms-transform: translateY(-4px) rotate(-45deg);
+            -o-transform: translateY(-4px) rotate(-45deg);
+            transform: translateY(-4px) rotate(-45deg);
+          }
+        }
+      }
+    }
+    .menu {
+      transform: translate3d(0, 0%, 0);
+      transition-delay: 1s;
+      .menuWrap {
+        ul.menuList {
+          li {
+            a {
+              transform: translate3d(0, 0%, 0);
+              transition: transform 1s cubic-bezier(0.165, 0.84, 0.44, 1) 1.2s;
+              animation: 0.8s ease 1.2s fadein;
+              @keyframes fadein {
+                0% {
+                  opacity: 0;
+                }
+                100% {
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+        .menuText {
+          ul {
+            transform: translate3d(0%, 0, 0);
+            transition: transform 1.1s cubic-bezier(0.165, 0.84, 0.44, 1) 1.1s;
+            animation: 1.1s ease 1.1s fadein;
+            @keyframes fadein {
+              0% {
+                opacity: 0;
+              }
+              100% {
+                opacity: 1;
+              }
+            }
           }
         }
       }
@@ -264,29 +214,34 @@ const HeaderBlock = styled.header`
         transform: translate3d(0px, 0%, 0px);
       }
       &.step1 {
-        transition: transform 1.1s cubic-bezier(0.9, 0.1, 0.4, 1);
+        transition: transform 1s cubic-bezier(0.7, 0.1, 0.4, 1);
       }
       &.step2 {
-        transition: transform 1.1s cubic-bezier(0.8, 0.1, 0.3, 1);
+        transition: transform 1s cubic-bezier(0.6, 0.1, 0.3, 1);
         &:before {
-          transition: transform 1.1s cubic-bezier(0.8, 0.1, 0.3, 1);
-          transition-delay: 0.5s;
+          transition: transform 0.6s cubic-bezier(0.6, 0.1, 0.3, 1);
+          transition-delay: 1s;
         }
       }
       &.step3 {
-        transition: transform 1.1s cubic-bezier(0.7, 0.1, 0.2, 1);
+        transition: transform 1s cubic-bezier(0.5, 0.1, 0.2, 1);
         &:before {
-          transition: transform 1.1s cubic-bezier(0.7, 0.1, 0.2, 1);
-          transition-delay: 0.5s;
+          transition: transform 0.6s cubic-bezier(0.5, 0.1, 0.2, 1);
+          transition-delay: 1s;
         }
       }
       &.step4 {
-        transition: transform 1.1s cubic-bezier(0.6, 0.1, 0.1, 1);
+        transition: transform 1s cubic-bezier(0.4, 0.1, 0.1, 1);
         &:before {
-          transition: transform 1.1s cubic-bezier(0.6, 0.1, 0.1, 1);
-          transition-delay: 0.5s;
+          transition: transform 0.6s cubic-bezier(0.4, 0.1, 0.1, 1);
+          transition-delay: 1s;
         }
       }
+    }
+    .line {
+      transform: translate3d(0%, 0, 0px);
+      transition: transform 1s ease-out;
+      transition-delay: 1s;
     }
   }
 `;
@@ -296,7 +251,7 @@ const Header = () => {
   const [open, setOpen] = useState(true);
 
   // 메뉴 클릭시 header에 active 클래스 추가
-  const handleClick = useCallback(() => {
+  const addActiveClass = useCallback(() => {
     if (open) {
       setActive(!active);
       setOpen(false);
@@ -308,6 +263,7 @@ const Header = () => {
 
   return (
     <HeaderBlock className={active && "active"}>
+      {/* <HeaderBlock className="active"> */}
       <div className="logo">
         <h1>
           <NavLink to="/" className="ease-in-out_1s">
@@ -315,18 +271,14 @@ const Header = () => {
           </NavLink>
         </h1>
       </div>
-      <div className="navBtn" onClick={handleClick}>
+      <div className="navBtn" onClick={addActiveClass}>
         <div className="ease-in-out_03s">
           <span className="ease-in-out_03s"></span>
           <span className="ease-in-out_03s"></span>
           <span className="ease-in-out_03s"></span>
         </div>
       </div>
-      <div className="menuWrap">
-        <Responsive>
-          <Menu handleClick={handleClick} />
-        </Responsive>
-      </div>
+      <Menu addActiveClass={addActiveClass} open={open} />
       <div className="bg step1" />
       <div className="bg step2" />
       <div className="bg step3" />

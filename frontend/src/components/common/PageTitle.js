@@ -20,7 +20,7 @@ const TitleBlock = styled.div`
     z-index: -1;
   }
   div {
-    margin-top: -1rem;
+    margin-top: -2rem;
     text-align: center;
     background: #fff;
     h3 {

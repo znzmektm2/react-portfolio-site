@@ -1,10 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../common/Button";
+import Responsive from "./../common/Responsive";
 
 const PortfolioBlock = styled.div`
-  margin: 0 auto;
+  margin: 10rem auto;
   width: 1200px;
+  .resposiveBlock {
+    > a {
+      margin-right: 1rem;
+    }
+  }
   li {
     font-size: 1.1rem;
     font-family: "trump-gothic-pro";
@@ -35,6 +41,7 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
   // 에러 발생시
   if (error) {
     if (error.response && error.response.status === 404) {
+      console.log(error.response);
       return <div>존재하지 않는 포트폴리오 입니다.</div>;
     }
   }
@@ -68,70 +75,73 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
 
   return (
     <PortfolioBlock>
-      {user && (
-        <>
-          <Button onClick={onEdit}>수정</Button>
-          <Button onClick={onRemove}>삭제</Button>
-        </>
-      )}
-      <ul>
-        <li>
-          <span>CLIENT</span>
-          {client}
-        </li>
-        <li>
-          {host !== "null" && <span>host</span>}
-          {host !== "null" && host}
-        </li>
-        <li>
-          <span>TYPE</span>
-          {web && "Web"}
-          {singlePage && "singlePage"}
-        </li>
-        <li>
-          <span>VERSION</span>
-          {pcVer && "PC version"}
-          {mobileVer && "Mobile Version"}
-          {responsiveWeb && "반응형 웹"}
-        </li>
-        <li>
-          <span>IE VERSION</span>
-          {IEVersion}
-        </li>
-        <li>
-          <span>SKILL</span>
-          {skillArray}
-        </li>
-        <li>
-          <span>ANIMATION EVENT</span>
-          {animationEventArray}
-        </li>
-        <li>
-          <span>WHEN</span>
-          {workYear} {workMonth}
-        </li>
-        <li>
-          <span>PERIOD</span>
-          {period}
-        </li>
-        <li>
-          <span>WORKER</span>
-          {worker}
-        </li>
-        <li>
-          <span>URL</span>
-          {url.map((d) => {
-            return (
-              <a target="_blank" rel="noopener noreferrer" href={d} key={d}>
-                {d}
-              </a>
-            );
-          })}
-        </li>
-        <li>
-          <img src={`../${contentImage.url}`} alt={contentImage.name} />
-        </li>
-      </ul>
+      <Responsive>
+        {user && (
+          <>
+            <Button to="/portfolios">리스트로 가기</Button>
+            <Button onClick={onEdit}>수정</Button>
+            <Button onClick={onRemove}>삭제</Button>
+          </>
+        )}
+        <ul>
+          <li>
+            <span>CLIENT</span>
+            {client}
+          </li>
+          <li>
+            {host !== "null" && <span>host</span>}
+            {host !== "null" && host}
+          </li>
+          <li>
+            <span>TYPE</span>
+            {web && "Web"}
+            {singlePage && "singlePage"}
+          </li>
+          <li>
+            <span>VERSION</span>
+            {pcVer && "PC version"}
+            {mobileVer && "Mobile Version"}
+            {responsiveWeb && "반응형 웹"}
+          </li>
+          <li>
+            <span>IE VERSION</span>
+            {IEVersion}
+          </li>
+          <li>
+            <span>SKILL</span>
+            {skillArray}
+          </li>
+          <li>
+            <span>ANIMATION EVENT</span>
+            {animationEventArray}
+          </li>
+          <li>
+            <span>WHEN</span>
+            {workYear} {workMonth}
+          </li>
+          <li>
+            <span>PERIOD</span>
+            {period}
+          </li>
+          <li>
+            <span>WORKER</span>
+            {worker}
+          </li>
+          <li>
+            <span>URL</span>
+            {url.map((d) => {
+              return (
+                <a target="_blank" rel="noopener noreferrer" href={d} key={d}>
+                  {d}
+                </a>
+              );
+            })}
+          </li>
+          <li>
+            <img src={`../${contentImage.url}`} alt={contentImage.name} />
+          </li>
+        </ul>
+      </Responsive>
     </PortfolioBlock>
   );
 };

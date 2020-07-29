@@ -132,7 +132,9 @@ const WritePortfolioContainer = ({ history }) => {
     }
 
     return () => {
-      dispatch(initialize());
+      if (portfolio) {
+        dispatch(initialize());
+      }
     };
   }, [dispatch, user, history, portfolio, portfolioError, originalPortfolioId]);
   return (

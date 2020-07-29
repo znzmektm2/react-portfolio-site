@@ -5,11 +5,11 @@ import PortfolioListContainer from "../containers/portfolios/PortfolioListContai
 
 const PortfoliosPage = () => {
   return (
-    <>
+    <div className="page">
       <PageTitle subTitle="All about my">Portfolios</PageTitle>
       <CategoryContainer />
       <PortfolioListContainer />
-    </>
+    </div>
   );
 };
 

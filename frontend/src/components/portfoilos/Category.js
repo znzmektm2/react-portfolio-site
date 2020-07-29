@@ -3,14 +3,15 @@ import styled from "styled-components";
 
 const CategoryBlock = styled.div`
   ul {
+    padding: 0.2rem 0;
     &:first-child {
-      border-top: 1px solid #aaa;
+      border-top: 1px solid #e2e2e2;
     }
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid #e2e2e2;
     display: flex;
     align-items: center;
     justify-content: center;
-    li {
+    > li {
       position: relative;
       margin: 1rem 2rem;
       padding-left: 40px;
@@ -71,8 +72,6 @@ const Category = ({
       return <div>데이터가 없습니다.</div>;
     }
   }
-
-  document.getElementsByClassName("lazy");
 
   return (
     <>
