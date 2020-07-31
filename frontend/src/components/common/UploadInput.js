@@ -31,30 +31,37 @@ const UploadInput = ({
   handleFormData,
   thumbImage,
   contentImage,
+  form,
 }) => {
   const [imageUrl, setImageUrl] = useState();
   const thumbImageInput = useRef();
-
+  console.log(22222222222);
   const onDrop = useCallback(
     (acceptedFiles, fileRejections, event) => {
       const files = acceptedFiles;
       let imageUrlArr = [];
-      const thumbInput =
-        event.target.name === "thumbImage" || event.target.id === "thumbImage";
 
-      if (thumbInput && files.length > 1) {
+      // 썸네일 이미지는 하나만 등록하기
+      if (event.target.closest("#thumbImage") && files.length > 1) {
         alert("썸네일 이미지는 하나만 등록 가능합니다.");
         thumbImageInput.current.value = "";
         return;
       }
 
+      // 컨텐트 이미지 추가 전 모두 삭제하기
+      if (event.target.closest("#contentImage")) {
+        form.current.delete("contentImage");
+      }
+
       for (let i = 0; i < files.length; i++) {
+        // 이미지 확장자만 가능
         if (!files[i].type.match("image.*")) {
           alert("이미지 확장자만 가능합니다.");
           thumbImageInput.current.value = "";
           return;
         }
 
+        // 폼데이터에 추가하기
         handleFormData(inputName, files[i]);
 
         const reader = new FileReader();
@@ -69,7 +76,7 @@ const UploadInput = ({
       }
       setImageUrl(imageUrlArr);
     },
-    [setImageUrl]
+    [setImageUrl, handleFormData, inputName, form]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -91,7 +98,7 @@ const UploadInput = ({
             ))
           : contentImage
           ? contentImage.map((contImg) => (
-              <div key={contImg.name}>
+              <div key={contImg.url}>
                 <img src={`../${contImg.url}`} alt={contImg.name} />
               </div>
             ))

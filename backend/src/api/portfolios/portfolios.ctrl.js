@@ -142,6 +142,9 @@ export const write = async (ctx) => {
   const requestBody = ctx.request.body;
   const result = schema.validate(requestBody);
 
+  console.log("requestBody ", requestBody);
+  console.log("result ", result);
+
   if (result.error) {
     ctx.status = 400; // Bad Request
     ctx.body = result.error;
@@ -160,6 +163,8 @@ export const write = async (ctx) => {
 
   // 파일 객체 담기
   const files = ctx.request.files;
+
+  console.log("files ", files);
 
   const generateUrl = (path) => {
     const pathSplit = path.split("\\");
@@ -187,6 +192,8 @@ export const write = async (ctx) => {
     thumbImage,
     contentImage,
   });
+
+  console.log("updateed portfolio ", portfolio);
   try {
     await portfolio.save();
     ctx.body = portfolio;
@@ -360,7 +367,7 @@ export const update = async (ctx) => {
       return;
     }
 
-    console.log(portfolio);
+    console.log("updated portfolio", portfolio);
     ctx.body = portfolio;
   } catch (e) {
     ctx.throw(500, e);

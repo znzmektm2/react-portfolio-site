@@ -140,7 +140,7 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
           <li>
             {contentImage.map((contImg) => (
               <img
-                key={contImg.name}
+                key={contImg.url}
                 src={`../${contImg.url}`}
                 alt={contImg.name}
               />

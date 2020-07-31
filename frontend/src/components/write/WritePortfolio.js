@@ -44,6 +44,7 @@ const WritePortfolio = ({
   portfolioError,
   originalPortfolioId,
   user,
+  form = { form },
 }) => {
   const onChange = (e) => {
     const name = e.target.name;
@@ -229,6 +230,7 @@ const WritePortfolio = ({
           inputName="contentImage"
           contentImage={contentImage}
           handleFormData={handleFormData}
+          form={form}
         />
         <br />
         {portfolioError && <p className="red">내용을 채워주세요</p>}

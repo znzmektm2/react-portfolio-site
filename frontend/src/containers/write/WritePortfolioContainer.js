@@ -75,15 +75,16 @@ const WritePortfolioContainer = ({ history }) => {
     [dispatch]
   );
 
-  const handleFormData = useCallback((key, value) => {
-    key !== "contentImage" && form.current.delete(key);
-    form.current.append(key, value);
-
-    return form.current;
-  }, []);
-
   useEffect(() => {
     form.current = new FormData();
+  }, []);
+
+  const handleFormData = useCallback((key, value) => {
+    key !== "contentImage"
+      ? form.current.set(key, value)
+      : form.current.append(key, value);
+
+    return form.current;
   }, []);
 
   const onPublish = () => {
@@ -139,7 +140,6 @@ const WritePortfolioContainer = ({ history }) => {
     }
 
     if (portfolio) {
-      console.log("history.push");
       history.push(`/portfolio/${portfolio.id}`);
     }
 
@@ -183,6 +183,7 @@ const WritePortfolioContainer = ({ history }) => {
       originalPortfolioId={originalPortfolioId}
       isEdit={!!originalPortfolioId}
       user={user}
+      form={form}
     />
   );
 };
