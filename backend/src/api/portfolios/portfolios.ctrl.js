@@ -243,9 +243,6 @@ export const update = async (ctx) => {
   const requestBody = ctx.request.body;
   const result = schema.validate(requestBody);
 
-  console.log("requestBody ", requestBody);
-  console.log("result ", result);
-
   if (result.error) {
     ctx.status = 400; // Bad Request
     ctx.body = result.error;
@@ -267,18 +264,22 @@ export const update = async (ctx) => {
   const updateThumbImage = files.thumbImage;
   const updateContentImage = files.contentImage;
 
+  // 이미지명 추출하기
   let generateUrl = (path) => {
     const pathSplit = path.split("\\");
     return pathSplit[pathSplit.length - 1];
   };
 
+  // 업로드 이미지가 배열일 경우
   let updateCntImg = [];
-  updateContentImage.map((contImg) => {
-    updateCntImg.push({
-      name: contImg.name,
-      url: generateUrl(contImg.path),
+  updateContentImage &&
+    Array.isArray(updateContentImage) &&
+    updateContentImage.map((contImg) => {
+      updateCntImg.push({
+        name: contImg.name,
+        url: generateUrl(contImg.path),
+      });
     });
-  });
 
   const updatePortfolio = {
     ...requestBody,
@@ -292,7 +293,12 @@ export const update = async (ctx) => {
       },
     }),
     ...(updateContentImage && {
-      contentImage: updateCntImg,
+      contentImage: Array.isArray(updateContentImage)
+        ? updateCntImg
+        : {
+            name: updateContentImage.name,
+            url: generateUrl(updateContentImage.path),
+          },
     }),
   };
 
@@ -315,16 +321,36 @@ export const update = async (ctx) => {
       );
 
     updateContentImage &&
-      originalPortfolio.contentImage.map((contImg) => {
-        fs.unlink(path.join(__dirname, "../../uploads", contImg.url), (err) => {
-          if (err) throw err;
-          console.log("ContentImag - ", contImg.url, "deleted");
-        });
-      });
+      (Array.isArray(originalPortfolio.contentImage)
+        ? originalPortfolio.contentImage.map((contImg) => {
+            console.log("contImg ", contImg);
+            fs.unlink(
+              path.join(__dirname, "../../uploads", contImg.url),
+              (err) => {
+                if (err) throw err;
+                console.log("ContentImag - ", contImg.url, "deleted");
+              }
+            );
+          })
+        : fs.unlink(
+            path.join(
+              __dirname,
+              "../../uploads",
+              originalPortfolio.contentImage.url
+            ),
+            (err) => {
+              if (err) throw err;
+              console.log(
+                "ContentImag - ",
+                originalPortfolio.contentImage.url,
+                "deleted"
+              );
+            }
+          ));
 
     const portfolio = await Portfolio.findOneAndUpdate(
       { id: id },
-      updatePortfolio,
+      { $set: updatePortfolio },
       {
         new: true,
       }
@@ -334,8 +360,7 @@ export const update = async (ctx) => {
       return;
     }
 
-    console.log("updatePortfolio ", updatePortfolio);
-    console.log("portfolio ", portfolio);
+    console.log(portfolio);
     ctx.body = portfolio;
   } catch (e) {
     ctx.throw(500, e);

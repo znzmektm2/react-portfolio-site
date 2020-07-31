@@ -11,8 +11,6 @@ import { withRouter } from "react-router-dom";
 import WritePortfolio from "./../../components/write/WritePortfolio";
 
 const WritePortfolioContainer = ({ history }) => {
-  console.log(1);
-
   const dispatch = useDispatch();
   const form = useRef(null);
   const {
@@ -78,7 +76,6 @@ const WritePortfolioContainer = ({ history }) => {
   );
 
   const handleFormData = useCallback((key, value) => {
-    console.log("handleFormData");
     key !== "contentImage" && form.current.delete(key);
     form.current.append(key, value);
 
@@ -87,18 +84,9 @@ const WritePortfolioContainer = ({ history }) => {
 
   useEffect(() => {
     form.current = new FormData();
-    console.log("useEffect 1 --- new FormData 생성");
   }, []);
 
-  if (form.current) {
-    for (var pair of form.current.entries()) {
-      console.log("value 2--- ", pair[0] + ", " + pair[1]);
-    }
-  }
-
   const onPublish = () => {
-    console.log("onPublish");
-
     // 아이디 중복일 경우
     if (originalPortfolioId !== id && hasId) {
       alert("중복된 아이디입니다");
@@ -106,6 +94,7 @@ const WritePortfolioContainer = ({ history }) => {
     }
 
     const data = form.current;
+    const host = hostValue ? hostValue : "null";
 
     // 업데이트
     if (originalPortfolioId) {
@@ -117,7 +106,6 @@ const WritePortfolioContainer = ({ history }) => {
       handleFormData("singlePage", singlePage);
       handleFormData("pcVer", pcVer);
       handleFormData("mobileVer", mobileVer);
-      handleFormData("responsiveWeb", responsiveWeb);
       handleFormData("IEVersion", IEVersion);
       handleFormData("skill", skill);
       handleFormData("animationEvent", animationEvent);
@@ -127,35 +115,26 @@ const WritePortfolioContainer = ({ history }) => {
       handleFormData("worker", worker);
       handleFormData("url", url);
 
-      for (var pair of data.entries()) {
-        console.log("value 2--- ", pair[0] + ", " + pair[1]);
-      }
-
-      console.log("업데이트 dispatch");
       dispatch(updatePortfolio({ originalPortfolioId, data }));
-      console.log("업데이트 끝---");
       return;
     }
 
     // 포트폴리오 작성
-    const host = hostValue ? hostValue : "null";
     handleFormData("host", host);
     handleFormData("web", web);
     handleFormData("singlePage", singlePage);
     handleFormData("pcVer", pcVer);
     handleFormData("mobileVer", mobileVer);
+
     dispatch(writePortfolio(data));
   };
 
   useEffect(() => {
-    console.log("useEffect 2");
-
     if (!user) {
       history.go(-1);
     }
 
     if (!originalPortfolioId) {
-      console.log("!originalPortfolioId -- initialize");
       dispatch(initialize());
     }
 
@@ -165,13 +144,11 @@ const WritePortfolioContainer = ({ history }) => {
     }
 
     if (portfolioError) {
-      console.log("portfolioError");
       console.log(portfolioError);
     }
 
     return () => {
       if (!portfolioError && portfolio) {
-        console.log("portfolio || !portfolioError -- initialize");
         dispatch(initialize());
       }
     };
