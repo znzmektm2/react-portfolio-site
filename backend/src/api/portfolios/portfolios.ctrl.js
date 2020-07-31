@@ -33,6 +33,69 @@ export const idCheck = async (ctx) => {
   }
 };
 
+/* 포트폴리오 리스트 조회
+GET /api/portfolios?skill=JavaScript&web=true
+*/
+export const list = async (ctx) => {
+  const page = parseInt(ctx.query.page || "1", 10);
+
+  if (page < 1) {
+    ctx.status = 400; // Bad Request
+    return;
+  }
+
+  const { skill, web, singlePage } = ctx.query;
+  let skillArray = [];
+  if (skill) {
+    skillArray = skill.split(",");
+  }
+
+  const query =
+    skill || web || singlePage
+      ? {
+          ...(skill && { skill: { $in: skillArray } }),
+          $or: [
+            web ? { web: true } : { web: false },
+            singlePage ? { singlePage: true } : { singlePage: false },
+          ],
+        }
+      : {};
+
+  try {
+    const listLimit = 4; // 보이는 개수 설정
+    const portfolios = await Portfolio.find(query)
+      .sort({ _id: -1 }) // 내림차순 정렬
+      .limit(listLimit) // 보이는 개수 제한
+      .skip((page - 1) * listLimit) // 계산한 값의 개수를 제외하고 그 다음 데이터 불러옴
+      .lean(); // JSON 형태로 조회
+    const portfolioList = [];
+    portfolios.map((portfolio) => {
+      const list = {
+        _id: portfolio._id,
+        id: portfolio.id,
+        client: portfolio.client,
+        web: portfolio.web,
+        singlePage: portfolio.singlePage,
+        thumbImage: portfolio.thumbImage,
+      };
+      portfolioList.push(list);
+    });
+    const portfolioCount = await Portfolio.countDocuments(query);
+    // Last-Page라는 커스텀 HTTP 헤더를 설정
+    ctx.set("Last-Page", Math.ceil(portfolioCount / listLimit));
+    ctx.body = portfolioList;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+/* 포트폴리오 뷰페이지 조회
+GET /api/portfolios/id
+*/
+export const read = async (ctx, next) => {
+  ctx.body = ctx.state.portfolio;
+};
+
 /* 포트폴리오 작성
 POST /api/portfolios
 { 
@@ -106,11 +169,16 @@ export const write = async (ctx) => {
     name: files.thumbImage.name,
     url: generateUrl(files.thumbImage.path),
   };
-  const contentImage = {
-    name: files.contentImage.name,
-    url: generateUrl(files.contentImage.path),
-  };
 
+  let content = [];
+  files.contentImage.map((contImg) => {
+    content.push({
+      name: contImg.name,
+      url: generateUrl(contImg.path),
+    });
+  });
+
+  const contentImage = content;
   const portfolio = new Portfolio({
     ...requestBody,
     skill,
@@ -122,107 +190,6 @@ export const write = async (ctx) => {
   try {
     await portfolio.save();
     ctx.body = portfolio;
-  } catch (e) {
-    ctx.throw(500, e);
-  }
-};
-
-/* 포트폴리오 리스트 조회
-GET /api/portfolios?skill=JavaScript&web=true
-*/
-export const list = async (ctx) => {
-  const page = parseInt(ctx.query.page || "1", 10);
-
-  if (page < 1) {
-    ctx.status = 400; // Bad Request
-    return;
-  }
-
-  const { skill, web, singlePage } = ctx.query;
-  let skillArray = [];
-  if (skill) {
-    skillArray = skill.split(",");
-  }
-
-  const query =
-    skill || web || singlePage
-      ? {
-          ...(skill && { skill: { $in: skillArray } }),
-          $or: [
-            web ? { web: true } : { web: false },
-            singlePage ? { singlePage: true } : { singlePage: false },
-          ],
-        }
-      : {};
-
-  try {
-    const listLimit = 6; // 보이는 개수 설정
-    const portfolios = await Portfolio.find(query)
-      .sort({ _id: -1 }) // 내림차순 정렬
-      .limit(listLimit) // 보이는 개수 제한
-      .skip((page - 1) * listLimit) // 계산한 값의 개수를 제외하고 그 다음 데이터 불러옴
-      .lean(); // JSON 형태로 조회
-    const portfolioList = [];
-    portfolios.map((portfolio) => {
-      const list = {
-        _id: portfolio._id,
-        id: portfolio.id,
-        client: portfolio.client,
-        thumbImage: portfolio.thumbImage,
-      };
-      portfolioList.push(list);
-    });
-    const portfolioCount = await Portfolio.countDocuments(query);
-    // Last-Page라는 커스텀 HTTP 헤더를 설정
-    ctx.set("Last-Page", Math.ceil(portfolioCount / listLimit));
-    ctx.body = portfolioList;
-  } catch (e) {
-    ctx.throw(500, e);
-  }
-};
-
-/* 포트폴리오 뷰페이지 조회
-GET /api/portfolios/id
-*/
-export const read = async (ctx, next) => {
-  ctx.body = ctx.state.portfolio;
-};
-
-/* 포트폴리오 삭제
-DELETE /api/portfolios/:id
-*/
-export const remove = async (ctx) => {
-  const { id } = ctx.params;
-  try {
-    const originalPortfolio = await Portfolio.findOne({ id: id });
-
-    fs.unlink(
-      path.join(__dirname, "../../uploads", originalPortfolio.thumbImage.url),
-      (err) => {
-        if (err) throw err;
-        console.log(
-          "ThumbImage -",
-          originalPortfolio.thumbImage.url,
-          "deleted"
-        );
-      }
-    );
-
-    fs.unlink(
-      path.join(__dirname, "../../uploads", originalPortfolio.contentImage.url),
-      (err) => {
-        if (err) throw err;
-        console.log(
-          "ContentImage -",
-          originalPortfolio.contentImage.url,
-          "deleted"
-        );
-      }
-    );
-
-    await Portfolio.deleteOne({ id: id });
-
-    ctx.status = 204; // No Content
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -276,6 +243,9 @@ export const update = async (ctx) => {
   const requestBody = ctx.request.body;
   const result = schema.validate(requestBody);
 
+  console.log("requestBody ", requestBody);
+  console.log("result ", result);
+
   if (result.error) {
     ctx.status = 400; // Bad Request
     ctx.body = result.error;
@@ -294,30 +264,35 @@ export const update = async (ctx) => {
 
   // 파일 객체 담기
   const files = ctx.request.files;
-  const addedThumbImage = files.thumbImage;
-  const addedContentImage = files.contentImage;
+  const updateThumbImage = files.thumbImage;
+  const updateContentImage = files.contentImage;
 
   let generateUrl = (path) => {
     const pathSplit = path.split("\\");
     return pathSplit[pathSplit.length - 1];
   };
 
+  let updateCntImg = [];
+  updateContentImage.map((contImg) => {
+    updateCntImg.push({
+      name: contImg.name,
+      url: generateUrl(contImg.path),
+    });
+  });
+
   const updatePortfolio = {
     ...requestBody,
     skill,
     animationEvent,
     url,
-    ...(addedThumbImage && {
+    ...(updateThumbImage && {
       thumbImage: {
-        name: addedThumbImage.name,
-        url: generateUrl(addedThumbImage.path),
+        name: updateThumbImage.name,
+        url: generateUrl(updateThumbImage.path),
       },
     }),
-    ...(addedContentImage && {
-      contentImage: {
-        name: addedContentImage.name,
-        url: generateUrl(addedContentImage.path),
-      },
+    ...(updateContentImage && {
+      contentImage: updateCntImg,
     }),
   };
 
@@ -326,7 +301,7 @@ export const update = async (ctx) => {
       id: id,
     });
 
-    addedThumbImage &&
+    updateThumbImage &&
       fs.unlink(
         path.join(__dirname, "../../uploads", originalPortfolio.thumbImage.url),
         (err) => {
@@ -339,22 +314,13 @@ export const update = async (ctx) => {
         }
       );
 
-    addedContentImage &&
-      fs.unlink(
-        path.join(
-          __dirname,
-          "../../uploads",
-          originalPortfolio.contentImage.url
-        ),
-        (err) => {
+    updateContentImage &&
+      originalPortfolio.contentImage.map((contImg) => {
+        fs.unlink(path.join(__dirname, "../../uploads", contImg.url), (err) => {
           if (err) throw err;
-          console.log(
-            "ContentImag - ",
-            originalPortfolio.contentImage.url,
-            "deleted"
-          );
-        }
-      );
+          console.log("ContentImag - ", contImg.url, "deleted");
+        });
+      });
 
     const portfolio = await Portfolio.findOneAndUpdate(
       { id: id },
@@ -376,7 +342,42 @@ export const update = async (ctx) => {
   }
 };
 
-/* 포트폴리오 스킬 조회
+/* 포트폴리오 삭제
+DELETE /api/portfolios/:id
+*/
+export const remove = async (ctx) => {
+  const { id } = ctx.params;
+  try {
+    const originalPortfolio = await Portfolio.findOne({ id: id });
+
+    fs.unlink(
+      path.join(__dirname, "../../uploads", originalPortfolio.thumbImage.url),
+      (err) => {
+        if (err) throw err;
+        console.log(
+          "ThumbImage -",
+          originalPortfolio.thumbImage.url,
+          "deleted"
+        );
+      }
+    );
+
+    originalPortfolio.contentImage.map((contImg) => {
+      fs.unlink(path.join(__dirname, "../../uploads", contImg.url), (err) => {
+        if (err) throw err;
+        console.log("ContentImage -", contImg.url, "deleted");
+      });
+    });
+
+    await Portfolio.deleteOne({ id: id });
+
+    ctx.status = 204; // No Content
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+/* 포트폴리오 스킬 카테고리 조회
 GET /api/portfolios/category
 */
 export const category = async (ctx) => {

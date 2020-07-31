@@ -3,12 +3,21 @@ import qs from "qs";
 
 export const checkId = (id) => client.get(`/api/portfolios/idCheck/${id}`);
 
-export const writePortFolio = (formData) =>
-  client.post("/api/portfolios", formData);
+export const writePortFolio = (formData) => {
+  for (var pair of formData.entries()) {
+    console.log("value 3--- ", pair[0] + ", " + pair[1]);
+  }
 
-export const updatePortFolio = ({ originalPortfolioId, formData }) =>
-  client.patch(`/api/portfolios/${originalPortfolioId}`, formData);
+  return client.post("/api/portfolios", formData);
+};
 
+export const updatePortFolio = ({ originalPortfolioId, formData }) => {
+  for (var pair of formData.entries()) {
+    console.log("value 3--- ", pair[0] + ", " + pair[1]);
+  }
+
+  return client.patch(`/api/portfolios/${originalPortfolioId}`, formData);
+};
 export const readPortFolio = (id) => client.get(`/api/portfolios/${id}`);
 
 export const removePortFolio = (id) => client.delete(`/api/portfolios/${id}`);

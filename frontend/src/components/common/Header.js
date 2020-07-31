@@ -67,17 +67,20 @@ const HeaderBlock = styled.header`
       position: relative;
       display: inline-block;
       padding: 1.282rem 1.125rem;
-    }
-    span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      margin: 3px auto;
-      background: #222;
-      &:nth-child(2) {
-        height: 1px;
+      transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+      span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        margin: 3px auto;
+        background: #222;
+        transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        &:nth-child(2) {
+          height: 1px;
+        }
       }
     }
+
     &:hover {
       cursor: pointer;
       &:before {
@@ -272,10 +275,10 @@ const Header = () => {
         </h1>
       </div>
       <div className="navBtn" onClick={addActiveClass}>
-        <div className="ease-in-out_03s">
-          <span className="ease-in-out_03s"></span>
-          <span className="ease-in-out_03s"></span>
-          <span className="ease-in-out_03s"></span>
+        <div>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </div>
       <Menu addActiveClass={addActiveClass} open={open} />

@@ -28,6 +28,7 @@ const CategoryBlock = styled.div`
       label {
         display: inline-block;
         padding: 0 1rem;
+        font-family: "KoPub Batang";
         font-size: 1rem;
         line-height: 2.5rem;
         vertical-align: middle;

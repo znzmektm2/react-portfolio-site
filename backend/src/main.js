@@ -27,7 +27,6 @@ app.use(
     formLimit: "1mb",
     formidable: {
       uploadDir: __dirname + "\\uploads", // upload directory
-      maxFileSize: 200 * 1024 * 1024, //Upload file size
       keepExtensions: true, // keep file extensions
       // 중복된 파일명 숫자 붙이기
       onFileBegin: (uploadName, uploadFile) => {

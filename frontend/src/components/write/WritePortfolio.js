@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../common/Button";
 import Responsive from "./../common/Responsive";
+import UploadInput from "./../common/UploadInput";
 
 const WritePortfolioBlock = styled.div`
   margin: 5rem auto;
@@ -36,10 +37,9 @@ const WritePortfolio = ({
   period,
   worker,
   url,
-  thumbImageInfo,
-  contentImageInfo,
-  setThumbImageFile,
-  setContentImageFile,
+  thumbImage,
+  contentImage,
+  handleFormData,
   onPublish,
   portfolioError,
   originalPortfolioId,
@@ -49,6 +49,7 @@ const WritePortfolio = ({
     const name = e.target.name;
     const value = e.target.value;
     onChangeField({ key: name, value: value });
+    handleFormData(name, value);
     if (name === "id") {
       onCheckId(value);
     }
@@ -62,53 +63,12 @@ const WritePortfolio = ({
       }
     });
     onChangeField({ key: e.target.id, value: e.target.checked });
+    handleFormData(e.target.id, e.target.checked);
   };
 
   const onChangeCheckbox = (e) => {
     onChangeField({ key: e.target.name, value: e.target.checked });
-  };
-
-  const [thumbImgName, setThumbImgName] = useState("");
-  const [thumbImgBase64, setThumbImgBase64] = useState(null);
-  const [contentImgName, setContentImgName] = useState("");
-  const [contentImgBase64, setContentImgBase64] = useState(null);
-
-  let reader = new FileReader();
-
-  const setThumbImage = (e) => {
-    e.preventDefault();
-    const thisFile = e.target.files[0];
-
-    reader.onloadend = (e) => {
-      const base64 = reader.result;
-      if (base64) {
-        setThumbImgBase64(base64.toString());
-      }
-    };
-    if (thisFile) {
-      setThumbImgName(thisFile.name);
-      reader.readAsDataURL(thisFile);
-    }
-
-    setThumbImageFile(thisFile);
-  };
-
-  const setContentImage = (e) => {
-    e.preventDefault();
-    const thisFile = e.target.files[0];
-
-    reader.onloadend = (e) => {
-      const base64 = reader.result;
-      if (base64) {
-        setContentImgBase64(base64.toString());
-      }
-    };
-    if (thisFile) {
-      setContentImgName(thisFile.name);
-      reader.readAsDataURL(thisFile);
-    }
-
-    setContentImageFile(thisFile);
+    handleFormData(e.target.name, e.target.checked);
   };
 
   const checkDuplicatedId = () => {
@@ -260,35 +220,16 @@ const WritePortfolio = ({
           onChange={onChange}
         />
         <br />
-        <input type="file" name="ThumbImage" onChange={setThumbImage} />
-        <br />
-        {thumbImgBase64 ? (
-          <div>
-            <img src={thumbImgBase64} alt={thumbImgName} />
-          </div>
-        ) : (
-          contentImageInfo && (
-            <div>
-              <img src={`../${thumbImageInfo.url}`} alt={thumbImageInfo.name} />
-            </div>
-          )
-        )}
-        <input type="file" name="contentImage" onChange={setContentImage} />
-        <br />
-        {contentImgBase64 ? (
-          <div>
-            <img src={contentImgBase64} alt={contentImgName} />
-          </div>
-        ) : (
-          contentImageInfo && (
-            <div>
-              <img
-                src={`../${contentImageInfo.url}`}
-                alt={contentImageInfo.name}
-              />
-            </div>
-          )
-        )}
+        <UploadInput
+          inputName="thumbImage"
+          thumbImage={thumbImage}
+          handleFormData={handleFormData}
+        />
+        <UploadInput
+          inputName="contentImage"
+          contentImage={contentImage}
+          handleFormData={handleFormData}
+        />
         <br />
         {portfolioError && <p className="red">내용을 채워주세요</p>}
         <Button onClick={onPublish}>

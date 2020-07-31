@@ -8,7 +8,6 @@ const buttonStyle = css`
   vertical-align: middle;
   border: none;
   font-size: 1rem;
-  font-weight: bold;
   padding: 0.5rem 1rem;
   color: white;
   outline: none;

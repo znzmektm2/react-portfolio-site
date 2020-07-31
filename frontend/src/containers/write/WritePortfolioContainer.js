@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeField,
@@ -11,7 +11,10 @@ import { withRouter } from "react-router-dom";
 import WritePortfolio from "./../../components/write/WritePortfolio";
 
 const WritePortfolioContainer = ({ history }) => {
+  console.log(1);
+
   const dispatch = useDispatch();
+  const form = useRef(null);
   const {
     id,
     hasId,
@@ -30,8 +33,8 @@ const WritePortfolioContainer = ({ history }) => {
     period,
     worker,
     url,
-    contentImageInfo,
-    thumbImageInfo,
+    contentImage,
+    thumbImage,
     portfolio,
     portfolioError,
     originalPortfolioId,
@@ -54,21 +57,13 @@ const WritePortfolioContainer = ({ history }) => {
     period: write.period,
     worker: write.worker,
     url: write.url,
-    contentImageInfo: write.contentImage,
-    thumbImageInfo: write.thumbImage,
+    contentImage: write.contentImage,
+    thumbImage: write.thumbImage,
     portfolio: write.portfolio,
     portfolioError: write.portfolioError,
     originalPortfolioId: write.originalPortfolioId,
     user: user.user,
   }));
-
-  const [thumbImage, setThumbImage] = useState("");
-  const [contentImage, setContentImage] = useState("");
-
-  const onChangeField = useCallback(
-    (payload) => dispatch(changeField(payload)),
-    [dispatch]
-  );
 
   const onCheckId = useCallback(
     (id) => {
@@ -77,66 +72,111 @@ const WritePortfolioContainer = ({ history }) => {
     [dispatch]
   );
 
-  const setThumbImageFile = useCallback((file) => setThumbImage(file), []);
-  const setContentImageFile = useCallback((file) => setContentImage(file), []);
+  const onChangeField = useCallback(
+    (payload) => dispatch(changeField(payload)),
+    [dispatch]
+  );
+
+  const handleFormData = useCallback((key, value) => {
+    console.log("handleFormData");
+    key !== "contentImage" && form.current.delete(key);
+    form.current.append(key, value);
+
+    return form.current;
+  }, []);
+
+  useEffect(() => {
+    form.current = new FormData();
+    console.log("useEffect 1 --- new FormData 생성");
+  }, []);
+
+  if (form.current) {
+    for (var pair of form.current.entries()) {
+      console.log("value 2--- ", pair[0] + ", " + pair[1]);
+    }
+  }
 
   const onPublish = () => {
-    const host = hostValue ? hostValue : "null";
-    const formData = new FormData();
+    console.log("onPublish");
 
-    formData.append("id", id);
-    formData.append("client", client);
-    formData.append("host", host);
-    formData.append("web", web);
-    formData.append("singlePage", singlePage);
-    formData.append("pcVer", pcVer);
-    formData.append("mobileVer", mobileVer);
-    formData.append("responsiveWeb", responsiveWeb);
-    formData.append("IEVersion", IEVersion);
-    formData.append("skill", skill);
-    formData.append("animationEvent", animationEvent);
-    formData.append("workYear", workYear);
-    formData.append("workMonth", workMonth);
-    formData.append("period", period);
-    formData.append("worker", worker);
-    formData.append("url", url);
-    thumbImage && formData.append("thumbImage", thumbImage);
-    contentImage && formData.append("contentImage", contentImage);
-
+    // 아이디 중복일 경우
     if (originalPortfolioId !== id && hasId) {
       alert("중복된 아이디입니다");
       return;
     }
 
+    const data = form.current;
+
+    // 업데이트
     if (originalPortfolioId) {
-      dispatch(updatePortfolio({ originalPortfolioId, formData }));
+      console.log("originalPortfolioId");
+      handleFormData("id", id);
+      handleFormData("client", client);
+      handleFormData("host", hostValue);
+      handleFormData("web", web);
+      handleFormData("singlePage", singlePage);
+      handleFormData("pcVer", pcVer);
+      handleFormData("mobileVer", mobileVer);
+      handleFormData("responsiveWeb", responsiveWeb);
+      handleFormData("IEVersion", IEVersion);
+      handleFormData("skill", skill);
+      handleFormData("animationEvent", animationEvent);
+      handleFormData("workYear", workYear);
+      handleFormData("workMonth", workMonth);
+      handleFormData("period", period);
+      handleFormData("worker", worker);
+      handleFormData("url", url);
+
+      for (var pair of data.entries()) {
+        console.log("value 2--- ", pair[0] + ", " + pair[1]);
+      }
+
+      console.log("업데이트 dispatch");
+      dispatch(updatePortfolio({ originalPortfolioId, data }));
+      console.log("업데이트 끝---");
       return;
     }
 
-    dispatch(writePortfolio(formData));
+    // 포트폴리오 작성
+    const host = hostValue ? hostValue : "null";
+    handleFormData("host", host);
+    handleFormData("web", web);
+    handleFormData("singlePage", singlePage);
+    handleFormData("pcVer", pcVer);
+    handleFormData("mobileVer", mobileVer);
+    dispatch(writePortfolio(data));
   };
 
   useEffect(() => {
+    console.log("useEffect 2");
+
     if (!user) {
       history.go(-1);
     }
+
     if (!originalPortfolioId) {
+      console.log("!originalPortfolioId -- initialize");
       dispatch(initialize());
     }
 
     if (portfolio) {
+      console.log("history.push");
       history.push(`/portfolio/${portfolio.id}`);
     }
+
     if (portfolioError) {
+      console.log("portfolioError");
       console.log(portfolioError);
     }
 
     return () => {
-      if (portfolio) {
+      if (!portfolioError && portfolio) {
+        console.log("portfolio || !portfolioError -- initialize");
         dispatch(initialize());
       }
     };
   }, [dispatch, user, history, portfolio, portfolioError, originalPortfolioId]);
+
   return (
     <WritePortfolio
       onChangeField={onChangeField}
@@ -158,10 +198,9 @@ const WritePortfolioContainer = ({ history }) => {
       period={period}
       worker={worker}
       url={url}
-      thumbImageInfo={thumbImageInfo}
-      contentImageInfo={contentImageInfo}
-      setThumbImageFile={setThumbImageFile}
-      setContentImageFile={setContentImageFile}
+      thumbImage={thumbImage}
+      contentImage={contentImage}
+      handleFormData={handleFormData}
       onPublish={onPublish}
       portfolioError={portfolioError}
       originalPortfolioId={originalPortfolioId}

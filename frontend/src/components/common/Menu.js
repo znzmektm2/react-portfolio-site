@@ -288,15 +288,15 @@ const Menu = ({ ...rest }) => {
           <div className="menuText">
             <ul>
               <li>
+                FRONTEND DEVELOPER<span>·</span>
+              </li>
+              <li>
                 PORTFOLIOS → 52<span>·</span>
               </li>
               <li>
                 DESIGN → 23<span>·</span>
               </li>
-              <li>
-                LAST UPDATE → AUGUST 2020<span>·</span>
-              </li>
-              <li>FRONTEND DEVELOPER → JEON AE RAN</li>
+              <li>LAST UPDATE → AUGUST 2020</li>
             </ul>
           </div>
         </div>

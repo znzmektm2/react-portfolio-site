@@ -1,4 +1,8 @@
 import mongoose, { Schema } from "mongoose";
+const ImageSchema = new Schema({
+  name: String,
+  url: String,
+});
 
 const PortfolioSchema = new Schema({
   id: String,
@@ -21,10 +25,7 @@ const PortfolioSchema = new Schema({
     name: String,
     url: String,
   },
-  contentImage: {
-    name: String,
-    url: String,
-  },
+  contentImage: [ImageSchema],
 });
 
 const Portfolio = mongoose.model("Portfolio", PortfolioSchema);

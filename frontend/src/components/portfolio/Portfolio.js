@@ -138,7 +138,13 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
             })}
           </li>
           <li>
-            <img src={`../${contentImage.url}`} alt={contentImage.name} />
+            {contentImage.map((contImg) => (
+              <img
+                key={contImg.name}
+                src={`../${contImg.url}`}
+                alt={contImg.name}
+              />
+            ))}
           </li>
         </ul>
       </Responsive>
