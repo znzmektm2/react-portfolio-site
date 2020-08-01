@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Button from "../common/Button";
 import Responsive from "./../common/Responsive";
@@ -44,7 +44,7 @@ const WritePortfolio = ({
   portfolioError,
   originalPortfolioId,
   user,
-  form = { form },
+  form,
 }) => {
   const onChange = (e) => {
     const name = e.target.name;

@@ -9,6 +9,7 @@ import {
 } from "../../modules/write";
 import { withRouter } from "react-router-dom";
 import WritePortfolio from "./../../components/write/WritePortfolio";
+import { initializePortfolios } from "../../modules/portfolios";
 
 const WritePortfolioContainer = ({ history }) => {
   const dispatch = useDispatch();
@@ -99,7 +100,6 @@ const WritePortfolioContainer = ({ history }) => {
 
     // 업데이트
     if (originalPortfolioId) {
-      console.log("originalPortfolioId");
       handleFormData("id", id);
       handleFormData("client", client);
       handleFormData("host", hostValue);
@@ -150,6 +150,7 @@ const WritePortfolioContainer = ({ history }) => {
     return () => {
       if (!portfolioError && portfolio) {
         dispatch(initialize());
+        dispatch(initializePortfolios());
       }
     };
   }, [dispatch, user, history, portfolio, portfolioError, originalPortfolioId]);

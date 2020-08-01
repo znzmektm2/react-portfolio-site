@@ -1,5 +1,4 @@
 import React from "react";
-import PageTitle from "./../components/common/PageTitle";
 import PortfolioContainer from "../containers/portfolio/PortfolioContainer";
 
 const PortfolioPage = () => {

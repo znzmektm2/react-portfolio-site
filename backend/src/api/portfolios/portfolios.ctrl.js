@@ -163,27 +163,34 @@ export const write = async (ctx) => {
 
   // 파일 객체 담기
   const files = ctx.request.files;
-
-  console.log("files ", files);
+  const thumbImageFile = files.thumbImage;
+  const contentImageFile = files.contentImage;
 
   const generateUrl = (path) => {
     const pathSplit = path.split("\\");
     return pathSplit[pathSplit.length - 1];
   };
+
   const thumbImage = {
-    name: files.thumbImage.name,
-    url: generateUrl(files.thumbImage.path),
+    name: thumbImageFile.name,
+    url: generateUrl(thumbImageFile.path),
   };
 
-  let content = [];
-  files.contentImage.map((contImg) => {
-    content.push({
-      name: contImg.name,
-      url: generateUrl(contImg.path),
-    });
-  });
+  const array = new Array();
+  let contentImage;
+  Array.isArray(contentImageFile)
+    ? contentImageFile.map((contImg) => {
+        array.push({
+          name: contImg.name,
+          url: generateUrl(contImg.path),
+        });
+        contentImage = array;
+      })
+    : (contentImage = {
+        name: contentImageFile.name,
+        url: generateUrl(contentImageFile.path),
+      });
 
-  const contentImage = content;
   const portfolio = new Portfolio({
     ...requestBody,
     skill,

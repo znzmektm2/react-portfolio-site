@@ -35,7 +35,6 @@ const UploadInput = ({
 }) => {
   const [imageUrl, setImageUrl] = useState();
   const thumbImageInput = useRef();
-  console.log(22222222222);
   const onDrop = useCallback(
     (acceptedFiles, fileRejections, event) => {
       const files = acceptedFiles;
