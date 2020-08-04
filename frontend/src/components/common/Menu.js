@@ -29,14 +29,15 @@ const MenuBlock = styled.div`
         justify-content: center;
         flex-direction: column;
         text-align: right;
-        padding: 0 12rem 0 16rem;
+        padding: 0 12rem 0 12rem;
         li {
-          padding: 0.2rem 0;
+          padding-left: 5rem;
           overflow: hidden;
 
           &:before {
             content: "";
             opacity: 0;
+            display: none;
             position: absolute;
             top: 0;
             left: 0;
@@ -104,12 +105,15 @@ const MenuBlock = styled.div`
 
           a {
             position: relative;
+            padding-left: 2.5rem;
             font-family: "goku";
             font-size: 5rem;
-            line-height: 5.6rem;
+            line-height: 6rem;
+            color: #e0e0dc;
             transform: translate3d(0, 110%, 0);
             transition-delay: 0.8s;
             animation: 0.3s ease forwards fadeOut;
+
             @keyframes fadeOut {
               0% {
                 opacity: 1;
@@ -118,93 +122,39 @@ const MenuBlock = styled.div`
                 opacity: 0;
               }
             }
-            span {
+            &:before {
+              content: "";
               position: absolute;
-              top: 0;
+              top: 10%;
               left: 0;
-              right: 0;
-              bottom: 0;
-              overflow: hidden;
-              &:before {
-                position: absolute;
-                top: 0;
-                left: 0;
-              }
-              &.front {
-                &:before {
-                  transform: translateZ(0);
-                  color: #c8c9b9;
-                }
-              }
-              &.end {
-                transform: translate3d(0, 100%, 0);
-                &:before {
-                  color: #ff1f44;
-                  background: -webkit-linear-gradient(
-                    -90deg,
-                    #fd0000,
-                    #ed1931,
-                    #fd0c68,
-                    #cb018f
-                  );
-                  -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                  transform: translate3d(0, -100%, 0);
-                  opacity: 0;
-                }
-              }
-            }
-            &:not(.active):hover {
-              .front {
-                transform: translate3d(0, -100%, 0);
-                transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-                &:before {
-                  transform: translate3d(0, 100%, 0);
-                  transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-                  opacity: 1;
-                }
-              }
-              .end {
-                transform: translateZ(0);
-                transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-                &:before {
-                  opacity: 1;
-                  transform: translateZ(0);
-                  transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-                }
-              }
-            }
-            &.active {
-              color: #ff1f44;
-              background: -webkit-linear-gradient(
-                -90deg,
+              display: block;
+              width: 117%;
+              height: 76%;
+              z-index: -1;
+              transform: translate3d(100%, 0, 0) skew(-45deg);
+              transition: all 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+              background: linear-gradient(
+                180deg,
                 #fd0000,
                 #ed1931,
                 #fd0c68,
                 #cb018f
               );
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
+              opacity: 0.9;
             }
-          }
-          &:nth-child(1) {
-            span:before {
-              content: "Home";
+            &:not(.active):hover {
+              color: #141e27;
+              transition: all 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+              &:before {
+                transform: translate3d(0%, 0, 0) skew(-45deg);
+              }
             }
-          }
-          &:nth-child(2) {
-            span:before {
-              content: "About";
-            }
-          }
-          &:nth-child(3) {
-            span:before {
-              content: "Portfolios";
-            }
-          }
-          &:nth-child(4) {
-            span:before {
-              content: "Design";
+            &.active {
+              color: #141e27;
+              transition: all 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+              &:before {
+                transform: translate3d(0%, 0, 0) skew(-45deg);
+              }
             }
           }
         }
@@ -259,29 +209,21 @@ const Menu = ({ ...rest }) => {
             <li>
               <DelayLink exact to="/" {...rest}>
                 Home
-                <span className="front" />
-                <span className="end" />
               </DelayLink>
             </li>
             <li>
               <DelayLink to="/about" {...rest}>
                 About
-                <span className="front" />
-                <span className="end" />
               </DelayLink>
             </li>
             <li>
               <DelayLink to="/portfolios" {...rest}>
                 Portfolios
-                <span className="front" />
-                <span className="end" />
               </DelayLink>
             </li>
             <li>
               <DelayLink to="/design" {...rest}>
                 Design
-                <span className="front" />
-                <span className="end" />
               </DelayLink>
             </li>
           </ul>

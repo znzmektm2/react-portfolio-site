@@ -1,9 +1,11 @@
 import React from "react";
 import Button from "../common/Button";
+import PageTitle from "./../common/PageTitle";
 
 const AdminForm = ({ password, onChange, onSubmit, onLogout, user, error }) => {
   return (
-    <div>
+    <div className="page">
+      <PageTitle subTitle="Admin">Admin</PageTitle>
       {user ? (
         <div>
           <Button onClick={onLogout}>로그아웃</Button>

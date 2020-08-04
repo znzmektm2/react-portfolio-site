@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import DelayLink from "./DelayLink";
 import styled from "styled-components";
 
 const ImageListBlock = styled.li`
@@ -10,7 +10,6 @@ const ImageListBlock = styled.li`
   width: 25%;
   line-height: 0;
   opacity: 0;
-
   box-sizing: border-box;
   -webkit-transition: all 1s ease-in-out;
   -moz-transition: all 1s ease-in-out;
@@ -19,6 +18,7 @@ const ImageListBlock = styled.li`
   &.appear {
     opacity: 1;
   }
+
   a {
     display: inline-block;
     position: relative;
@@ -55,7 +55,8 @@ const ImageListBlock = styled.li`
         left: -1px;
         width: 101%;
         height: 0;
-        background: #000506d9;
+        background: #000506;
+        opacity: 0.85;
       }
       .wrap {
         position: relative;
@@ -90,6 +91,7 @@ const ImageListBlock = styled.li`
             width: 4rem;
             height: 3px;
             background: #c8c9b9;
+            transform: translate3d(-100%, 0, 0);
           }
           span {
             display: inline-block;
@@ -138,6 +140,10 @@ const ImageListBlock = styled.li`
             transform: translate3d(0, 0%, 0);
             transition: transform 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
           }
+          &:after {
+            transform: translate3d(0%, 0, 0);
+            transition: transform 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
+          }
         }
         h4 {
           span {
@@ -160,39 +166,41 @@ const ImageList = ({
   srcSet,
   alt,
   isLazy = false,
-}) => (
-  <>
-    <ImageListBlock className={isLazy ? "lazy" : ""}>
-      <Link to={`/portfolio/${id}`}>
-        <div className="imgBox">
-          <img
-            src={src}
-            alt={alt}
-            srcSet={isLazy ? "" : srcSet}
-            data-srcset={srcSet}
-            data-src={src}
-          />
-        </div>
-        <div className="txtBox">
-          <div className="wrap">
-            <div className="type">
-              <span>
-                {web && "WEB"}
-                {singlePage && "SINGLEPAGE"}
-              </span>
-            </div>
-            <h3>
-              <span>{id}</span>
-            </h3>
-            <h4>
-              <span>{client}</span>
-            </h4>
+}) => {
+  return (
+    <>
+      <ImageListBlock className={isLazy ? "lazy" : ""}>
+        <DelayLink to={`/portfolio/${id}`} open="true">
+          <div className="imgBox">
+            <img
+              src={src}
+              alt={alt}
+              srcSet={isLazy ? "" : srcSet}
+              data-srcset={srcSet}
+              data-src={src}
+            />
           </div>
-        </div>
-      </Link>
-    </ImageListBlock>
-  </>
-);
+          <div className="txtBox">
+            <div className="wrap">
+              <div className="type">
+                <span>
+                  {web && "WEB"}
+                  {singlePage && "SINGLEPAGE"}
+                </span>
+              </div>
+              <h3>
+                <span>{id}</span>
+              </h3>
+              <h4>
+                <span>{client}</span>
+              </h4>
+            </div>
+          </div>
+        </DelayLink>
+      </ImageListBlock>
+    </>
+  );
+};
 
 ImageList.propTypes = {
   src: PropTypes.string.isRequired,

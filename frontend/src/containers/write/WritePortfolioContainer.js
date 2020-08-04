@@ -135,7 +135,8 @@ const WritePortfolioContainer = ({ history }) => {
       history.go(-1);
     }
 
-    if (!originalPortfolioId) {
+    if (!originalPortfolioId && !portfolioError) {
+      console.log(2);
       dispatch(initialize());
     }
 
@@ -148,7 +149,7 @@ const WritePortfolioContainer = ({ history }) => {
     }
 
     return () => {
-      if (!portfolioError && portfolio) {
+      if (portfolio && !portfolioError) {
         dispatch(initialize());
         dispatch(initializePortfolios());
       }

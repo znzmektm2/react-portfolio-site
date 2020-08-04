@@ -6,10 +6,11 @@ import styled from "styled-components";
 const HeaderBlock = styled.header`
   .logo {
     position: fixed;
-    top: 102px;
-    left: -18px;
-    transform: rotate(90deg);
+    top: 50px;
+    left: 96px;
     font-size: 1.61rem;
+    transform: rotate(90deg);
+    transform-origin: left top;
     z-index: 5;
     h1 {
       a {
@@ -21,24 +22,16 @@ const HeaderBlock = styled.header`
   .navBtn {
     position: fixed;
     top: 50px;
-    right: 33px;
+    right: 50px;
     display: flex;
     -ms-flex-align: center;
     align-items: center;
     -ms-flex-pack: center;
     justify-content: center;
     line-height: 0;
-    border: 1px solid;
-    border-image-slice: 1;
-    border-image-source: -webkit-linear-gradient(
-      -90deg,
-      #fd0000cc,
-      #ed1931cc,
-      #fd0c68cc,
-      #cb018fcc
-    );
     overflow: hidden;
     z-index: 5;
+
     &:before {
       content: "";
       position: absolute;
@@ -63,21 +56,54 @@ const HeaderBlock = styled.header`
       opacity: 1;
     }
 
-    div {
+    .burgerLine {
       position: relative;
       display: inline-block;
-      padding: 1.282rem 1.125rem;
+      padding: 1.782rem 1.563rem;
       transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
       span {
         display: block;
-        width: 22px;
+        width: 20px;
         height: 2px;
-        margin: 3px auto;
+        margin: 2px auto;
         background: #222;
         transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         &:nth-child(2) {
           height: 1px;
         }
+      }
+    }
+
+    .btnLine {
+      position: absolute;
+      opacity: 0.6;
+      &.step1 {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: #fd0000;
+      }
+      &.step2 {
+        top: 0;
+        right: 0;
+        width: 1px;
+        height: 100%;
+        background: linear-gradient(180deg, #fd0000, #ed1931, #fd0c68, #cb018f);
+      }
+      &.step3 {
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: #cb018f;
+      }
+      &.step4 {
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 100%;
+        background: linear-gradient(180deg, #fd0000, #ed1931, #fd0c68, #cb018f);
       }
     }
 
@@ -149,11 +175,10 @@ const HeaderBlock = styled.header`
     }
     .navBtn {
       div {
-        padding: 1.344rem 1.313rem;
+        opacity: 0.9;
         span {
           background: #fff;
-          height: 1px;
-          width: 16px;
+          opacity: 0.9;
           &:nth-child(1) {
             -webkit-transform: translateY(4px) rotate(45deg);
             -ms-transform: translateY(4px) rotate(45deg);
@@ -164,10 +189,10 @@ const HeaderBlock = styled.header`
             opacity: 0;
           }
           &:nth-child(3) {
-            -webkit-transform: translateY(-4px) rotate(-45deg);
-            -ms-transform: translateY(-4px) rotate(-45deg);
-            -o-transform: translateY(-4px) rotate(-45deg);
-            transform: translateY(-4px) rotate(-45deg);
+            -webkit-transform: translateY(-3px) rotate(-45deg);
+            -ms-transform: translateY(-3px) rotate(-45deg);
+            -o-transform: translateY(-3px) rotate(-45deg);
+            transform: translateY(-3px) rotate(-45deg);
           }
         }
       }
@@ -178,6 +203,9 @@ const HeaderBlock = styled.header`
       .menuWrap {
         ul.menuList {
           li {
+            &:before {
+              display: block;
+            }
             a {
               transform: translate3d(0, 0%, 0);
               transition: transform 1s cubic-bezier(0.165, 0.84, 0.44, 1) 1.2s;
@@ -266,7 +294,6 @@ const Header = () => {
 
   return (
     <HeaderBlock className={active && "active"}>
-      {/* <HeaderBlock className="active"> */}
       <div className="logo">
         <h1>
           <NavLink to="/" className="ease-in-out_1s">
@@ -275,11 +302,15 @@ const Header = () => {
         </h1>
       </div>
       <div className="navBtn" onClick={addActiveClass}>
-        <div>
-          <span></span>
-          <span></span>
-          <span></span>
+        <div className="burgerLine">
+          <span />
+          <span />
+          <span />
         </div>
+        <span className="btnLine step1" />
+        <span className="btnLine step2" />
+        <span className="btnLine step3" />
+        <span className="btnLine step4" />
       </div>
       <Menu addActiveClass={addActiveClass} open={open} />
       <div className="bg step1" />

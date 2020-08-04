@@ -221,6 +221,11 @@ const WritePortfolio = ({
           onChange={onChange}
         />
         <br />
+        {portfolioError && <p className="red">내용을 채워주세요</p>}
+        <Button onClick={onPublish}>
+          {originalPortfolioId ? "수정하기" : "등록하기"}
+        </Button>
+        <br />
         <UploadInput
           inputName="thumbImage"
           thumbImage={thumbImage}
@@ -232,11 +237,6 @@ const WritePortfolio = ({
           handleFormData={handleFormData}
           form={form}
         />
-        <br />
-        {portfolioError && <p className="red">내용을 채워주세요</p>}
-        <Button onClick={onPublish}>
-          {originalPortfolioId ? "수정하기" : "등록하기"}
-        </Button>
       </Responsive>
     </WritePortfolioBlock>
   );

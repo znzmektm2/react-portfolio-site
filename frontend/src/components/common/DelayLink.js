@@ -6,17 +6,20 @@ export const DelayLink = ({ exact, to, addActiveClass, open, children }) => {
 
   const clickMenu = (e) => {
     e.preventDefault();
-    addActiveClass();
+    addActiveClass && addActiveClass();
 
     if (open) {
-      setTimeout(() => {
-        const root = document.getElementById("root");
-        root.classList.add("fadeOut");
-        setTimeout(() => {
-          root.classList.remove("fadeOut");
-          history.push(to);
-        }, 500);
-      }, 500);
+      setTimeout(
+        () => {
+          const root = document.getElementById("root");
+          root.classList.add("fadeOut");
+          setTimeout(() => {
+            root.classList.remove("fadeOut");
+            history.push(to);
+          }, 500);
+        },
+        addActiveClass ? 500 : 0
+      );
     }
   };
 
