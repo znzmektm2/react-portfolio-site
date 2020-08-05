@@ -47,12 +47,12 @@ const PortfolioListContainer = ({ location, history }) => {
     [dispatch, location.search]
   );
 
-  // 포트폴리오 API 호출
+  // 포트폴리오 API 호출 이벤트
   const searchPortfolio = useCallback(() => {
     loadPortfolio();
   }, [loadPortfolio]);
 
-  // 다음 페이지 포트폴리오 API 호츌
+  // 다음 페이지 포트폴리오 API 호츌 이벤트
   const loadMorePortfolio = useCallback(async () => {
     if (portfolioList.length > 0) {
       dispatch(currentPage(page + 1));

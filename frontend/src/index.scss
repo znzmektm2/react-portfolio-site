@@ -172,7 +172,7 @@ $translate1: translate(0, -100%);
   }
 }
 
-.page {
+:not(.not).page {
   opacity: 0;
   animation: 0.5s ease-in-out forwards fadein;
 }

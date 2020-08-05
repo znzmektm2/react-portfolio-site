@@ -8,6 +8,7 @@ import { removePortFolio } from "./../../lib/api/portfolios";
 
 const PortfolioContainer = ({ match, history }) => {
   const { id } = match.params;
+
   const dispatch = useDispatch();
   const { portfolio, error, loading, user } = useSelector(
     ({ portfolio, loading, user }) => ({
