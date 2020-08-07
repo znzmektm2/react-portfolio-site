@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const CategoryBlock = styled.div`
+  background: #fff;
   ul {
     padding: 0.2rem 0;
     &:first-child {

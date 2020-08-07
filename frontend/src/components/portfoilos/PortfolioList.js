@@ -9,6 +9,7 @@ import { DelayLink } from "./../common/DelayLink";
 const PortfolioListBlock = styled.div`
   padding: 4rem 0 10rem;
   min-height: 500px;
+  background: #fff;
   .writeButtonArea {
     overflow: hidden;
     a {
@@ -197,7 +198,7 @@ const PortfolioList = forwardRef((props, ref) => {
         let lazyImage = entry.target;
         lazyImage.src = lazyImage.dataset.src;
         lazyImage.classList.remove("lazy");
-        lazyImage.closest("li").classList.add("appear");
+        lazyImage.parentNode.parentNode.parentNode.classList.add("appear");
         observer.unobserve(lazyImage);
       }
     });

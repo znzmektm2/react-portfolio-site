@@ -16,6 +16,14 @@ const HeaderBlock = styled.header`
       a {
         font-family: "LibreBarcode128Text-Regular";
         line-height: 3.2rem;
+        transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+    }
+    &.cubicBezier {
+      h1 {
+        a {
+          transition: all 1s ease-in-out;
+        }
       }
     }
   }
@@ -164,7 +172,7 @@ const HeaderBlock = styled.header`
   }
 
   /* 메뉴 클릭시 */
-  &.active {
+  &#active {
     z-index: 5;
     .logo {
       h1 {
@@ -275,30 +283,53 @@ const HeaderBlock = styled.header`
       transition-delay: 1s;
     }
   }
+
+  /* 페이지 하단 텍스트 호버시 */
+  &.effective {
+    &.over {
+      .logo {
+        h1 {
+          a {
+            color: #c8c9b9;
+          }
+        }
+      }
+      .navBtn {
+        div {
+          opacity: 0.9;
+          span {
+            background: #fff;
+            opacity: 0.9;
+          }
+        }
+      }
+    }
+  }
 `;
 
 const Header = () => {
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(true);
+  const logo = document.getElementsByClassName("logo");
 
   // 메뉴 클릭시 header에 active 클래스 추가
   const addActiveClass = useCallback(() => {
     if (open) {
       setActive(!active);
       setOpen(false);
+      logo[0].classList.add("cubicBezier");
       setTimeout(() => {
         setOpen(true);
+        logo[0].classList.remove("cubicBezier");
       }, 1100);
     }
-  }, [active, open]);
+  }, [active, open, logo]);
 
   return (
-    <HeaderBlock className={active && "active"}>
+    <HeaderBlock id={active ? "active" : ""}>
       <div className="logo">
         <h1>
-          <NavLink to="/" className="ease-in-out_1s">
-            JeonAeRan
-          </NavLink>
+          <NavLink to="/">JeonAeRan</NavLink>
         </h1>
       </div>
       <div className="navBtn" onClick={addActiveClass}>

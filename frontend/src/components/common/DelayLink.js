@@ -4,9 +4,13 @@ import { withRouter, NavLink, useHistory } from "react-router-dom";
 export const DelayLink = ({ exact, to, addActiveClass, open, children }) => {
   let history = useHistory();
 
-  const clickMenu = (e) => {
+  const clickLink = (e) => {
     e.preventDefault();
     addActiveClass && addActiveClass();
+
+    const header = document.getElementsByTagName("header");
+    header[0].classList.remove("effective");
+    header[0].classList.remove("over");
 
     if (open) {
       setTimeout(
@@ -16,6 +20,7 @@ export const DelayLink = ({ exact, to, addActiveClass, open, children }) => {
           setTimeout(() => {
             root.classList.remove("fadeOut");
             history.push(to);
+            window.scroll(0, 0);
           }, 500);
         },
         addActiveClass ? 500 : 0
@@ -24,7 +29,7 @@ export const DelayLink = ({ exact, to, addActiveClass, open, children }) => {
   };
 
   return (
-    <NavLink exact to={to} onClick={clickMenu}>
+    <NavLink exact to={to} onClick={clickLink}>
       {children}
     </NavLink>
   );
