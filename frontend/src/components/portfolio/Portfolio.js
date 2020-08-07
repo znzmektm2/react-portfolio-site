@@ -249,7 +249,6 @@ const PortfolioBlock = styled.div`
       padding: 9rem 0;
       text-align: center;
       .buttonBox {
-        padding-bottom: 2rem;
         text-align: left;
         a {
           margin: 0 1rem 0 0;
@@ -260,6 +259,8 @@ const PortfolioBlock = styled.div`
       }
 
       img {
+        margin: 2rem auto 0;
+        display: block;
         opacity: 0;
         transform: translate3d(0, 200px, 0);
         &.appear {
@@ -329,7 +330,6 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
     responsiveWeb,
     IEVersion,
     skill,
-    animationEvent,
     workYear,
     workMonth,
     period,
@@ -339,8 +339,12 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
     contentImage,
   } = portfolio;
 
+  console.log("id ", id);
+  console.log("thumbImage.name ", thumbImage.name);
+  console.log("thumbImage.url ", thumbImage.url);
+  contentImage.map((contImg) => console.log("contImg.name ", contImg.name));
+
   const skillArray = skill.join(", ");
-  const animationEventArray = animationEvent.join(", ");
   const insertTag = (host) => (
     <li>
       <span>HOST</span>
@@ -370,7 +374,7 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
                 </h3>
                 <div className="detailList">
                   <ul>
-                    {host !== "null" && insertTag(host)}
+                    {host !== " " && insertTag(host)}
                     <li>
                       <span>TYPE</span>
                       <span>

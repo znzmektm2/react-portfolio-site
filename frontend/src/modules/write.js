@@ -5,7 +5,7 @@ import createRequestSaga, {
 import * as portfoliosAPI from "./../lib/api/portfolios";
 import { takeLatest } from "redux-saga/effects";
 
-const INITIALIZE = "write/INITIALIZE";
+const INITIALIZEWRITE = "write/INITIALIZEWRITE";
 const CHANGE_FIELD = "write/CHANGE_FIELD";
 const [CHECK_ID, CHECK_ID_SUCCESS, CHECK_ID_FAILURE] = createRequestActionTypes(
   "write/CHECK_ID"
@@ -22,7 +22,7 @@ const [
   UPDATE_PORTFOLIO_FAILURE,
 ] = createRequestActionTypes("write/UPDATE_PORTFOLIO");
 
-export const initialize = createAction(INITIALIZE);
+export const initializeWrite = createAction(INITIALIZEWRITE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
@@ -79,7 +79,7 @@ const initialState = {
 
 export default handleActions(
   {
-    [INITIALIZE]: (state) => initialState,
+    [INITIALIZEWRITE]: (state) => initialState,
     [CHANGE_FIELD]: (state, { payload: { key, value } }) => ({
       ...state,
       [key]: value,
@@ -130,11 +130,6 @@ export default handleActions(
       contentImage: portfolio.contentImage,
       originalPortfolioId: portfolio.id,
     }),
-    [UPDATE_PORTFOLIO]: (state) => ({
-      ...state,
-      portfolio: null,
-      portfolioError: null,
-    }),
     [UPDATE_PORTFOLIO_SUCCESS]: (state, { payload: portfolio }) => ({
       ...state,
       portfolio,
@@ -142,7 +137,6 @@ export default handleActions(
     }),
     [UPDATE_PORTFOLIO_FAILURE]: (state, { payload: portfolioError }) => ({
       ...state,
-      portfolio: null,
       portfolioError,
     }),
   },

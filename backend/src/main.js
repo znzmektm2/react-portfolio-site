@@ -44,10 +44,14 @@ app.use(
             const savedFile = fileList[index];
             const splitSavedFile = savedFile.split(".");
             const savedName = splitSavedFile[0];
+            const nameNum = savedName.split("_")[1];
+
             // 중첩된 파일명이 여러개일 경우
             if (savedName.indexOf(name + "_") > -1) {
               // 파일명 끝 숫자만 배열에 넣기
-              numArr.push(savedName.split("_")[1]);
+              if (parseInt(nameNum)) {
+                numArr.push(nameNum);
+              }
             }
             // 중첩된 파일명이 1개일 경우
             else {
@@ -56,6 +60,7 @@ app.use(
           }
           uploadFileName =
             name + "_" + (Math.max.apply(null, numArr) + 1) + "." + extension;
+          console.log("uploadFileName ", uploadFileName);
         }
         // 파일명이 없는 경우
         else {

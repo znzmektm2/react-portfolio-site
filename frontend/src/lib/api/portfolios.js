@@ -6,8 +6,8 @@ export const checkId = (id) => client.get(`/api/portfolios/idCheck/${id}`);
 export const writePortFolio = (formData) =>
   client.post("/api/portfolios", formData);
 
-export const updatePortFolio = ({ originalPortfolioId, data }) =>
-  client.patch(`/api/portfolios/${originalPortfolioId}`, data);
+export const updatePortFolio = ({ originalPortfolioId, formData }) =>
+  client.patch(`/api/portfolios/${originalPortfolioId}`, formData);
 export const readPortFolio = (id) => client.get(`/api/portfolios/${id}`);
 
 export const removePortFolio = (id) => client.delete(`/api/portfolios/${id}`);

@@ -84,7 +84,7 @@ const PortfolioListContainer = ({ location, history }) => {
     if (!portfolioList.length) {
       searchPortfolio();
     }
-  }, [portfolioList.length, searchPortfolio]);
+  }, [portfolioList.length, dispatch, searchPortfolio]);
 
   return (
     <PortfolioList

@@ -5,6 +5,7 @@ import Portfolio from "./../../components/portfolio/Portfolio";
 import { readportfolio, unloadPortfolio } from "../../modules/portfolio";
 import { setOriginalPortfolio } from "../../modules/write";
 import { removePortFolio } from "./../../lib/api/portfolios";
+import { initializePortfolios } from "./../../modules/portfolios";
 
 const PortfolioContainer = ({ match, history }) => {
   const { id } = match.params;
@@ -35,6 +36,7 @@ const PortfolioContainer = ({ match, history }) => {
   const onRemove = async () => {
     try {
       await removePortFolio(id);
+      dispatch(initializePortfolios());
       history.push("/portfolios");
     } catch (e) {
       console.log(e);

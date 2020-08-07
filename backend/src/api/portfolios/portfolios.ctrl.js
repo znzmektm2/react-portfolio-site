@@ -166,6 +166,9 @@ export const write = async (ctx) => {
   const thumbImageFile = files.thumbImage;
   const contentImageFile = files.contentImage;
 
+  console.log("thumbImageFile ", thumbImageFile);
+  console.log("contentImageFile ", contentImageFile);
+
   const generateUrl = (path) => {
     const pathSplit = path.split("\\");
     return pathSplit[pathSplit.length - 1];
@@ -256,6 +259,9 @@ export const update = async (ctx) => {
   // 검증 실패인 경우 에러 처리
   const requestBody = ctx.request.body;
   const result = schema.validate(requestBody);
+
+  console.log("requestBody ", requestBody);
+  console.log("result ", result);
 
   if (result.error) {
     ctx.status = 400; // Bad Request

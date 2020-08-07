@@ -4,7 +4,7 @@ import {
   changeField,
   checkId,
   writePortfolio,
-  initialize,
+  initializeWrite,
   updatePortfolio,
 } from "../../modules/write";
 import { withRouter } from "react-router-dom";
@@ -13,7 +13,8 @@ import { initializePortfolios } from "../../modules/portfolios";
 
 const WritePortfolioContainer = ({ history }) => {
   const dispatch = useDispatch();
-  const form = useRef(null);
+  const thumbImageRef = useRef(null);
+  const contentImageRef = useRef(null);
   const {
     id,
     hasId,
@@ -76,18 +77,6 @@ const WritePortfolioContainer = ({ history }) => {
     [dispatch]
   );
 
-  useEffect(() => {
-    form.current = new FormData();
-  }, []);
-
-  const handleFormData = useCallback((key, value) => {
-    key !== "contentImage"
-      ? form.current.set(key, value)
-      : form.current.append(key, value);
-
-    return form.current;
-  }, []);
-
   const onPublish = () => {
     // 아이디 중복일 경우
     if (originalPortfolioId !== id && hasId) {
@@ -95,39 +84,39 @@ const WritePortfolioContainer = ({ history }) => {
       return;
     }
 
-    const data = form.current;
-    const host = hostValue ? hostValue : "null";
+    const formData = new FormData();
+    const host = hostValue ? hostValue : " ";
+
+    formData.append("id", id);
+    formData.append("client", client);
+    formData.append("host", host);
+    formData.append("web", web);
+    formData.append("singlePage", singlePage);
+    formData.append("pcVer", pcVer);
+    formData.append("mobileVer", mobileVer);
+    formData.append("IEVersion", IEVersion);
+    formData.append("skill", skill);
+    formData.append("animationEvent", animationEvent);
+    formData.append("workYear", workYear);
+    formData.append("workMonth", workMonth);
+    formData.append("period", period);
+    formData.append("worker", worker);
+    formData.append("url", url);
+    thumbImageRef.current !== null &&
+      formData.append("thumbImage", thumbImageRef.current);
+    contentImageRef.current !== null &&
+      contentImageRef.current.map((file) =>
+        formData.append("contentImage", file)
+      );
 
     // 업데이트
     if (originalPortfolioId) {
-      handleFormData("id", id);
-      handleFormData("client", client);
-      handleFormData("host", hostValue);
-      handleFormData("web", web);
-      handleFormData("singlePage", singlePage);
-      handleFormData("pcVer", pcVer);
-      handleFormData("mobileVer", mobileVer);
-      handleFormData("IEVersion", IEVersion);
-      handleFormData("skill", skill);
-      handleFormData("animationEvent", animationEvent);
-      handleFormData("workYear", workYear);
-      handleFormData("workMonth", workMonth);
-      handleFormData("period", period);
-      handleFormData("worker", worker);
-      handleFormData("url", url);
-
-      dispatch(updatePortfolio({ originalPortfolioId, data }));
+      dispatch(updatePortfolio({ originalPortfolioId, formData }));
       return;
     }
 
     // 포트폴리오 작성
-    handleFormData("host", host);
-    handleFormData("web", web);
-    handleFormData("singlePage", singlePage);
-    handleFormData("pcVer", pcVer);
-    handleFormData("mobileVer", mobileVer);
-
-    dispatch(writePortfolio(data));
+    dispatch(writePortfolio(formData));
   };
 
   useEffect(() => {
@@ -136,11 +125,11 @@ const WritePortfolioContainer = ({ history }) => {
     }
 
     if (!originalPortfolioId && !portfolioError) {
-      console.log(2);
-      dispatch(initialize());
+      dispatch(initializeWrite());
     }
 
     if (portfolio) {
+      dispatch(initializePortfolios());
       history.push(`/portfolio/${portfolio.id}`);
     }
 
@@ -150,8 +139,7 @@ const WritePortfolioContainer = ({ history }) => {
 
     return () => {
       if (portfolio && !portfolioError) {
-        dispatch(initialize());
-        dispatch(initializePortfolios());
+        dispatch(initializeWrite());
       }
     };
   }, [dispatch, user, history, portfolio, portfolioError, originalPortfolioId]);
@@ -179,13 +167,13 @@ const WritePortfolioContainer = ({ history }) => {
       url={url}
       thumbImage={thumbImage}
       contentImage={contentImage}
-      handleFormData={handleFormData}
+      thumbImageRef={thumbImageRef}
+      contentImageRef={contentImageRef}
       onPublish={onPublish}
       portfolioError={portfolioError}
       originalPortfolioId={originalPortfolioId}
       isEdit={!!originalPortfolioId}
       user={user}
-      form={form}
     />
   );
 };

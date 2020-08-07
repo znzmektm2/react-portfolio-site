@@ -39,18 +39,17 @@ const WritePortfolio = ({
   url,
   thumbImage,
   contentImage,
-  handleFormData,
+  thumbImageRef,
+  contentImageRef,
   onPublish,
   portfolioError,
   originalPortfolioId,
   user,
-  form,
 }) => {
   const onChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     onChangeField({ key: name, value: value });
-    handleFormData(name, value);
     if (name === "id") {
       onCheckId(value);
     }
@@ -64,12 +63,10 @@ const WritePortfolio = ({
       }
     });
     onChangeField({ key: e.target.id, value: e.target.checked });
-    handleFormData(e.target.id, e.target.checked);
   };
 
   const onChangeCheckbox = (e) => {
     onChangeField({ key: e.target.name, value: e.target.checked });
-    handleFormData(e.target.name, e.target.checked);
   };
 
   const checkDuplicatedId = () => {
@@ -229,13 +226,12 @@ const WritePortfolio = ({
         <UploadInput
           inputName="thumbImage"
           thumbImage={thumbImage}
-          handleFormData={handleFormData}
+          thumbImageRef={thumbImageRef}
         />
         <UploadInput
           inputName="contentImage"
           contentImage={contentImage}
-          handleFormData={handleFormData}
-          form={form}
+          contentImageRef={contentImageRef}
         />
       </Responsive>
     </WritePortfolioBlock>

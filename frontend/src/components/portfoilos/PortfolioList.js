@@ -1,6 +1,5 @@
 import React, { forwardRef, useEffect } from "react";
 import styled from "styled-components";
-import Button from "../common/Button";
 import useIO from "./../../lib/useIO";
 import Image from "./../common/Image";
 import Responsive from "./../common/Responsive";
@@ -14,7 +13,18 @@ const PortfolioListBlock = styled.div`
     overflow: hidden;
     a {
       float: right;
-      margin-right: 0;
+      line-height: 1.5rem;
+      vertical-align: middle;
+      border: none;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      color: white;
+      outline: none;
+      background: #aaa;
+      cursor: pointer;
+      &:hover {
+        background: #ddd;
+      }
     }
   }
   ul {
@@ -224,7 +234,9 @@ const PortfolioList = forwardRef((props, ref) => {
       <Responsive>
         {user && (
           <div className="writeButtonArea">
-            <Button to="/write">새 글 작성하기</Button>
+            <DelayLink to="/write" open="true" className="writeBtn">
+              새 글 작성하기
+            </DelayLink>
           </div>
         )}
         <ul className="portfolioList">
