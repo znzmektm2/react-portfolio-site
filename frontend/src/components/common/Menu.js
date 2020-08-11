@@ -135,7 +135,7 @@ const MenuBlock = styled.div`
               transition: all 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
               background: linear-gradient(
                 180deg,
-                #fd0000,
+                #ff2f00,
                 #ed1931,
                 #fd0c68,
                 #cb018f
@@ -151,7 +151,6 @@ const MenuBlock = styled.div`
             }
             &.active {
               color: #141e27;
-              transition: all 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
               &:before {
                 transform: translate3d(0%, 0, 0) skew(-45deg);
               }

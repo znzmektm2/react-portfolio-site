@@ -175,6 +175,10 @@ $translate1: translate(0, -100%);
 .page {
   margin-bottom: 100vh;
   border-bottom: 1px solid #e2e2e2;
+
+  &.home {
+    border-bottom: none;
+  }
 }
 
 :not(.not).page {

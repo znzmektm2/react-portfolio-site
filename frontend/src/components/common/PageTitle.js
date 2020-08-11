@@ -18,12 +18,12 @@ const TitleBlock = styled.div`
     height: 100%;
     background: linear-gradient(180deg, #ff3000, #ed0200, #ff096c, #d50082);
     transform: skew(-45deg);
-    z-index: -1;
   }
   div {
     margin-top: -2rem;
     text-align: center;
     background: #fff;
+    z-index: 1;
     h3 {
       font-family: "trump-gothic-pro";
       font-size: 4.2rem;
