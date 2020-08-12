@@ -6,7 +6,7 @@ import About from "../components/about/About";
 const AboutPage = () => {
   return (
     <>
-      <div className="page">
+      <div className="page about">
         <PageTitle subTitle="About me more">About</PageTitle>
         <About />
       </div>

@@ -149,10 +149,10 @@ const HomeBlock = styled.div`
 
 const Home = () => {
   useEffect(() => {
-    const header = document.getElementsByTagName("header");
-    header[0].classList.add("home");
+    const header = document.getElementsByTagName("header")[0];
+    header.classList.add("home");
     return () => {
-      header[0].classList.remove("home");
+      header.classList.remove("home");
     };
   });
 

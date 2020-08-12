@@ -126,8 +126,7 @@ const PortfolioBlock = styled.div`
             h3 {
               margin-top: 3em;
               overflow: hidden;
-              span {
-                display: inline-block;
+              a {
                 font-family: "KoPub Batang", serif;
                 font-size: 1.1em;
                 line-height: 1.5em;
@@ -185,21 +184,24 @@ const PortfolioBlock = styled.div`
 
       /* 인트로 이미지 박스 */
       &.introImg {
-        > img {
-          opacity: 0;
-          transform: translate3d(20%, 0, 0);
-          width: 380px;
-          box-shadow: 45px 45px 0px #fff;
-          cursor: pointer;
-          animation: 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 0.2s fadeIn;
-          @keyframes fadeIn {
-            0% {
-              transform: translate3d(20%, 0, 0);
-              opacity: 0;
-            }
-            100% {
-              transform: translate3d(0%, 0, 0);
-              opacity: 1;
+        a {
+          img {
+            opacity: 0;
+            transform: translate3d(20%, 0, 0);
+            width: 380px;
+            box-shadow: 45px 45px 0px #fff;
+            cursor: pointer;
+            animation: 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 0.2s
+              fadeIn;
+            @keyframes fadeIn {
+              0% {
+                transform: translate3d(20%, 0, 0);
+                opacity: 0;
+              }
+              100% {
+                transform: translate3d(0%, 0, 0);
+                opacity: 1;
+              }
             }
           }
         }
@@ -339,9 +341,10 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
     contentImage,
   } = portfolio;
 
-  console.log("id ", id);
-  console.log("thumbImage.name ", thumbImage.name);
-  console.log("thumbImage.url ", thumbImage.url);
+  // console.log("id ", id);
+  // console.log("thumbImage.name ", thumbImage.name);
+  // console.log("thumbImage.url ", thumbImage.url);
+  console.log("url ", url);
   contentImage.map((contImg) => console.log("contImg.name ", contImg.name));
 
   const skillArray = skill.join(", ");
@@ -351,9 +354,7 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
       <span>{host}</span>
     </li>
   );
-  const toLink = () => {
-    window.open(url[0], "_blank");
-  };
+
   return (
     <div className="page not">
       <PortfolioBlock>
@@ -365,12 +366,19 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
               <span className="line step3" />
               <div className="txtWrap">
                 <h2>
-                  <span className="wrap">
-                    <span onClick={toLink}>{id}</span>
-                  </span>
+                  <a
+                    className="wrap"
+                    href={url[0]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>{id}</span>
+                  </a>
                 </h2>
                 <h3>
-                  <span onClick={toLink}>{client}</span>
+                  <a href={url[0]} target="_blank" rel="noopener noreferrer">
+                    {client}
+                  </a>
                 </h3>
                 <div className="detailList">
                   <ul>
@@ -433,11 +441,9 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
             </div>
           </div>
           <div className="half introImg">
-            <img
-              src={`../${thumbImage.url}`}
-              alt={thumbImage.name}
-              onClick={toLink}
-            />
+            <a href={url[0]} target="_blank" rel="noopener noreferrer">
+              <img src={`../${thumbImage.url}`} alt={thumbImage.name} />
+            </a>
             <span className="bg">
               <svg>
                 <defs>

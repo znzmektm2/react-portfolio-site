@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const AboutBlock = styled.div`
   article {
     position: relative;
-    padding: 9.5rem 4.6rem 4.6rem;
+    padding: 85px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,16 +15,70 @@ const AboutBlock = styled.div`
     border-bottom: 1px solid #000;
     box-sizing: border-box;
 
-    h2 {
-      position: relative;
-      font-size: calc(3rem + 3vw);
-      line-height: 1.4em;
-      letter-spacing: -0.01em;
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 9rem 4rem 4rem;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      h2 {
+        position: absolute;
+        top: 5.5vh;
+        left: 0;
+        width: 100%;
+        font-size: calc(3.5rem + 3vw);
+        line-height: 1.4em;
+        letter-spacing: -0.01em;
+        text-align: center;
+        span {
+          display: inline-block;
+          padding: 0 2vw;
+        }
+      }
     }
 
     &.intro {
-      padding: 0;
       overflow: hidden;
+      h2 {
+        top: 14vh;
+        color: #fff;
+      }
+      .content {
+        padding: 30vh 4vw 0;
+        border: 1px solid #46454d;
+        ul {
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          li {
+            display: inline-block;
+            vertical-align: top;
+            max-width: 33.333%;
+            padding: 0 3rem;
+            color: #fff;
+            text-align: left;
+            h3 {
+              margin-bottom: 1rem;
+              font-family: trump-gothic-pro;
+              font-size: calc(0.7rem + 0.6vw);
+              letter-spacing: 1.6px;
+            }
+            div {
+              margin-bottom: 1rem;
+            }
+            p {
+              font-family: "KoPub Batang", serif;
+              color: #a7a7a7;
+              span {
+                color: #ff1f44;
+              }
+            }
+          }
+        }
+      }
+
       .bg {
         position: fixed;
         top: 0;
@@ -33,59 +87,71 @@ const AboutBlock = styled.div`
         height: 120%;
         background: #000308;
         z-index: -1;
-        &:before {
-          content: "";
-          display: block;
-          height: 100%;
-          background: url(/images/about.jpg) bottom right no-repeat;
-          background-size: cover;
+        img {
+          width: 100%;
           opacity: 0.2;
         }
       }
 
-      h2 {
-        color: #fff;
-      }
-      ul {
-        li {
-          color: #fff;
+      &.hide {
+        .bg {
+          position: absolute;
         }
       }
     }
 
-    &.skills {
+    &.clients {
       background: #fff;
+      h2 {
+        span {
+          color: #222;
+          background: #fff;
+        }
+      }
+      .content {
+        border: 1px solid #222;
+        .skillList {
+          width: 96%;
+          height: 100%;
+          overflow: hidden;
+          ul {
+            text-align: left;
+            li {
+              margin-bottom: 1.1rem;
+              width: 16.666%;
+              display: inline-block;
+              font-size: 0;
+              line-height: 0;
+              text-align: center;
+              a {
+                width: 94%;
+              }
+            }
+          }
+        }
+      }
     }
     &.recongition {
       position: relative;
       background: #0d0e13;
       h2 {
-        position: absolute;
-        left: 0;
-        top: 5rem;
-        width: 100%;
-        text-align: center;
-        display: inline-block;
         span {
-          padding: 0 2vw;
           color: #fff;
           background: #0d0e13;
         }
       }
       .content {
-        width: 100%;
-        height: 100%;
         border: 1px solid #42390f;
         .lists {
-          margin: 0 auto;
-          width: 80%;
-          max-width: 1300px;
-          height: 100%;
+          width: 84%;
           display: flex;
-          align-items: center;
-          justify-content: space-between;
+          justify-content: center;
           li {
-            padding: 8vh 4.5vw 0;
+            padding: 13vh 4.8vw 0;
+            line-height: 0;
+            img {
+              width: 100%;
+            }
           }
         }
       }
@@ -94,32 +160,448 @@ const AboutBlock = styled.div`
 `;
 
 const About = () => {
-  // const toLink = (e) => {
-  //   e.preventDefault();
-  //   window.open(url, "_blank");
-  // };
+  const [top, setTop] = useState("0%");
+  const [opacity, setOpacity] = useState("0%");
+
+  const scrollEvent = () => {
+    const scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
+    const windowHeight = window.innerHeight; // 스크린 창
+    const fullHeight = document.body.scrollHeight; //  margin 값은 포함 x
+    const margin = windowHeight / 11;
+
+    const intro = document.getElementsByClassName("intro")[0];
+    const introOffsetTop = intro.offsetTop;
+    const introOffsetBottom = introOffsetTop + intro.offsetHeight;
+
+    const recongition = document.getElementsByClassName("recongition")[0];
+    const recongitionOffsetTop = recongition.offsetTop;
+    const recongitionOffsetBottom =
+      recongitionOffsetTop + recongition.offsetHeight;
+
+    const header = document.getElementsByTagName("header")[0];
+
+    // 인트로 밑으로 나가면 bg position 바꾸기
+    if (scrollLocation > introOffsetBottom) {
+      intro.classList.add("hide");
+    } else {
+      intro.classList.remove("hide");
+    }
+
+    // 인트로 진입시 로고 밑 메뉴버튼 색 바꾸기
+    if (
+      scrollLocation >= introOffsetTop - margin &&
+      scrollLocation <= introOffsetBottom - margin
+    ) {
+      header.classList.add("scroll");
+      header.classList.add("effective");
+      console.log("effective");
+      console.log("scroll");
+    }
+    // Recognition 진입시 로고 밑 메뉴버튼 색 바꾸기
+    else if (
+      scrollLocation >= recongitionOffsetTop - margin &&
+      scrollLocation <= recongitionOffsetBottom - margin
+    ) {
+      header.classList.add("effective");
+      header.classList.add("scroll");
+    } else {
+      header.classList.remove("effective");
+      header.classList.remove("scroll");
+    }
+
+    setTop(-(scrollLocation * 0.018) + "%");
+    setOpacity(0.35 - scrollLocation * 0.0002);
+
+    if (scrollLocation + windowHeight >= fullHeight) {
+      console.log("끝");
+    }
+  };
+
+  useEffect(() => {
+    scrollEvent();
+    window.addEventListener("scroll", scrollEvent);
+
+    return () => {
+      window.removeEventListener("scroll", scrollEvent);
+    };
+  }, []);
 
   return (
     <AboutBlock>
       <article className="intro">
-        <div className="bg" />
-        <h2>
-          <img src="/images/aeranjeon.svg" alt="aeranjeon" />
-        </h2>
-        <ul>
-          <li>전애란 / Ae Ran Jeon.</li>
-          <li>+82 10-6224-7367</li>
-          <li>sierrajeon@gmail.com</li>
-        </ul>
+        <div className="content">
+          <h2>
+            <span>Aeran Jeon.</span>
+          </h2>
+          <ul>
+            <li>
+              <h3>Information</h3>
+              <div>
+                <p>
+                  <span>Name</span> 전애란
+                </p>
+                <p>
+                  <span>Mobile</span> +82 10-6224-7367
+                </p>
+                <p>
+                  <span>Adress</span> Yongin-si, Gyeonggi-do, Republic of Korea
+                </p>
+                <p>
+                  <span>Email</span> sierrajeon@gmail.com
+                </p>
+                <p>
+                  <span>Intro</span> 독학으로 시작한 웹사이트 제작 경험을
+                  기반으로 프론트엔드 부터 백엔드까지 차근차근 과정을 밟아
+                  왔습니다. 흥미로운 애니메이션과 인터렉션에 재미를 느끼며,
+                  최근에는 자바스크립트와 리액트에 관심이 많습니다.
+                </p>
+              </div>
+            </li>
+            <li>
+              <h3>SKILL EXPERIENCE</h3>
+              <p>
+                <span>Language</span> HTML5, CSS3, SCSS, JavaScript, jQuery,
+                Java
+              </p>
+              <p>
+                <span>Front Library</span> React
+              </p>
+              <p>
+                <span>Server</span> Node.js, Apache Tomcat 8.5
+              </p>
+              <p>
+                <span>DataBase</span> MongoDB, Oracle Database
+              </p>
+              <p>
+                <span>Framework</span> Spring Framework 4.x, MyBatis 3.x
+              </p>
+              <p>
+                <span>Web Editor</span> WordPress, XpressEngine, Namo WebEditor
+              </p>
+              <p>
+                <span>Configuration Management</span> Git &amp; Github, SVN
+              </p>
+              <p>
+                <span>IDE</span> Visual Studio Code, Eclipse, Brackets, EditPlus
+              </p>
+            </li>
+            <li>
+              <h3>EDUCATION</h3>
+              <div>
+                <p>
+                  <span>Period</span> 2019.04.29 ~ 2019.08.29
+                </p>
+                <p>
+                  <span>Major</span> MSA(Microservice Architecture)
+                  <br /> 실습 프로젝트 활용 SW인력 양성과정
+                </p>
+                <p>
+                  <span>Training Center</span> 판교 한국소프트웨어기술훈련원
+                </p>
+              </div>
+              <div>
+                <p>
+                  <span>Period</span> 2017.04.21 ~ 2017.06.21
+                </p>
+                <p>
+                  <span>Major</span> UI제작 향상(자바스크립트,제이쿼리)
+                </p>
+                <p>
+                  <span>Training Center</span> 강남 이젠아카데미컴퓨터학원
+                </p>
+              </div>
+              <div>
+                <p>
+                  <span>Period</span> 2015.04.01 ~ 2015.08.14
+                </p>
+                <p>
+                  <span>Major</span> 디지털디자인B
+                </p>
+                <p>
+                  <span>Training Center</span> 강남 하이미디어컴퓨터학원
+                </p>
+              </div>
+              <div>
+                <p>
+                  <span>Period</span> 2013.01.07 ~ 2013.01.30
+                </p>
+                <p>
+                  <span>Major</span> FLASH(5교시)
+                </p>
+                <p>
+                  <span>Training Center</span> 강남 그린컴퓨터아트학원
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div className="bg">
+          <img
+            src="/images/about.jpg"
+            alt="about"
+            style={{ opacity: opacity, marginTop: top }}
+          />
+        </div>
       </article>
-      <article className="skills">
-        <h2>Clients</h2>
+      <article className="clients">
+        <div className="content">
+          <h2>
+            <span>Clients</span>
+          </h2>
+          <div className="skillList">
+            <ul>
+              <li>
+                <a
+                  href="http://fn.hackers.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="/images/clients/p_fn_hackers.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="http://www.hackersut.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="/images/clients/p_hackersut.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="http://asan-nanum.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="/images/clients/p_asan_nanum.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://cse.postech.ac.kr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="/images/clients/p_cse_postech.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://ee.postech.ac.kr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="/images/clients/p_ee_postech.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="http://ccej.or.kr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="/images/clients/p_ccej.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="http://www.kimikim.it/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="/images/clients/p_kimikim.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="http://www.korbi.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="/images/clients/p_korbi.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="http://www.cimon.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="/images/clients/p_cimon.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="http://metabrain.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="/images/clients/p_metabrain.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="http://www.postechholdings.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="/images/clients/p_postechholdings.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="http://mot.unist.ac.kr/en/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src="/images/clients/p_mot_unist.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://nov.ncc.re.kr/">
+                  <img src="/images/clients/p_nov_ncc.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://www.postech.ac.kr/">
+                  <img src="/images/clients/p_postech.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://management.unist.ac.kr/">
+                  <img src="/images/clients/p_management_unist.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://unist-kor.unist.ac.kr/">
+                  <img src="/images/clients/p_unist.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://www.kriso.re.kr/">
+                  <img src="/images/clients/p_kriso.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://lei.snu.ac.kr/">
+                  <img src="/images/clients/p_language_snu.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://smile.seoul.kr/webzine">
+                  <img src="/images/clients/p_smile_seoul_webzine.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://industry.unist.ac.kr/">
+                  <img src="/images/clients/p_industry_unist.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://vote.ccej.or.kr/">
+                  <img src="/images/clients/p_vote_ccej.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="https://research.unist.ac.kr">
+                  <img src="/images/clients/p_research_unist.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://health.pulmuone.co.kr/">
+                  <img src="/images/clients/p_health_pulmuone.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://www.nowpeople.co.kr/">
+                  <img src="/images/clients/p_nowpeople.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://fn.hackers.com/">
+                  <img src="/images/clients/p_fn_hackers.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://www.hackersut.com/">
+                  <img src="/images/clients/p_hackersut.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://asan-nanum.org/">
+                  <img src="/images/clients/p_asan_nanum.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="https://cse.postech.ac.kr/">
+                  <img src="/images/clients/p_cse_postech.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="https://ee.postech.ac.kr/">
+                  <img src="/images/clients/p_ee_postech.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://ccej.or.kr/">
+                  <img src="/images/clients/p_ccej.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://www.kimikim.it/">
+                  <img src="/images/clients/p_kimikim.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://www.korbi.com/">
+                  <img src="/images/clients/p_korbi.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://www.cimon.com/">
+                  <img src="/images/clients/p_cimon.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://metabrain.com/">
+                  <img src="/images/clients/p_metabrain.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://www.postechholdings.com/">
+                  <img src="/images/clients/p_postechholdings.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://mot.unist.ac.kr/en/">
+                  <img src="/images/clients/p_mot_unist.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://nov.ncc.re.kr/">
+                  <img src="/images/clients/p_nov_ncc.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://www.postech.ac.kr/">
+                  <img src="/images/clients/p_postech.png" alt="" />
+                </a>
+              </li>
+              <li>
+                <a href="http://management.unist.ac.kr/">
+                  <img src="/images/clients/p_management_unist.png" alt="" />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </article>
       <article className="recongition">
-        <h2>
-          <span>Recognition</span>
-        </h2>
         <div className="content">
+          <h2>
+            <span>Recognition</span>
+          </h2>
           <ul className="lists">
             <li>
               <Link to="http://ccej.or.kr/">

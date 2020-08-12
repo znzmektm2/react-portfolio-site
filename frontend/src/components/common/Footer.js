@@ -36,7 +36,6 @@ const FooterBlock = styled.div`
           width: 0;
           height: 0.7rem;
           background: #c8c9b9;
-          transition: all 0.2s ease;
         }
       }
     }
@@ -48,6 +47,7 @@ const FooterBlock = styled.div`
           color: #c8c9b9;
           &:after {
             width: 100%;
+            transition: all 0.2s ease;
           }
         }
       }

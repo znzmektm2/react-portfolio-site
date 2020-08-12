@@ -285,7 +285,8 @@ const HeaderBlock = styled.header`
 
   /* 페이지 하단 텍스트 호버시 */
   &.effective {
-    &.over {
+    &.over,
+    &.scroll {
       .logo {
         h1 {
           a {
