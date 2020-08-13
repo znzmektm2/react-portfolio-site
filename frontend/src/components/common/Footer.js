@@ -54,7 +54,7 @@ const FooterBlock = styled.div`
     }
   }
 
-  .target {
+  .Footertarget {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -64,36 +64,36 @@ const FooterBlock = styled.div`
 `;
 
 const Footer = ({ next, to }) => {
-  const targetRef = useRef(document.getElementsByClassName("target"));
+  const targetRef = useRef();
   const [observer, setElements, entries] = useIO({
     threshold: 0,
     root: null,
   });
-  const header = document.getElementsByTagName("header");
-  const footer = document.getElementsByClassName("footer");
+  const header = document.getElementsByTagName("header")[0];
+  const footer = document.getElementsByClassName("footer")[0];
 
   useEffect(() => {
-    setElements(targetRef.current);
+    setElements([targetRef.current]);
   }, [setElements]);
 
   useEffect(() => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        header[0].classList.add("effective");
+        header.classList.add("effective");
       } else {
-        header[0].classList.remove("effective");
+        header.classList.remove("effective");
       }
     });
   }, [entries, observer, header]);
 
   const onMouseEnter = (e) => {
-    header[0].classList.add("over");
-    footer[0].classList.add("over");
+    header.classList.add("over");
+    footer.classList.add("over");
   };
 
   const onMouseLeave = (e) => {
-    header[0].classList.remove("over");
-    footer[0].classList.remove("over");
+    header.classList.remove("over");
+    footer.classList.remove("over");
   };
 
   return (
@@ -109,7 +109,7 @@ const Footer = ({ next, to }) => {
           </DelayLink>
         </div>
       </div>
-      <span className="target" />
+      <span className="Footertarget" ref={targetRef} />
     </FooterBlock>
   );
 };

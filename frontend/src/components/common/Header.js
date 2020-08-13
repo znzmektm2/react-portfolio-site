@@ -225,6 +225,13 @@ const HeaderBlock = styled.header`
                   opacity: 1;
                 }
               }
+              &:hover {
+                color: #141e27;
+                transition: all 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
+                &:before {
+                  transform: translate3d(0%, 0, 0) skew(-45deg);
+                }
+              }
             }
           }
         }
@@ -305,7 +312,7 @@ const HeaderBlock = styled.header`
     }
   }
 
-  /* 페이지 Home 일 경우 */
+  /* Home 일 경우 */
   @keyframes width100 {
     0% {
       width: 0;
@@ -369,24 +376,35 @@ const HeaderBlock = styled.header`
     }
   }
 
+  @keyframes visible {
+    0% {
+      visibility: hidden;
+    }
+    100% {
+      visibility: visible;
+    }
+  }
+
   &.home {
     .logo {
       h1 {
         a {
           color: #d0d0d0;
           opacity: 0;
-          animation: 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 2.8s
+          animation: 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 4.3s
             opacity1;
         }
       }
     }
     .navBtn {
+      visibility: hidden;
+      animation: 0s forwards 4.3s visible;
       &:before {
         opacity: 1;
-        animation: 0.7s cubic-bezier(0.165, 0.84, 0.44, 1) 2.1s y0;
+        animation: 0.7s cubic-bezier(0.165, 0.84, 0.44, 1) 4.3s y0;
       }
       &:after {
-        animation: 0.7s cubic-bezier(0.165, 0.84, 0.44, 1) 2.8s y-105;
+        animation: 0.7s cubic-bezier(0.165, 0.84, 0.44, 1) 5s y-105;
       }
       .burgerLine {
         opacity: 0.9;
@@ -394,15 +412,15 @@ const HeaderBlock = styled.header`
           background: #c8c9b9;
           width: 0;
           &:nth-child(1) {
-            animation: 1s cubic-bezier(0.165, 0.84, 0.44, 1) 3.05s forwards
+            animation: 1s cubic-bezier(0.165, 0.84, 0.44, 1) 5.25s forwards
               width20;
           }
           &:nth-child(2) {
-            animation: 1s cubic-bezier(0.165, 0.84, 0.44, 1) 3.2s forwards
+            animation: 1s cubic-bezier(0.165, 0.84, 0.44, 1) 5.4s forwards
               width20;
           }
           &:nth-child(3) {
-            animation: 1s cubic-bezier(0.165, 0.84, 0.44, 1) 3.35s forwards
+            animation: 1s cubic-bezier(0.165, 0.84, 0.44, 1) 5.55s forwards
               width20;
           }
         }
@@ -411,20 +429,20 @@ const HeaderBlock = styled.header`
       .btnLine {
         &.step1 {
           width: 0;
-          animation: 0s forwards 3.3s width100;
+          animation: 0s forwards 5.1s width100;
         }
         &.step2 {
           height: 0;
-          animation: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 2.5s
+          animation: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 4.3s
             height100;
         }
         &.step3 {
           width: 0;
-          animation: 0s forwards 2.5s width100;
+          animation: 0s forwards 4.3s width100;
         }
         &.step4 {
           height: 0;
-          animation: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 2.5s
+          animation: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 4.3s
             height100;
         }
       }
@@ -455,7 +473,7 @@ const Header = () => {
   const logo = document.getElementsByClassName("logo");
 
   // 메뉴 클릭시 header에 active 클래스 추가
-  const addActiveClass = useCallback(() => {
+  const addHeaderActiveClass = useCallback(() => {
     if (open) {
       setActive(!active);
       setOpen(false);
@@ -474,7 +492,7 @@ const Header = () => {
           <NavLink to="/">JeonAeRan</NavLink>
         </h1>
       </div>
-      <div className="navBtn" onClick={addActiveClass}>
+      <div className="navBtn" onClick={addHeaderActiveClass}>
         <div className="burgerLine">
           <span />
           <span />
@@ -485,7 +503,7 @@ const Header = () => {
         <span className="btnLine step3" />
         <span className="btnLine step4" />
       </div>
-      <Menu addActiveClass={addActiveClass} open={open} />
+      <Menu addHeaderActiveClass={addHeaderActiveClass} open={open} />
       <div className="bg step1" />
       <div className="bg step2" />
       <div className="bg step3" />

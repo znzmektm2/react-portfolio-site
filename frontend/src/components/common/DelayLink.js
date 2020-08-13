@@ -1,12 +1,16 @@
 import React from "react";
 import { withRouter, NavLink, useHistory } from "react-router-dom";
 
-export const DelayLink = ({ exact, to, addActiveClass, open, children }) => {
+export const DelayLink = ({ to, addHeaderActiveClass, open, children }) => {
   let history = useHistory();
 
   const clickLink = (e) => {
     e.preventDefault();
-    addActiveClass && addActiveClass();
+
+    addHeaderActiveClass && addHeaderActiveClass();
+
+    document.querySelector(".menuList li a.active").classList.remove("active");
+    e.target.classList.add("active");
 
     const header = document.getElementsByTagName("header");
     header[0].classList.remove("effective");
@@ -23,7 +27,7 @@ export const DelayLink = ({ exact, to, addActiveClass, open, children }) => {
             window.scroll(0, 0);
           }, 500);
         },
-        addActiveClass ? 500 : 0
+        addHeaderActiveClass ? 500 : 0
       );
     }
   };

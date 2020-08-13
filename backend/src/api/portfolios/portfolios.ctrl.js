@@ -62,7 +62,7 @@ export const list = async (ctx) => {
       : {};
 
   try {
-    const listLimit = 12; // 보이는 개수 설정
+    const listLimit = 4; // 보이는 개수 설정
     const portfolios = await Portfolio.find(query)
       .sort({ _id: -1 }) // 내림차순 정렬
       .limit(listLimit) // 보이는 개수 제한

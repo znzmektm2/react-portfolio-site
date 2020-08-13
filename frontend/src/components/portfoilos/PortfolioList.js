@@ -1,6 +1,5 @@
-import React, { forwardRef, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import useIO from "./../../lib/useIO";
 import Image from "./../common/Image";
 import Responsive from "./../common/Responsive";
 import { DelayLink } from "./../common/DelayLink";
@@ -187,33 +186,12 @@ const PortfolioListBlock = styled.div`
   }
 `;
 
-const PortfolioList = forwardRef((props, ref) => {
-  const { portfolioList, portfoliosError, portfolioLoading, user } = props;
-
-  const [observer, setElements, entries] = useIO({
-    threshold: 0,
-    root: null,
-  });
-
-  useEffect(() => {
-    if (!portfolioLoading && portfolioList) {
-      let img = Array.from(document.getElementsByClassName("lazy"));
-      setElements(img);
-    }
-  }, [portfolioLoading, portfolioList, setElements]);
-
-  useEffect(() => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        let lazyImage = entry.target;
-        lazyImage.src = lazyImage.dataset.src;
-        lazyImage.classList.remove("lazy");
-        lazyImage.parentNode.parentNode.parentNode.classList.add("appear");
-        observer.unobserve(lazyImage);
-      }
-    });
-  }, [entries, observer]);
-
+const PortfolioList = ({
+  portfolioList,
+  portfoliosError,
+  portfolioLoading,
+  user,
+}) => {
   if (portfoliosError) {
     return <div>에러가 발생했습니다.</div>;
   }
@@ -270,10 +248,10 @@ const PortfolioList = forwardRef((props, ref) => {
             </li>
           ))}
         </ul>
-        <div ref={ref} />
+        <div className="bottomTarget" />
       </Responsive>
     </PortfolioListBlock>
   );
-});
+};
 
 export default PortfolioList;

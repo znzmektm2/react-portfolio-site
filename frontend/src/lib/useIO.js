@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import "intersection-observer";
 
 const useIO = (options) => {
   const [elements, setElements] = useState([]);

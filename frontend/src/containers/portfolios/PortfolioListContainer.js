@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import qs from "qs";
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PortfolioList from "./../../components/portfoilos/PortfolioList";
-import useIntersectionObserver from "./../../lib/useIntersectionObserver";
+import useIO from "./../../lib/useIO";
 import {
   portfolios,
   currentPage,
@@ -12,7 +12,10 @@ import {
 
 const PortfolioListContainer = ({ location, history }) => {
   const dispatch = useDispatch();
-  const targetRef = useRef(null);
+  const [observer, setElements, entries] = useIO({
+    threshold: 0,
+    root: null,
+  });
   const {
     portfolioList,
     portfoliosError,
@@ -60,17 +63,36 @@ const PortfolioListContainer = ({ location, history }) => {
     }
   }, [dispatch, portfolioList.length, page, loadPortfolio]);
 
-  // 맨 아래로 내렸을 때를 감지하는 이벤트
-  useIntersectionObserver({
-    target: targetRef.current,
-    onIntersect: (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !portfolioLoading && page < lastPage) {
+  // 스크롤 타겟 관리(img, .bottomTarget)
+  useEffect(() => {
+    if (!portfolioLoading && portfolioList) {
+      const img = document.querySelectorAll(".lazy");
+      const bottomTarget = document.getElementsByClassName("bottomTarget");
+      const array = [...img, ...bottomTarget];
+      setElements(array);
+    }
+  }, [portfolioLoading, portfolioList, setElements]);
+
+  useEffect(() => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        // 이미지에 appear 클래스 추가
+        let target = entry.target;
+        if (target.tagName === "IMG") {
+          console.log(target);
+          target.src = target.dataset.src;
+          target.classList.remove("lazy");
+          target.parentNode.parentNode.parentNode.classList.add("appear");
+          observer.unobserve(target);
+        }
+
+        // 리스트를 끝까지 내렸을 때 다음 페이지 API 호출
+        if (!portfolioLoading && page < lastPage) {
           loadMorePortfolio();
         }
-      });
-    },
-  });
+      }
+    });
+  }, [entries, observer, portfolioLoading, page, lastPage, loadMorePortfolio]);
 
   // 포트폴리오 메뉴 클릭시 포트폴리오 초기화
   useEffect(() => {
@@ -92,7 +114,6 @@ const PortfolioListContainer = ({ location, history }) => {
       portfoliosError={portfoliosError}
       portfolioLoading={portfolioLoading}
       user={user}
-      ref={targetRef}
     />
   );
 };

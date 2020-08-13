@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import useIO from "./../../lib/useIO";
 
 const AboutBlock = styled.div`
   article {
@@ -70,6 +71,7 @@ const AboutBlock = styled.div`
             }
             p {
               font-family: "KoPub Batang", serif;
+              font-size: 0.96rem;
               color: #a7a7a7;
               span {
                 color: #ff1f44;
@@ -80,7 +82,7 @@ const AboutBlock = styled.div`
       }
 
       .bg {
-        position: fixed;
+        position: absolute;
         top: 0;
         left: -10%;
         width: 120%;
@@ -93,9 +95,9 @@ const AboutBlock = styled.div`
         }
       }
 
-      &.hide {
+      &.active {
         .bg {
-          position: absolute;
+          position: fixed;
         }
       }
     }
@@ -110,7 +112,7 @@ const AboutBlock = styled.div`
       }
       .content {
         border: 1px solid #222;
-        .skillList {
+        .clientsList {
           width: 96%;
           height: 100%;
           overflow: hidden;
@@ -160,8 +162,13 @@ const AboutBlock = styled.div`
 `;
 
 const About = () => {
+  const [observer, setElements, entries] = useIO({
+    threshold: 0,
+    root: null,
+  });
+
   const [top, setTop] = useState("0%");
-  const [opacity, setOpacity] = useState("0%");
+  const [opacity, setOpacity] = useState("0.2");
 
   const scrollEvent = () => {
     const scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
@@ -194,8 +201,6 @@ const About = () => {
     ) {
       header.classList.add("scroll");
       header.classList.add("effective");
-      console.log("effective");
-      console.log("scroll");
     }
     // Recognition 진입시 로고 밑 메뉴버튼 색 바꾸기
     else if (
@@ -209,22 +214,87 @@ const About = () => {
       header.classList.remove("scroll");
     }
 
-    setTop(-(scrollLocation * 0.018) + "%");
-    setOpacity(0.35 - scrollLocation * 0.0002);
+    // setTop(-(scrollLocation * 0.018) + "%");
+    // setOpacity(0.35 - scrollLocation * 0.0002);
 
     if (scrollLocation + windowHeight >= fullHeight) {
       console.log("끝");
     }
   };
 
+  const ieMouseWheelEvent = (e) => {
+    e.preventDefault();
+    const wheelDelta = e.deltaY;
+    const currentScrollPosition = window.pageYOffset;
+    window.scrollTo(0, currentScrollPosition + wheelDelta);
+  };
+
+  const ieOnKeyDownEvent = (e) => {
+    e.preventDefault();
+    const currentScrollPosition = window.pageYOffset;
+
+    switch (e.which) {
+      case 35: // End
+        window.scrollTo(0, document.body.scrollHeight);
+        break;
+      case 36: // Home
+        window.scrollTo(0, 0);
+        break;
+      case 38: // up
+        window.scrollTo(0, currentScrollPosition - 120);
+        break;
+      case 40: // down
+        window.scrollTo(0, currentScrollPosition + 120);
+        break;
+      case 116: // F5
+        window.location.reload();
+        break;
+      default:
+        return;
+    }
+  };
+
   useEffect(() => {
-    scrollEvent();
-    window.addEventListener("scroll", scrollEvent);
+    // 스크롤 타겟 관리
+    const intro = document.querySelectorAll(".intro");
+    const introLi = document.querySelectorAll(".intro .content ul li");
+    const clientsList = document.getElementsByClassName("clientsList");
+    const recongitionLi = document.querySelectorAll(".recongition .lists li");
+    const array = [...intro, ...introLi, ...clientsList, ...recongitionLi];
+    setElements(array);
+
+    // 스크롤 이벤트
+    // scrollEvent();
+    // window.addEventListener("scroll", scrollEvent);
+
+    // position: fixed 사용시 ie 떨림 현상 방지
+    const body = document.getElementsByTagName("body")[0];
+    if (navigator.userAgent.match(/Trident\/7\./)) {
+      body.addEventListener("wheel", ieMouseWheelEvent);
+      body.onkeydown = ieOnKeyDownEvent;
+    }
 
     return () => {
-      window.removeEventListener("scroll", scrollEvent);
+      // window.removeEventListener("scroll", scrollEvent);
+
+      if (navigator.userAgent.match(/Trident\/7\./)) {
+        body.removeEventListener("wheel", ieMouseWheelEvent);
+        body.onkeydown = null;
+      }
     };
-  }, []);
+  }, [setElements]);
+
+  useEffect(() => {
+    // 타겟 노출시 이벤트
+    entries.forEach((entry) => {
+      let target = entry.target;
+      if (entry.isIntersecting) {
+        target.classList.add("active");
+      } else {
+        target.classList.remove("active");
+      }
+    });
+  }, [entries, observer]);
 
   return (
     <AboutBlock>
@@ -235,7 +305,7 @@ const About = () => {
           </h2>
           <ul>
             <li>
-              <h3>Information</h3>
+              <h3>INFORMATION</h3>
               <div>
                 <p>
                   <span>Name</span> 전애란
@@ -348,7 +418,7 @@ const About = () => {
           <h2>
             <span>Clients</span>
           </h2>
-          <div className="skillList">
+          <div className="clientsList">
             <ul>
               <li>
                 <a

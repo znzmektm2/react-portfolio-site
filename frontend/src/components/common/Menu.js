@@ -142,13 +142,6 @@ const MenuBlock = styled.div`
               );
               opacity: 0.9;
             }
-            &:not(.active):hover {
-              color: #141e27;
-              transition: all 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
-              &:before {
-                transform: translate3d(0%, 0, 0) skew(-45deg);
-              }
-            }
             &.active {
               color: #141e27;
               &:before {
