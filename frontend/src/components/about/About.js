@@ -2,8 +2,18 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import useIO from "./../../lib/useIO";
+import introUseIO from "./../../lib/useIO";
 
 const AboutBlock = styled.div`
+  @keyframes y-100 {
+    0% {
+      transform: translateY(70%);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+
   article {
     position: relative;
     padding: 85px;
@@ -65,9 +75,20 @@ const AboutBlock = styled.div`
               font-family: trump-gothic-pro;
               font-size: calc(0.7rem + 0.6vw);
               letter-spacing: 1.6px;
+              overflow: hidden;
+              span {
+                display: inline-block;
+                transform: translate3d(0, 105%, 0);
+              }
             }
-            div {
-              margin-bottom: 1rem;
+            .introText {
+              overflow: hidden;
+              .wrap {
+                transform: translate3d(0, 105%, 0);
+                div {
+                  margin-bottom: 1rem;
+                }
+              }
             }
             p {
               font-family: "KoPub Batang", serif;
@@ -75,6 +96,20 @@ const AboutBlock = styled.div`
               color: #a7a7a7;
               span {
                 color: #ff1f44;
+              }
+            }
+            &.active {
+              h3 {
+                span {
+                  transform: translate3d(0, 0%, 0);
+                  transition: 1s cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s;
+                }
+              }
+              .introText {
+                .wrap {
+                  transform: translate3d(0, 0%, 0);
+                  transition: 1s cubic-bezier(0.165, 0.84, 0.44, 1) 0.5s;
+                }
               }
             }
           }
@@ -117,6 +152,7 @@ const AboutBlock = styled.div`
           height: 100%;
           overflow: hidden;
           ul {
+            transform: translateY(70%);
             text-align: left;
             li {
               margin-bottom: 1.1rem;
@@ -127,6 +163,15 @@ const AboutBlock = styled.div`
               text-align: center;
               a {
                 width: 94%;
+              }
+            }
+          }
+
+          &.active {
+            ul {
+              animation: 15s linear infinite y-100;
+              &:hover {
+                animation-play-state: paused;
               }
             }
           }
@@ -151,8 +196,30 @@ const AboutBlock = styled.div`
           li {
             padding: 13vh 4.8vw 0;
             line-height: 0;
+            overflow: hidden;
             img {
+              opacity: 0;
               width: 100%;
+              transform: translate3d(0, 20%, 0);
+            }
+          }
+          &.active {
+            li {
+              img {
+                opacity: 1;
+                transform: translate3d(0, 0%, 0);
+                transition: 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+              }
+              &:nth-child(2) {
+                img {
+                  transition: 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.3s;
+                }
+              }
+              &:nth-child(3) {
+                img {
+                  transition: 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.6s;
+                }
+              }
             }
           }
         }
@@ -163,17 +230,20 @@ const AboutBlock = styled.div`
 
 const About = () => {
   const [observer, setElements, entries] = useIO({
+    threshold: 0.3,
+    root: null,
+  });
+  const [, setIntroElement, introEntry] = introUseIO({
     threshold: 0,
     root: null,
   });
 
-  const [top, setTop] = useState("0%");
-  const [opacity, setOpacity] = useState("0.2");
+  // const [top, setTop] = useState("0%");
+  // const [opacity, setOpacity] = useState("0.2");
 
   const scrollEvent = () => {
     const scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
     const windowHeight = window.innerHeight; // 스크린 창
-    const fullHeight = document.body.scrollHeight; //  margin 값은 포함 x
     const margin = windowHeight / 11;
 
     const intro = document.getElementsByClassName("intro")[0];
@@ -186,13 +256,6 @@ const About = () => {
       recongitionOffsetTop + recongition.offsetHeight;
 
     const header = document.getElementsByTagName("header")[0];
-
-    // 인트로 밑으로 나가면 bg position 바꾸기
-    if (scrollLocation > introOffsetBottom) {
-      intro.classList.add("hide");
-    } else {
-      intro.classList.remove("hide");
-    }
 
     // 인트로 진입시 로고 밑 메뉴버튼 색 바꾸기
     if (
@@ -216,10 +279,6 @@ const About = () => {
 
     // setTop(-(scrollLocation * 0.018) + "%");
     // setOpacity(0.35 - scrollLocation * 0.0002);
-
-    if (scrollLocation + windowHeight >= fullHeight) {
-      console.log("끝");
-    }
   };
 
   const ieMouseWheelEvent = (e) => {
@@ -256,16 +315,18 @@ const About = () => {
 
   useEffect(() => {
     // 스크롤 타겟 관리
-    const intro = document.querySelectorAll(".intro");
     const introLi = document.querySelectorAll(".intro .content ul li");
     const clientsList = document.getElementsByClassName("clientsList");
-    const recongitionLi = document.querySelectorAll(".recongition .lists li");
-    const array = [...intro, ...introLi, ...clientsList, ...recongitionLi];
+    const recongitionUl = document.querySelectorAll(".recongition .lists");
+    const array = [...introLi, ...clientsList, ...recongitionUl];
     setElements(array);
 
+    const intro = document.querySelectorAll(".intro");
+    setIntroElement([...intro]);
+
     // 스크롤 이벤트
-    // scrollEvent();
-    // window.addEventListener("scroll", scrollEvent);
+    scrollEvent();
+    window.addEventListener("scroll", scrollEvent);
 
     // position: fixed 사용시 ie 떨림 현상 방지
     const body = document.getElementsByTagName("body")[0];
@@ -275,18 +336,28 @@ const About = () => {
     }
 
     return () => {
-      // window.removeEventListener("scroll", scrollEvent);
+      window.removeEventListener("scroll", scrollEvent);
 
       if (navigator.userAgent.match(/Trident\/7\./)) {
         body.removeEventListener("wheel", ieMouseWheelEvent);
         body.onkeydown = null;
       }
     };
-  }, [setElements]);
+  }, [setElements, setIntroElement]);
 
   useEffect(() => {
     // 타겟 노출시 이벤트
     entries.forEach((entry) => {
+      let target = entry.target;
+
+      if (entry.isIntersecting) {
+        target.classList.add("active");
+        observer.unobserve(target);
+      }
+    });
+
+    // .intro 노출시 이벤트
+    introEntry.forEach((entry) => {
       let target = entry.target;
       if (entry.isIntersecting) {
         target.classList.add("active");
@@ -294,7 +365,7 @@ const About = () => {
         target.classList.remove("active");
       }
     });
-  }, [entries, observer]);
+  }, [entries, introEntry, observer]);
 
   return (
     <AboutBlock>
@@ -305,102 +376,119 @@ const About = () => {
           </h2>
           <ul>
             <li>
-              <h3>INFORMATION</h3>
-              <div>
-                <p>
-                  <span>Name</span> 전애란
-                </p>
-                <p>
-                  <span>Mobile</span> +82 10-6224-7367
-                </p>
-                <p>
-                  <span>Adress</span> Yongin-si, Gyeonggi-do, Republic of Korea
-                </p>
-                <p>
-                  <span>Email</span> sierrajeon@gmail.com
-                </p>
-                <p>
-                  <span>Intro</span> 독학으로 시작한 웹사이트 제작 경험을
-                  기반으로 프론트엔드 부터 백엔드까지 차근차근 과정을 밟아
-                  왔습니다. 흥미로운 애니메이션과 인터렉션에 재미를 느끼며,
-                  최근에는 자바스크립트와 리액트에 관심이 많습니다.
-                </p>
+              <h3>
+                <span>INFORMATION</span>
+              </h3>
+              <div className="introText">
+                <div className="wrap">
+                  <p>
+                    <span>Name</span> 전애란
+                  </p>
+                  <p>
+                    <span>Mobile</span> +82 10-6224-7367
+                  </p>
+                  <p>
+                    <span>Adress</span> Yongin-si, Gyeonggi-do, Republic of
+                    Korea
+                  </p>
+                  <p>
+                    <span>Email</span> sierrajeon@gmail.com
+                  </p>
+                  <p>
+                    <span>Intro</span> 독학으로 시작한 웹사이트 제작 경험을
+                    기반으로 프론트엔드 부터 백엔드까지 차근차근 과정을 밟아
+                    왔습니다. 흥미로운 애니메이션과 인터렉션에 재미를 느끼며,
+                    최근에는 자바스크립트와 리액트에 관심이 많습니다.
+                  </p>
+                </div>
               </div>
             </li>
             <li>
-              <h3>SKILL EXPERIENCE</h3>
-              <p>
-                <span>Language</span> HTML5, CSS3, SCSS, JavaScript, jQuery,
-                Java
-              </p>
-              <p>
-                <span>Front Library</span> React
-              </p>
-              <p>
-                <span>Server</span> Node.js, Apache Tomcat 8.5
-              </p>
-              <p>
-                <span>DataBase</span> MongoDB, Oracle Database
-              </p>
-              <p>
-                <span>Framework</span> Spring Framework 4.x, MyBatis 3.x
-              </p>
-              <p>
-                <span>Web Editor</span> WordPress, XpressEngine, Namo WebEditor
-              </p>
-              <p>
-                <span>Configuration Management</span> Git &amp; Github, SVN
-              </p>
-              <p>
-                <span>IDE</span> Visual Studio Code, Eclipse, Brackets, EditPlus
-              </p>
+              <h3>
+                <span>SKILL EXPERIENCE</span>
+              </h3>
+              <div className="introText">
+                <div className="wrap">
+                  <p>
+                    <span>Language</span> HTML5, CSS3, SCSS, JavaScript, jQuery,
+                    Java
+                  </p>
+                  <p>
+                    <span>Front Library</span> React
+                  </p>
+                  <p>
+                    <span>Server</span> Node.js, Apache Tomcat 8.5
+                  </p>
+                  <p>
+                    <span>DataBase</span> MongoDB, Oracle Database
+                  </p>
+                  <p>
+                    <span>Framework</span> Spring Framework 4.x, MyBatis 3.x
+                  </p>
+                  <p>
+                    <span>Web Editor</span> WordPress, XpressEngine, Namo
+                    WebEditor
+                  </p>
+                  <p>
+                    <span>Configuration Management</span> Git &amp; Github, SVN
+                  </p>
+                  <p>
+                    <span>IDE</span> Visual Studio Code, Eclipse, Brackets,
+                    EditPlus
+                  </p>
+                </div>
+              </div>
             </li>
             <li>
-              <h3>EDUCATION</h3>
-              <div>
-                <p>
-                  <span>Period</span> 2019.04.29 ~ 2019.08.29
-                </p>
-                <p>
-                  <span>Major</span> MSA(Microservice Architecture)
-                  <br /> 실습 프로젝트 활용 SW인력 양성과정
-                </p>
-                <p>
-                  <span>Training Center</span> 판교 한국소프트웨어기술훈련원
-                </p>
-              </div>
-              <div>
-                <p>
-                  <span>Period</span> 2017.04.21 ~ 2017.06.21
-                </p>
-                <p>
-                  <span>Major</span> UI제작 향상(자바스크립트,제이쿼리)
-                </p>
-                <p>
-                  <span>Training Center</span> 강남 이젠아카데미컴퓨터학원
-                </p>
-              </div>
-              <div>
-                <p>
-                  <span>Period</span> 2015.04.01 ~ 2015.08.14
-                </p>
-                <p>
-                  <span>Major</span> 디지털디자인B
-                </p>
-                <p>
-                  <span>Training Center</span> 강남 하이미디어컴퓨터학원
-                </p>
-              </div>
-              <div>
-                <p>
-                  <span>Period</span> 2013.01.07 ~ 2013.01.30
-                </p>
-                <p>
-                  <span>Major</span> FLASH(5교시)
-                </p>
-                <p>
-                  <span>Training Center</span> 강남 그린컴퓨터아트학원
-                </p>
+              <h3>
+                <span>EDUCATION</span>
+              </h3>
+              <div className="introText">
+                <div className="wrap">
+                  <div>
+                    <p>
+                      <span>Period</span> 2019.04.29 ~ 2019.08.29
+                    </p>
+                    <p>
+                      <span>Major</span> MSA(Microservice Architecture)
+                      <br /> 실습 프로젝트 활용 SW인력 양성과정
+                    </p>
+                    <p>
+                      <span>Training Center</span> 판교 한국소프트웨어기술훈련원
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <span>Period</span> 2017.04.21 ~ 2017.06.21
+                    </p>
+                    <p>
+                      <span>Major</span> UI제작 향상(자바스크립트,제이쿼리)
+                    </p>
+                    <p>
+                      <span>Training Center</span> 강남 이젠아카데미컴퓨터학원
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      <span>Period</span> 2015.04.01 ~ 2015.08.14
+                    </p>
+                    <p>
+                      <span>Major</span> 디지털디자인B
+                    </p>
+                    <p>
+                      <span>Training Center</span> 강남 하이미디어컴퓨터학원
+                    </p>
+                    <p>
+                      <span>Period</span> 2013.01.07 ~ 2013.01.30
+                    </p>
+                    <p>
+                      <span>Major</span> FLASH(5교시)
+                    </p>
+                    <p>
+                      <span>Training Center</span> 강남 그린컴퓨터아트학원
+                    </p>
+                  </div>
+                </div>
               </div>
             </li>
           </ul>
@@ -409,7 +497,7 @@ const About = () => {
           <img
             src="/images/about.jpg"
             alt="about"
-            style={{ opacity: opacity, marginTop: top }}
+            // style={{ opacity: opacity, marginTop: top }}
           />
         </div>
       </article>
