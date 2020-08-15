@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import useIO from "./../../lib/useIO";
 import introUseIO from "./../../lib/useIO";
+import { Scrollbars } from "react-custom-scrollbars";
 
 const AboutBlock = styled.div`
-  @keyframes y-100 {
-    0% {
-      transform: translateY(70%);
-    }
-    100% {
-      transform: translateY(-100%);
-    }
-  }
-
   article {
     position: relative;
     padding: 85px;
@@ -129,7 +121,6 @@ const AboutBlock = styled.div`
           opacity: 0.2;
         }
       }
-
       &.active {
         .bg {
           position: fixed;
@@ -148,30 +139,36 @@ const AboutBlock = styled.div`
       .content {
         border: 1px solid #222;
         .clientsList {
+          display: flex;
+          flex-direction: column-reverse;
           width: 96%;
           height: 100%;
           overflow: hidden;
-          ul {
-            transform: translateY(70%);
+          .scrollBars {
             text-align: left;
-            li {
-              margin-bottom: 1.1rem;
-              width: 16.666%;
-              display: inline-block;
-              font-size: 0;
-              line-height: 0;
-              text-align: center;
-              a {
-                width: 94%;
-              }
-            }
-          }
-
-          &.active {
             ul {
-              animation: 15s linear infinite y-100;
-              &:hover {
-                animation-play-state: paused;
+              li {
+                margin-bottom: 1.1rem;
+                width: 16.666%;
+                display: inline-block;
+                font-size: 0;
+                line-height: 0;
+                text-align: center;
+                a {
+                  width: 94%;
+                  overflow: hidden;
+                  img {
+                    opacity: 0;
+                    transition: 3s cubic-bezier(0.165, 0.84, 0.44, 1);
+                  }
+                }
+                &.active {
+                  a {
+                    img {
+                      opacity: 1;
+                    }
+                  }
+                }
               }
             }
           }
@@ -236,15 +233,19 @@ const About = () => {
   const [, setIntroElement, introEntry] = introUseIO({
     threshold: 0,
     root: null,
+    rootMargin: "-1px",
   });
 
-  // const [top, setTop] = useState("0%");
-  // const [opacity, setOpacity] = useState("0.2");
+  const [top, setTop] = useState("0%");
+  const [opacity, setOpacity] = useState("0.2");
 
+  // 스크롤 이벤트
   const scrollEvent = () => {
     const scrollLocation = document.documentElement.scrollTop; // 현재 스크롤바 위치
     const windowHeight = window.innerHeight; // 스크린 창
     const margin = windowHeight / 11;
+
+    const header = document.getElementsByTagName("header")[0];
 
     const intro = document.getElementsByClassName("intro")[0];
     const introOffsetTop = intro.offsetTop;
@@ -255,10 +256,13 @@ const About = () => {
     const recongitionOffsetBottom =
       recongitionOffsetTop + recongition.offsetHeight;
 
-    const header = document.getElementsByTagName("header")[0];
-
+    // 인트로 bg 애니메이션
+    if (scrollLocation > 0 && scrollLocation <= introOffsetBottom - margin) {
+      setTop(-(scrollLocation * 0.018) + "%");
+      setOpacity(0.38 - scrollLocation * 0.0002);
+    }
     // 인트로 진입시 로고 밑 메뉴버튼 색 바꾸기
-    if (
+    else if (
       scrollLocation >= introOffsetTop - margin &&
       scrollLocation <= introOffsetBottom - margin
     ) {
@@ -272,22 +276,15 @@ const About = () => {
     ) {
       header.classList.add("effective");
       header.classList.add("scroll");
-    } else {
+    }
+    // 타겟 지점이 아닌 경우
+    else {
       header.classList.remove("effective");
       header.classList.remove("scroll");
     }
-
-    // setTop(-(scrollLocation * 0.018) + "%");
-    // setOpacity(0.35 - scrollLocation * 0.0002);
   };
 
-  const ieMouseWheelEvent = (e) => {
-    e.preventDefault();
-    const wheelDelta = e.deltaY;
-    const currentScrollPosition = window.pageYOffset;
-    window.scrollTo(0, currentScrollPosition + wheelDelta);
-  };
-
+  // 키 다운 이벤트
   const ieOnKeyDownEvent = (e) => {
     e.preventDefault();
     const currentScrollPosition = window.pageYOffset;
@@ -313,8 +310,51 @@ const About = () => {
     }
   };
 
+  // window 마우스 휠 이벤트
+  const windowWheelEvent = (e) => {
+    e.preventDefault();
+    const wheelDelta = e.deltaY;
+    const currentScrollPosition = window.pageYOffset;
+    const parentNode = e.target.parentNode;
+    const IMG =
+      parentNode.parentNode.parentNode.parentNode.parentNode.className;
+    const LI = parentNode.parentNode.parentNode.className;
+    const UL = parentNode.parentNode.className;
+
+    // .clientsList 영역이면 window 마우스 휠 이벤트 무시
+    if (IMG === "scrollBars" || LI === "scrollBars" || UL === "scrollBars") {
+      return;
+    }
+    window.scrollTo(0, currentScrollPosition + wheelDelta);
+  };
+
+  // .clients ul 마우스 휠 이벤트
+  const clientsUlWheelEvent = (e) => {
+    const wheelDelta = e.deltaY;
+    const scrollTarget = document.querySelectorAll(
+      ".clientsList .scrollBars"
+    )[0].firstChild;
+    const scrollValue = wheelDelta / 5.344444557472511 + scrollTarget.scrollTop;
+    scrollTarget.scrollTop = scrollValue;
+  };
+
+  // ie 스크롤 이벤트
+  const ieScrollEvent = useCallback(() => {
+    const body = document.getElementsByTagName("body")[0];
+    const clientsListUl = document.querySelectorAll(".clientsList")[0];
+
+    if (navigator.userAgent.match(/Trident\/7\./)) {
+      // position: fixed 사용시 ie 떨림 현상 방지 이벤트
+      body.onkeydown = ieOnKeyDownEvent;
+      body.addEventListener("wheel", windowWheelEvent);
+
+      // ie에서 .clients ul 마우스 휠 이벤트 적용
+      clientsListUl.addEventListener("wheel", clientsUlWheelEvent);
+    }
+  }, []);
+
   useEffect(() => {
-    // 스크롤 타겟 관리
+    // IntersectionObserver 타겟 관리
     const introLi = document.querySelectorAll(".intro .content ul li");
     const clientsList = document.getElementsByClassName("clientsList");
     const recongitionUl = document.querySelectorAll(".recongition .lists");
@@ -324,33 +364,36 @@ const About = () => {
     const intro = document.querySelectorAll(".intro");
     setIntroElement([...intro]);
 
-    // 스크롤 이벤트
+    // 스크롤 이벤트 적용
     scrollEvent();
     window.addEventListener("scroll", scrollEvent);
 
-    // position: fixed 사용시 ie 떨림 현상 방지
-    const body = document.getElementsByTagName("body")[0];
-    if (navigator.userAgent.match(/Trident\/7\./)) {
-      body.addEventListener("wheel", ieMouseWheelEvent);
-      body.onkeydown = ieOnKeyDownEvent;
-    }
+    // ie 스크롤 이벤트 적용
+    ieScrollEvent();
 
     return () => {
-      window.removeEventListener("scroll", scrollEvent);
+      const body = document.getElementsByTagName("body")[0];
+      const clientsListUl = document.querySelectorAll(".clientsList ul")[0];
 
-      if (navigator.userAgent.match(/Trident\/7\./)) {
-        body.removeEventListener("wheel", ieMouseWheelEvent);
-        body.onkeydown = null;
-      }
+      window.removeEventListener("scroll", scrollEvent);
+      body.removeEventListener("wheel", windowWheelEvent);
+      clientsListUl.removeEventListener("wheel", clientsUlWheelEvent);
     };
-  }, [setElements, setIntroElement]);
+  }, [setElements, setIntroElement, ieScrollEvent]);
 
   useEffect(() => {
     // 타겟 노출시 이벤트
+    const clientsListLi = document.querySelectorAll(".clientsList ul li");
     entries.forEach((entry) => {
-      let target = entry.target;
-
+      const target = entry.target;
       if (entry.isIntersecting) {
+        if (target.className === "clientsList") {
+          for (let i = 0; i < clientsListLi.length; i++) {
+            setTimeout(() => {
+              clientsListLi[i].classList.add("active");
+            }, 25 * i);
+          }
+        }
         target.classList.add("active");
         observer.unobserve(target);
       }
@@ -358,7 +401,7 @@ const About = () => {
 
     // .intro 노출시 이벤트
     introEntry.forEach((entry) => {
-      let target = entry.target;
+      const target = entry.target;
       if (entry.isIntersecting) {
         target.classList.add("active");
       } else {
@@ -497,7 +540,7 @@ const About = () => {
           <img
             src="/images/about.jpg"
             alt="about"
-            // style={{ opacity: opacity, marginTop: top }}
+            style={{ opacity: opacity, marginTop: top }}
           />
         </div>
       </article>
@@ -507,251 +550,256 @@ const About = () => {
             <span>Clients</span>
           </h2>
           <div className="clientsList">
-            <ul>
-              <li>
-                <a
-                  href="http://fn.hackers.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="/images/clients/p_fn_hackers.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="http://www.hackersut.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="/images/clients/p_hackersut.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="http://asan-nanum.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="/images/clients/p_asan_nanum.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://cse.postech.ac.kr/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="/images/clients/p_cse_postech.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://ee.postech.ac.kr/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="/images/clients/p_ee_postech.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="http://ccej.or.kr/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="/images/clients/p_ccej.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="http://www.kimikim.it/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="/images/clients/p_kimikim.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="http://www.korbi.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="/images/clients/p_korbi.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="http://www.cimon.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="/images/clients/p_cimon.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="http://metabrain.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="/images/clients/p_metabrain.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="http://www.postechholdings.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="/images/clients/p_postechholdings.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="http://mot.unist.ac.kr/en/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src="/images/clients/p_mot_unist.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://nov.ncc.re.kr/">
-                  <img src="/images/clients/p_nov_ncc.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://www.postech.ac.kr/">
-                  <img src="/images/clients/p_postech.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://management.unist.ac.kr/">
-                  <img src="/images/clients/p_management_unist.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://unist-kor.unist.ac.kr/">
-                  <img src="/images/clients/p_unist.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://www.kriso.re.kr/">
-                  <img src="/images/clients/p_kriso.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://lei.snu.ac.kr/">
-                  <img src="/images/clients/p_language_snu.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://smile.seoul.kr/webzine">
-                  <img src="/images/clients/p_smile_seoul_webzine.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://industry.unist.ac.kr/">
-                  <img src="/images/clients/p_industry_unist.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://vote.ccej.or.kr/">
-                  <img src="/images/clients/p_vote_ccej.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="https://research.unist.ac.kr">
-                  <img src="/images/clients/p_research_unist.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://health.pulmuone.co.kr/">
-                  <img src="/images/clients/p_health_pulmuone.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://www.nowpeople.co.kr/">
-                  <img src="/images/clients/p_nowpeople.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://fn.hackers.com/">
-                  <img src="/images/clients/p_fn_hackers.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://www.hackersut.com/">
-                  <img src="/images/clients/p_hackersut.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://asan-nanum.org/">
-                  <img src="/images/clients/p_asan_nanum.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="https://cse.postech.ac.kr/">
-                  <img src="/images/clients/p_cse_postech.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="https://ee.postech.ac.kr/">
-                  <img src="/images/clients/p_ee_postech.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://ccej.or.kr/">
-                  <img src="/images/clients/p_ccej.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://www.kimikim.it/">
-                  <img src="/images/clients/p_kimikim.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://www.korbi.com/">
-                  <img src="/images/clients/p_korbi.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://www.cimon.com/">
-                  <img src="/images/clients/p_cimon.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://metabrain.com/">
-                  <img src="/images/clients/p_metabrain.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://www.postechholdings.com/">
-                  <img src="/images/clients/p_postechholdings.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://mot.unist.ac.kr/en/">
-                  <img src="/images/clients/p_mot_unist.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://nov.ncc.re.kr/">
-                  <img src="/images/clients/p_nov_ncc.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://www.postech.ac.kr/">
-                  <img src="/images/clients/p_postech.png" alt="" />
-                </a>
-              </li>
-              <li>
-                <a href="http://management.unist.ac.kr/">
-                  <img src="/images/clients/p_management_unist.png" alt="" />
-                </a>
-              </li>
-            </ul>
+            <Scrollbars className="scrollBars" style={{ height: "100%" }}>
+              <ul>
+                <li>
+                  <a
+                    href="http://fn.hackers.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/images/clients/p_fn_hackers.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://www.hackersut.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/images/clients/p_hackersut.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://asan-nanum.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/images/clients/p_asan_nanum.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://cse.postech.ac.kr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/images/clients/p_cse_postech.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://ee.postech.ac.kr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/images/clients/p_ee_postech.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://ccej.or.kr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/images/clients/p_ccej.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://www.kimikim.it/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/images/clients/p_kimikim.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://www.korbi.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/images/clients/p_korbi.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://www.cimon.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/images/clients/p_cimon.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://metabrain.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/images/clients/p_metabrain.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://www.postechholdings.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/images/clients/p_postechholdings.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="http://mot.unist.ac.kr/en/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src="/images/clients/p_mot_unist.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://nov.ncc.re.kr/">
+                    <img src="/images/clients/p_nov_ncc.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.postech.ac.kr/">
+                    <img src="/images/clients/p_postech.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://management.unist.ac.kr/">
+                    <img src="/images/clients/p_management_unist.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://unist-kor.unist.ac.kr/">
+                    <img src="/images/clients/p_unist.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.kriso.re.kr/">
+                    <img src="/images/clients/p_kriso.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://lei.snu.ac.kr/">
+                    <img src="/images/clients/p_language_snu.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://smile.seoul.kr/webzine">
+                    <img
+                      src="/images/clients/p_smile_seoul_webzine.png"
+                      alt=""
+                    />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://industry.unist.ac.kr/">
+                    <img src="/images/clients/p_industry_unist.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://vote.ccej.or.kr/">
+                    <img src="/images/clients/p_vote_ccej.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="https://research.unist.ac.kr">
+                    <img src="/images/clients/p_research_unist.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://health.pulmuone.co.kr/">
+                    <img src="/images/clients/p_health_pulmuone.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.nowpeople.co.kr/">
+                    <img src="/images/clients/p_nowpeople.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://fn.hackers.com/">
+                    <img src="/images/clients/p_fn_hackers.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.hackersut.com/">
+                    <img src="/images/clients/p_hackersut.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://asan-nanum.org/">
+                    <img src="/images/clients/p_asan_nanum.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="https://cse.postech.ac.kr/">
+                    <img src="/images/clients/p_cse_postech.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="https://ee.postech.ac.kr/">
+                    <img src="/images/clients/p_ee_postech.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://ccej.or.kr/">
+                    <img src="/images/clients/p_ccej.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.kimikim.it/">
+                    <img src="/images/clients/p_kimikim.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.korbi.com/">
+                    <img src="/images/clients/p_korbi.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.cimon.com/">
+                    <img src="/images/clients/p_cimon.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://metabrain.com/">
+                    <img src="/images/clients/p_metabrain.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.postechholdings.com/">
+                    <img src="/images/clients/p_postechholdings.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://mot.unist.ac.kr/en/">
+                    <img src="/images/clients/p_mot_unist.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://nov.ncc.re.kr/">
+                    <img src="/images/clients/p_nov_ncc.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.postech.ac.kr/">
+                    <img src="/images/clients/p_postech.png" alt="" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://management.unist.ac.kr/">
+                    <img src="/images/clients/p_management_unist.png" alt="" />
+                  </a>
+                </li>
+              </ul>
+            </Scrollbars>
           </div>
         </div>
       </article>
