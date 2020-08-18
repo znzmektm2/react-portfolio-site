@@ -41,15 +41,8 @@
 
 html {
   font-size: 16px;
-  height: 100%;
-  overflow-x: hidden;
 }
 body {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   font-family: "goku", "KoPub Batang", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
     "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 16px;
@@ -116,11 +109,6 @@ em {
 }
 
 #root {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
 }
 
 $ease-in-out_1s: all 1s ease-in-out;
@@ -172,13 +160,66 @@ $translate1: translate(0, -100%);
   }
 }
 
-.page {
-  margin-bottom: 100vh;
-  border-bottom: 1px solid #e2e2e2;
+@keyframes grain {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(-200px, 0, 0);
+  }
+  50% {
+    transform: translate3d(-200px, -200px, 0);
+  }
+  75% {
+    transform: translate3d(0, -200px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
 
-  &.home,
-  &.about {
-    border-bottom: none;
+.page {
+  position: relative;
+  margin-bottom: 100vh;
+  z-index: 1;
+  &.design {
+    overflow: hidden;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0b0b0c;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 300%;
+      height: 300%;
+      background: url(/images/grain.png);
+      background-size: 396px;
+      transform-style: preserve-3d;
+      transform: translate3d(0, 0, 0);
+      animation: 0.51s grain steps(1, start) infinite;
+      opacity: 0.5;
+    }
+    .pageTitle {
+      background: none;
+      z-index: 1;
+      div {
+        background: none;
+        h3 {
+          color: #c8c9b9;
+        }
+        h2 {
+          color: #c8c9b9;
+        }
+      }
+    }
   }
 }
 

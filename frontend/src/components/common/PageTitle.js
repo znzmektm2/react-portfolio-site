@@ -41,7 +41,7 @@ const TitleBlock = styled.div`
 
 const PageTitle = ({ subTitle, children }) => {
   return (
-    <TitleBlock>
+    <TitleBlock className="pageTitle">
       <div>
         <h3>{subTitle}</h3>
         <h2>{children}</h2>

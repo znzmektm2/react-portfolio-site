@@ -312,7 +312,7 @@ const HeaderBlock = styled.header`
     }
   }
 
-  /* Home 일 경우 */
+  /* Home 페이지일 경우 */
   @keyframes width100 {
     0% {
       width: 0;
@@ -461,6 +461,45 @@ const HeaderBlock = styled.header`
       .burgerLine {
         span {
           background: #222;
+        }
+      }
+    }
+  }
+
+  /* Design 페이지일 경우 */
+  &.dark {
+    .logo {
+      h1 {
+        a {
+          color: #c8c9b9;
+        }
+      }
+    }
+    .navBtn {
+      .burgerLine {
+        opacity: 0.9;
+        span {
+          background: #c8c9b9;
+        }
+      }
+    }
+
+    &.effective {
+      &.over,
+      &.scroll {
+        .logo {
+          h1 {
+            a {
+              color: #222;
+            }
+          }
+        }
+        .navBtn {
+          .burgerLine {
+            span {
+              background: #222;
+            }
+          }
         }
       }
     }

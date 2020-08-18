@@ -5,17 +5,16 @@ import useIO from "./../../lib/useIO";
 
 const FooterBlock = styled.div`
   position: relative;
-  .footer {
+  .footerWrap {
     position: fixed;
+    top: 0;
     left: 0;
-    bottom: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background: #fff;
-    z-index: -2;
     .nextLink {
       margin-bottom: 3rem;
       overflow: hidden;
@@ -53,7 +52,35 @@ const FooterBlock = styled.div`
       }
     }
   }
+  /* Design 페이지일 경우 */
+  &.dark {
+    .footerWrap {
+      background: #0b0b0c;
+      .nextLink {
+        a {
+          color: #c8c9b9;
+          &:after {
+            background: #222;
+          }
+        }
+      }
+    }
 
+    &.over {
+      .footerWrap {
+        background: #fff;
+        .nextLink {
+          a {
+            color: #222;
+            &:after {
+              width: 100%;
+              transition: all 0.2s ease;
+            }
+          }
+        }
+      }
+    }
+  }
   .Footertarget {
     position: absolute;
     bottom: 0;
@@ -97,8 +124,8 @@ const Footer = ({ next, to }) => {
   };
 
   return (
-    <FooterBlock>
-      <div className="footer">
+    <FooterBlock className="footer">
+      <div className="footerWrap">
         <div
           className="nextLink"
           onMouseEnter={onMouseEnter}

@@ -262,12 +262,12 @@ const About = () => {
       setOpacity(0.38 - scrollLocation * 0.0002);
     }
     // 인트로 진입시 로고 밑 메뉴버튼 색 바꾸기
-    else if (
+    if (
       scrollLocation >= introOffsetTop - margin &&
       scrollLocation <= introOffsetBottom - margin
     ) {
-      header.classList.add("scroll");
       header.classList.add("effective");
+      header.classList.add("scroll");
     }
     // Recognition 진입시 로고 밑 메뉴버튼 색 바꾸기
     else if (
@@ -276,6 +276,7 @@ const About = () => {
     ) {
       header.classList.add("effective");
       header.classList.add("scroll");
+      console.log(2);
     }
     // 타겟 지점이 아닌 경우
     else {
@@ -312,24 +313,16 @@ const About = () => {
 
   // window 마우스 휠 이벤트
   const windowWheelEvent = (e) => {
-    e.preventDefault();
     const wheelDelta = e.deltaY;
     const currentScrollPosition = window.pageYOffset;
-    const parentNode = e.target.parentNode;
-    const IMG =
-      parentNode.parentNode.parentNode.parentNode.parentNode.className;
-    const LI = parentNode.parentNode.parentNode.className;
-    const UL = parentNode.parentNode.className;
-
-    // .clientsList 영역이면 window 마우스 휠 이벤트 무시
-    if (IMG === "scrollBars" || LI === "scrollBars" || UL === "scrollBars") {
-      return;
-    }
     window.scrollTo(0, currentScrollPosition + wheelDelta);
   };
 
   // .clients ul 마우스 휠 이벤트
   const clientsUlWheelEvent = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     const wheelDelta = e.deltaY;
     const scrollTarget = document.querySelectorAll(
       ".clientsList .scrollBars"
@@ -393,6 +386,7 @@ const About = () => {
               clientsListLi[i].classList.add("active");
             }, 25 * i);
           }
+          return;
         }
         target.classList.add("active");
         observer.unobserve(target);

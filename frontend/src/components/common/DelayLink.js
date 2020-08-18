@@ -12,9 +12,16 @@ export const DelayLink = ({ to, addHeaderActiveClass, open, children }) => {
     document.querySelector(".menuList li a.active").classList.remove("active");
     e.target.classList.add("active");
 
-    const header = document.getElementsByTagName("header");
-    header[0].classList.remove("effective");
-    header[0].classList.remove("over");
+    const header = document.getElementsByTagName("header")[0];
+    const footer = document.getElementsByClassName("footer")[0];
+
+    header.classList.remove("effective");
+    header.classList.remove("over");
+
+    if (to !== "/design") {
+      footer.classList.remove("dark");
+      header.classList.remove("dark");
+    }
 
     if (open) {
       setTimeout(

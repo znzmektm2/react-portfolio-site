@@ -5,7 +5,7 @@ import Footer from "../components/common/Footer";
 const HomePage = () => {
   return (
     <>
-      <div className="page home">
+      <div className="page">
         <Home />
       </div>
       <Footer to="/about" next="About" />
