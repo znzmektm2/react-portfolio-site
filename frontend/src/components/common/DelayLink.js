@@ -9,7 +9,8 @@ export const DelayLink = ({ to, addHeaderActiveClass, open, children }) => {
 
     addHeaderActiveClass && addHeaderActiveClass();
 
-    document.querySelector(".menuList li a.active").classList.remove("active");
+    const activeA = document.querySelector(".menuList li a.active");
+    activeA && activeA.classList.remove("active");
     e.target.classList.add("active");
 
     const header = document.getElementsByTagName("header")[0];

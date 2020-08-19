@@ -10,7 +10,6 @@ const CategoryBlock = styled.div`
     }
     border-bottom: 1px solid #e2e2e2;
     display: flex;
-    align-items: center;
     justify-content: center;
     > li {
       position: relative;
@@ -53,7 +52,7 @@ const CategoryBlock = styled.div`
   }
 `;
 
-const Category = ({
+const PortfolioCategory = ({
   categories,
   error,
   loading,
@@ -119,4 +118,4 @@ const Category = ({
   );
 };
 
-export default Category;
+export default PortfolioCategory;

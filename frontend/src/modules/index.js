@@ -4,7 +4,7 @@ import loading from "./loading";
 import user, { userSaga } from "./user";
 import portfolios, { portfoliosSaga } from "./portfolios";
 import portfolio, { portfolioSaga } from "./portfolio";
-import write, { writeSaga } from "./write";
+import writePortfolio, { writeSaga } from "./writePortfolio";
 import { all } from "redux-saga/effects";
 
 const rootReducers = combineReducers({
@@ -13,7 +13,7 @@ const rootReducers = combineReducers({
   user,
   portfolios,
   portfolio,
-  write,
+  writePortfolio,
 });
 
 export function* rootSaga() {

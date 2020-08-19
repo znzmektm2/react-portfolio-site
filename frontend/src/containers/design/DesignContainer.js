@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import Design from "../../components/design/Design";
+import DesignCategory from "./../../components/design/DesignCategory";
 
 const DesignContainer = ({ location }) => {
   useEffect(() => {
@@ -14,7 +15,12 @@ const DesignContainer = ({ location }) => {
       footer.classList.add("dark");
     }
   }, [location]);
-  return <Design />;
+  return (
+    <>
+      <DesignCategory />
+      <Design />
+    </>
+  );
 };
 
 export default withRouter(DesignContainer);

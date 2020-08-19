@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Portfolio from "./../../components/portfolio/Portfolio";
 import { readportfolio, unloadPortfolio } from "../../modules/portfolio";
-import { setOriginalPortfolio } from "../../modules/write";
+import { setOriginalPortfolio } from "../../modules/writePortfolio";
 import { removePortFolio } from "./../../lib/api/portfolios";
 import { initializePortfolios } from "./../../modules/portfolios";
 

@@ -6,9 +6,9 @@ import {
   writePortfolio,
   initializeWrite,
   updatePortfolio,
-} from "../../modules/write";
+} from "../../modules/writePortfolio";
 import { withRouter } from "react-router-dom";
-import WritePortfolio from "./../../components/write/WritePortfolio";
+import WritePortfolio from "./../../components/writePortfolio/WritePortfolio";
 import { initializePortfolios } from "../../modules/portfolios";
 
 const WritePortfolioContainer = ({ history }) => {
@@ -39,29 +39,29 @@ const WritePortfolioContainer = ({ history }) => {
     portfolioError,
     originalPortfolioId,
     user,
-  } = useSelector(({ write, user }) => ({
-    id: write.id,
-    hasId: write.hasId,
-    client: write.client,
-    hostValue: write.host,
-    web: write.web,
-    singlePage: write.singlePage,
-    pcVer: write.pcVer,
-    mobileVer: write.mobileVer,
-    responsiveWeb: write.responsiveWeb,
-    IEVersion: write.IEVersion,
-    skill: write.skill,
-    animationEvent: write.animationEvent,
-    workYear: write.workYear,
-    workMonth: write.workMonth,
-    period: write.period,
-    worker: write.worker,
-    url: write.url,
-    contentImage: write.contentImage,
-    thumbImage: write.thumbImage,
-    portfolio: write.portfolio,
-    portfolioError: write.portfolioError,
-    originalPortfolioId: write.originalPortfolioId,
+  } = useSelector(({ writePortfolio, user }) => ({
+    id: writePortfolio.id,
+    hasId: writePortfolio.hasId,
+    client: writePortfolio.client,
+    hostValue: writePortfolio.host,
+    web: writePortfolio.web,
+    singlePage: writePortfolio.singlePage,
+    pcVer: writePortfolio.pcVer,
+    mobileVer: writePortfolio.mobileVer,
+    responsiveWeb: writePortfolio.responsiveWeb,
+    IEVersion: writePortfolio.IEVersion,
+    skill: writePortfolio.skill,
+    animationEvent: writePortfolio.animationEvent,
+    workYear: writePortfolio.workYear,
+    workMonth: writePortfolio.workMonth,
+    period: writePortfolio.period,
+    worker: writePortfolio.worker,
+    url: writePortfolio.url,
+    contentImage: writePortfolio.contentImage,
+    thumbImage: writePortfolio.thumbImage,
+    portfolio: writePortfolio.portfolio,
+    portfolioError: writePortfolio.portfolioError,
+    originalPortfolioId: writePortfolio.originalPortfolioId,
     user: user.user,
   }));
 

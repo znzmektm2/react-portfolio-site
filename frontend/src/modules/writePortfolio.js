@@ -5,22 +5,22 @@ import createRequestSaga, {
 import * as portfoliosAPI from "./../lib/api/portfolios";
 import { takeLatest } from "redux-saga/effects";
 
-const INITIALIZEWRITE = "write/INITIALIZEWRITE";
-const CHANGE_FIELD = "write/CHANGE_FIELD";
+const INITIALIZEWRITE = "writePortfolio/INITIALIZEWRITE";
+const CHANGE_FIELD = "writePortfolio/CHANGE_FIELD";
 const [CHECK_ID, CHECK_ID_SUCCESS, CHECK_ID_FAILURE] = createRequestActionTypes(
-  "write/CHECK_ID"
+  "writePortfolio/CHECK_ID"
 );
 const [
   WRITE_PORTFOLIO,
   WRITE_PORTFOLIO_SUCCESS,
   WRITE_PORTFOLIO_FAILURE,
-] = createRequestActionTypes("write/WRITE_PORTFOLIO");
-const SET_ORIGINAL_PORTFOLIO = "write/SET_ORIGINAL_PORTFOLIO";
+] = createRequestActionTypes("writePortfolio/WRITE_PORTFOLIO");
+const SET_ORIGINAL_PORTFOLIO = "writePortfolio/SET_ORIGINAL_PORTFOLIO";
 const [
   UPDATE_PORTFOLIO,
   UPDATE_PORTFOLIO_SUCCESS,
   UPDATE_PORTFOLIO_FAILURE,
-] = createRequestActionTypes("write/UPDATE_PORTFOLIO");
+] = createRequestActionTypes("writePortfolio/UPDATE_PORTFOLIO");
 
 export const initializeWrite = createAction(INITIALIZEWRITE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({

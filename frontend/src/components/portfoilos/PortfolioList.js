@@ -212,7 +212,7 @@ const PortfolioList = ({
       <Responsive>
         {user && (
           <div className="writeButtonArea">
-            <DelayLink to="/write" open="true" className="writeBtn">
+            <DelayLink to="/writePortfolio" open="true" className="writeBtn">
               새 글 작성하기
             </DelayLink>
           </div>

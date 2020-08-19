@@ -38,8 +38,9 @@ const FooterBlock = styled.div`
         }
       }
     }
-
-    &.over {
+  }
+  &.over {
+    .footerWrap {
       background: #0b0b0c;
       .nextLink {
         a {

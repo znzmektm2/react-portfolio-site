@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import qs from "qs";
 import { useSelector, useDispatch } from "react-redux";
-import Category from "./../../components/portfoilos/Category";
+import PortfolioCategory from "./../../components/portfoilos/PortfolioCategory";
 import { category, initializePortfolios } from "../../modules/portfolios";
 import { withRouter } from "react-router-dom";
 
@@ -128,7 +128,7 @@ const CategoryContainer = ({ history, location }) => {
   });
 
   return (
-    <Category
+    <PortfolioCategory
       categories={categories}
       error={error}
       loading={loading}

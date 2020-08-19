@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import WritePage from "./pages/WritePage";
+import WritePortfolioPage from "./pages/WritePortfolioPage";
 import AdminPage from "./pages/AdminPage";
 import DesignPage from "./pages/DesignPage";
 import PortfoliosPage from "./pages/PortfoliosPage";
@@ -17,7 +17,7 @@ const App = () => {
       <Route component={PortfoliosPage} path="/portfolios" />
       <Route component={PortfolioPage} path="/portfolio/:id" />
       <Route component={AboutPage} path="/about" />
-      <Route component={WritePage} path="/write" />
+      <Route component={WritePortfolioPage} path="/writePortfolio" />
       <Route component={DesignPage} path="/design" />
       <Route component={AdminPage} path="/admin" />
     </>
