@@ -193,7 +193,11 @@ const PortfolioList = ({
   user,
 }) => {
   if (portfoliosError) {
-    return <div>에러가 발생했습니다.</div>;
+    return (
+      <PortfolioListBlock>
+        <Responsive>에러가 발생했습니다.</Responsive>
+      </PortfolioListBlock>
+    );
   }
 
   if (!portfolioList.length) {
@@ -203,10 +207,26 @@ const PortfolioList = ({
     }
     // 로딩중이 아니면서 포트폴리오가 없을 시
     if (!portfolioLoading) {
-      return <PortfolioListBlock>데이터가 없습니다.</PortfolioListBlock>;
+      return (
+        <PortfolioListBlock>
+          <Responsive>
+            {user && (
+              <div className="writeButtonArea">
+                <DelayLink
+                  to="/writePortfolio"
+                  open="true"
+                  className="writeBtn"
+                >
+                  새 글 작성하기
+                </DelayLink>
+              </div>
+            )}
+            <p>데이터가 없습니다.</p>
+          </Responsive>
+        </PortfolioListBlock>
+      );
     }
   }
-
   return (
     <PortfolioListBlock>
       <Responsive>

@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import WritePortfolioPage from "./pages/WritePortfolioPage";
 import AdminPage from "./pages/AdminPage";
 import DesignPage from "./pages/DesignPage";
+import WriteDesignPage from "./pages/WriteDesignPage";
 import PortfoliosPage from "./pages/PortfoliosPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import AboutPage from "./pages/AboutPage";
@@ -19,6 +20,7 @@ const App = () => {
       <Route component={AboutPage} path="/about" />
       <Route component={WritePortfolioPage} path="/writePortfolio" />
       <Route component={DesignPage} path="/design" />
+      <Route component={WriteDesignPage} path="/writeDesign" />
       <Route component={AdminPage} path="/admin" />
     </>
   );

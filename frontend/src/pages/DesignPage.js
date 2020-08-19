@@ -1,14 +1,16 @@
 import React from "react";
 import PageTitle from "./../components/common/PageTitle";
 import Footer from "./../components/common/Footer";
-import DesignContainer from "../containers/design/DesignContainer";
+import DesignCategoryContainer from "../containers/design/DesignCategoryContainer";
+import DesignListContainer from "../containers/design/DesignListContainer";
 
 const DesignPage = () => {
   return (
     <>
       <div className="page design">
         <PageTitle subTitle="A small selection of my">Design</PageTitle>
-        <DesignContainer />
+        <DesignCategoryContainer />
+        <DesignListContainer />
       </div>
       <Footer to="/home" next="Home" />
     </>

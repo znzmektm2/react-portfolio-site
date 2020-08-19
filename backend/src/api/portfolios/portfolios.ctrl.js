@@ -3,7 +3,7 @@ import Joi from "@hapi/joi";
 import fs from "fs";
 import path from "path";
 
-// 포트폴리오 뷰페이지 조회시 ctx.state.portfolio에 값 넣기
+// 포트폴리오 아이디 조회시
 export const getPortfolioById = async (ctx, next) => {
   const { id } = ctx.params;
   try {
@@ -18,6 +18,13 @@ export const getPortfolioById = async (ctx, next) => {
   } catch (e) {
     ctx.throw(500, e);
   }
+};
+
+/* 포트폴리오 페이지 읽기
+GET /api/portfolios/:id
+*/
+export const read = async (ctx, next) => {
+  ctx.body = ctx.state.portfolio;
 };
 
 /* id 값 중복 조회
@@ -87,13 +94,6 @@ export const list = async (ctx) => {
   } catch (e) {
     ctx.throw(500, e);
   }
-};
-
-/* 포트폴리오 뷰페이지 조회
-GET /api/portfolios/id
-*/
-export const read = async (ctx, next) => {
-  ctx.body = ctx.state.portfolio;
 };
 
 /* 포트폴리오 작성
@@ -203,7 +203,7 @@ export const write = async (ctx) => {
     contentImage,
   });
 
-  console.log("updateed portfolio ", portfolio);
+  console.log("write portfolio ", portfolio);
   try {
     await portfolio.save();
     ctx.body = portfolio;

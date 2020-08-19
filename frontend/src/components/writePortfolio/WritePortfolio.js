@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Button from "../common/Button";
 import Responsive from "./../common/Responsive";
@@ -81,6 +81,10 @@ const WritePortfolio = ({
     }
     return <span className="green">아이디 사용가능</span>;
   };
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   if (!user) {
     return null;

@@ -30,7 +30,7 @@ const PortfolioContainer = ({ match, history }) => {
 
   const onEdit = () => {
     dispatch(setOriginalPortfolio(portfolio));
-    history.push("/write");
+    history.push("/writePortfolio");
   };
 
   const onRemove = async () => {

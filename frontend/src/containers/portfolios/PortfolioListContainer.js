@@ -79,7 +79,6 @@ const PortfolioListContainer = ({ location, history }) => {
         // 이미지에 appear 클래스 추가
         let target = entry.target;
         if (target.tagName === "IMG") {
-          console.log(target);
           target.src = target.dataset.src;
           target.classList.remove("lazy");
           target.parentNode.parentNode.parentNode.classList.add("appear");
@@ -106,7 +105,7 @@ const PortfolioListContainer = ({ location, history }) => {
     if (!portfolioList.length) {
       searchPortfolio();
     }
-  }, [portfolioList.length, dispatch, searchPortfolio]);
+  }, [portfolioList.length, searchPortfolio]);
 
   return (
     <PortfolioList

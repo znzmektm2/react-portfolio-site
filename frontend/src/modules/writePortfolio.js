@@ -45,7 +45,7 @@ const updatePortfolioSaga = createRequestSaga(
   portfoliosAPI.updatePortFolio
 );
 
-export function* writeSaga() {
+export function* allWritePortfolioSaga() {
   yield takeLatest(CHECK_ID, checkIdSaga);
   yield takeLatest(WRITE_PORTFOLIO, writePortfolioSaga);
   yield takeLatest(UPDATE_PORTFOLIO, updatePortfolioSaga);

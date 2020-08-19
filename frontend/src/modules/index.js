@@ -4,7 +4,9 @@ import loading from "./loading";
 import user, { userSaga } from "./user";
 import portfolios, { portfoliosSaga } from "./portfolios";
 import portfolio, { portfolioSaga } from "./portfolio";
-import writePortfolio, { writeSaga } from "./writePortfolio";
+import writePortfolio, { allWritePortfolioSaga } from "./writePortfolio";
+import design, { designSaga } from "./design";
+import writeDesign, { allWriteDesignSaga } from "./writeDesign";
 import { all } from "redux-saga/effects";
 
 const rootReducers = combineReducers({
@@ -14,6 +16,8 @@ const rootReducers = combineReducers({
   portfolios,
   portfolio,
   writePortfolio,
+  design,
+  writeDesign,
 });
 
 export function* rootSaga() {
@@ -22,7 +26,9 @@ export function* rootSaga() {
     userSaga(),
     portfoliosSaga(),
     portfolioSaga(),
-    writeSaga(),
+    allWritePortfolioSaga(),
+    designSaga(),
+    allWriteDesignSaga(),
   ]);
 }
 

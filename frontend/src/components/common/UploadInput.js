@@ -44,9 +44,11 @@ const UploadImageBlock = styled.div`
 const UploadInput = ({
   inputName,
   thumbImage,
-  contentImage,
   thumbImageRef,
+  contentImage,
   contentImageRef,
+  designImage,
+  designImageRef,
 }) => {
   const [imageUrl, setImageUrl] = useState();
   const onDrop = useCallback(
@@ -55,6 +57,7 @@ const UploadInput = ({
       let imageUrlArr = [];
       const targetThumbImage = event.target.name === "thumbImage";
       const targetContentImage = event.target.name === "contentImage";
+      const targetDesignImage = event.target.name === "designImage";
       const contentImageArr = [];
 
       // 썸네일 이미지는 하나만 등록하기
@@ -83,6 +86,11 @@ const UploadInput = ({
           contentImageRef.current = contentImageArr;
         }
 
+        // designImage 폼데이터에 추가하기
+        if (targetDesignImage) {
+          designImageRef.current = files[i];
+        }
+
         const reader = new FileReader();
         reader.addEventListener(
           "load",
@@ -96,7 +104,7 @@ const UploadInput = ({
 
       setImageUrl(imageUrlArr);
     },
-    [setImageUrl, thumbImageRef, contentImageRef]
+    [setImageUrl, thumbImageRef, contentImageRef, designImageRef]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -119,6 +127,9 @@ const UploadInput = ({
         : thumbImage && (
             <img src={`../${thumbImage.url}`} alt={thumbImage.name} />
           )}
+      {designImage && (
+        <img src={`../${designImage.url}`} alt={designImage.name} />
+      )}
     </UploadImageBlock>
   );
 };
