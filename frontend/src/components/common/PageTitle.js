@@ -22,7 +22,6 @@ const TitleBlock = styled.div`
   div {
     margin-top: -2rem;
     text-align: center;
-    background: #fff;
     z-index: 1;
     h3 {
       font-family: "trump-gothic-pro";

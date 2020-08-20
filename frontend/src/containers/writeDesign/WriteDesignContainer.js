@@ -68,7 +68,7 @@ const WriteDesignContainer = ({ history }) => {
 
     if (design) {
       dispatch(initializeDesign());
-      history.push("/design");
+      history.push(`/design?category=${design.category}`);
     }
 
     if (designError) {

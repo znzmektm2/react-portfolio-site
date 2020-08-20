@@ -7,12 +7,13 @@ import { DelayLink } from "./../common/DelayLink";
 const DesignListBlock = styled.div`
   position: relative;
   padding: 10rem 0;
+  min-height: 100vh;
   background: none;
   color: #c8c9b9;
   overflow: hidden;
   z-index: 1;
   .resposiveBlock {
-    max-width: 1500px;
+    max-width: 1600px;
   }
 
   .writeButtonArea {
@@ -29,11 +30,8 @@ const DesignListBlock = styled.div`
     margin: 1rem auto 0;
     max-width: 100%;
     ul {
-      width: 50%;
-      display: inline-block;
-      vertical-align: top;
       li {
-        margin-bottom: 15vh;
+        padding: 0 5rem;
         width: 100%;
         display: inline-block;
         vertical-align: top;
@@ -41,32 +39,34 @@ const DesignListBlock = styled.div`
         transform: translate3d(0, 120px, 0);
         opacity: 0;
         transition: all 1.5s;
+        &:nth-child(even) {
+          text-align: right;
+          .wrap {
+            h3 {
+              right: auto;
+              left: calc(100% + 4rem);
+              top: -4rem;
+              transform-origin: left top;
+              transform: rotate(90deg);
+            }
+            &.active {
+              h3 {
+                top: 0.1rem;
+              }
+            }
+          }
+        }
         &.appear {
           transform: translate3d(0, 0, 0);
           opacity: 1;
         }
-        > div {
+        .wrap {
           position: relative;
-          padding: 5rem;
-          min-width: 90%;
-          cursor: pointer;
-          .buttonBox {
-            text-align: right;
-            transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
-            button {
-              margin: 1rem 0 1rem 1rem;
-              padding: 0.5rem 1rem;
-              color: #fff;
-              border: 1px solid #525252;
-              outline: none;
-              background: none;
-              cursor: pointer;
-            }
-          }
+          transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
           h3 {
             position: absolute;
-            top: -0.8rem;
-            right: 94%;
+            top: -5rem;
+            right: calc(100% + 4rem);
             padding-left: 1.1rem;
             font-family: "KoPub Batang", serif;
             font-size: 12px;
@@ -91,80 +91,102 @@ const DesignListBlock = styled.div`
               z-index: 2;
             }
           }
-
-          .imgWrap {
+          .buttonImgWrap {
+            display: inline-block;
             position: relative;
-            display: block;
-            max-height: 50vh;
-            box-shadow: 0 0 20px #252525;
-            overflow: hidden;
+            width: 40%;
+            max-width: 100%;
             transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
-            &:before {
-              content: "";
-              position: absolute;
-              top: -10px;
-              left: 0;
-              width: 100%;
-              height: 9rem;
-              background-image: linear-gradient(
-                0deg,
-                rgba(12, 12, 12, 0),
-                #292929
-              );
-              z-index: 1;
-              transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
-            }
-            img {
-              width: 100%;
-              opacity: 0.75;
-              filter: grayscale(1);
-              transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
-            }
-          }
-          &:hover {
-            h3 {
-              color: #fff;
-            }
-            .imgWrap {
-              &:before {
-                opacity: 0;
-              }
-              img {
-                opacity: 1;
-              }
-            }
-          }
-
-          &.active {
+            cursor: pointer;
             .buttonBox {
-              transform: translateY(-1.5rem);
+              text-align: right;
+              transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
+              button {
+                margin: 0 0 1rem 1rem;
+                padding: 0.5rem 1rem;
+                color: #fff;
+                border: 1px solid #525252;
+                outline: none;
+                background: none;
+                cursor: pointer;
+              }
             }
-            h3 {
-              top: 2.3rem;
-              color: #fff;
-            }
+
             .imgWrap {
-              max-height: 100vh;
-              transform: translateY(-1.5rem);
+              position: relative;
+              display: block;
+              width: 100%;
+              max-height: 50vh;
+              box-shadow: 0 0 40px -10px #292929;
+              overflow: hidden;
+              transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
+
               &:before {
-                opacity: 0;
+                content: "";
+                position: absolute;
+                top: -10px;
+                left: -1%;
+                right: -1%;
+                width: 102%;
+                height: 9rem;
+                background-image: linear-gradient(
+                  0deg,
+                  rgba(0, 0, 0, 0),
+                  #000000bf
+                );
+                z-index: 1;
+                transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
               }
               img {
-                opacity: 1;
-                filter: none;
+                width: 100%;
+                opacity: 0.75;
+                filter: grayscale(1);
+                transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
+              }
+            }
+            .index {
+              position: absolute;
+              bottom: -1rem;
+              right: 0;
+              display: inline-block;
+              font-family: "KoPub Batang", serif;
+              color: #afafaf;
+              font-size: 12px;
+            }
+            &:hover {
+              h3 {
+                color: #fff;
+              }
+              .imgWrap {
+                &:before {
+                  opacity: 0;
+                }
+                img {
+                  opacity: 1;
+                }
+              }
+            }
+          }
+          &.active {
+            margin: 4rem 0;
+            h3 {
+              top: -1.1rem;
+              color: #fff;
+            }
+            .buttonImgWrap {
+              width: 100%;
+              .imgWrap {
+                &:before {
+                  opacity: 0;
+                }
+                img {
+                  opacity: 1;
+                  filter: none;
+                }
               }
             }
           }
         }
-      }
-      &:first-child {
-        margin-top: 30vh;
-        margin-left: -5rem;
-      }
-      &:last-child {
-        margin-right: -5rem;
-        float: right;
-        text-align: right;
       }
     }
   }
@@ -179,10 +201,30 @@ const DesignList = ({
   onRemove,
 }) => {
   const onClick = (e) => {
-    e.currentTarget.classList.toggle("active");
+    const buttonImgWrap = e.currentTarget;
+    const imgWrap = buttonImgWrap.childNodes[1];
+    const wrapWidth =
+      imgWrap.parentNode.parentNode.parentNode.childNodes[0].clientWidth;
+    const img = imgWrap.childNodes[0];
+    const imgNaturalWidth = img.naturalWidth;
+    const imgNaturalHeight = img.naturalHeight;
+    const calcHeight = (wrapWidth * imgNaturalHeight) / imgNaturalWidth;
+
+    buttonImgWrap.parentNode.classList.toggle("active");
+
+    if (buttonImgWrap.parentNode.className === "wrap active") {
+      if (wrapWidth > imgNaturalWidth) {
+        buttonImgWrap.style.width = imgNaturalWidth + "px";
+        imgWrap.style.maxHeight = img.naturalHeight + "px";
+      } else {
+        imgWrap.style.maxHeight = calcHeight + "px";
+      }
+    } else {
+      buttonImgWrap.style.removeProperty("width");
+      imgWrap.style.removeProperty("max-height");
+    }
   };
 
-  console.log(designList);
   if (designError) {
     return (
       <DesignListBlock>
@@ -231,84 +273,45 @@ const DesignList = ({
         )}
         <div className="designList">
           <ul>
-            {designList.map(
-              (list, index) =>
-                index % 2 === 0 && (
-                  <li key={list._id} className={index}>
-                    <div onClick={onClick}>
-                      {user && (
-                        <div className="buttonBox">
-                          <button
-                            onClick={() => {
-                              onEdit(list);
-                            }}
-                          >
-                            수정
-                          </button>
-                          <button
-                            onClick={() => {
-                              onRemove(list._id);
-                            }}
-                          >
-                            삭제
-                          </button>
-                        </div>
-                      )}
-                      <h3>
-                        <span className="category">{list.category}.</span>
-                        {list.name}
-                      </h3>
-                      <span className="imgWrap">
-                        <Image
-                          src={list.designImage.url}
-                          alt={list.designImage.name}
-                          isLazy
-                        />
-                      </span>
+            {designList.map((list, index, array) => (
+              <li key={list._id}>
+                <div className="wrap">
+                  <h3>
+                    <span className="category">{list.category}.</span>
+                    {list.name}
+                  </h3>
+                  <div className="buttonImgWrap" onClick={onClick}>
+                    {user && (
+                      <div className="buttonBox">
+                        <button
+                          onClick={() => {
+                            onEdit(list);
+                          }}
+                        >
+                          수정
+                        </button>
+                        <button
+                          onClick={() => {
+                            onRemove(list._id, list.category);
+                          }}
+                        >
+                          삭제
+                        </button>
+                      </div>
+                    )}
+
+                    <div className="imgWrap">
+                      <Image
+                        src={list.designImage.url}
+                        alt={list.designImage.name}
+                        isLazy
+                      />
                     </div>
-                  </li>
-                )
-            )}
-          </ul>
-          <ul>
-            {designList.map(
-              (list, index) =>
-                index % 2 !== 0 && (
-                  <li key={list._id} className={index}>
-                    <div onClick={onClick}>
-                      {user && (
-                        <div className="buttonBox">
-                          <button
-                            onClick={() => {
-                              onEdit(list);
-                            }}
-                          >
-                            수정
-                          </button>
-                          <button
-                            onClick={() => {
-                              onRemove(list._id);
-                            }}
-                          >
-                            삭제
-                          </button>
-                        </div>
-                      )}
-                      <h3>
-                        <span className="category">{list.category}.</span>
-                        {list.name}
-                      </h3>
-                      <span className="imgWrap">
-                        <Image
-                          src={list.designImage.url}
-                          alt={list.designImage.name}
-                          isLazy
-                        />
-                      </span>
-                    </div>
-                  </li>
-                )
-            )}
+                    <span className="index">{array.length - index}</span>
+                  </div>
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="bottomTarget" />

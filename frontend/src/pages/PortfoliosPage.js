@@ -1,6 +1,6 @@
 import React from "react";
 import PageTitle from "./../components/common/PageTitle";
-import CategoryContainer from "../containers/portfolios/CategoryContainer";
+import PortfolioCategoryContainer from "../containers/portfolios/PortfolioCategoryContainer";
 import PortfolioListContainer from "../containers/portfolios/PortfolioListContainer";
 import Footer from "../components/common/Footer";
 
@@ -9,7 +9,7 @@ const PortfoliosPage = () => {
     <>
       <div className="page">
         <PageTitle subTitle="All about my">Portfolios</PageTitle>
-        <CategoryContainer />
+        <PortfolioCategoryContainer />
         <PortfolioListContainer />
       </div>
       <Footer to="/design" next="Design" />

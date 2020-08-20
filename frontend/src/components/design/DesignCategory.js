@@ -38,40 +38,44 @@ const DesignCategoryBlock = styled.div`
   }
 `;
 
-const DesignCategory = () => {
+const DesignCategory = ({
+  categories,
+  error,
+  loading,
+  clickDesignRadiobox,
+}) => {
+  if (error) {
+    return <div>에러가 발생했습니다.</div>;
+  }
+
+  if (!categories) {
+    // 로딩중이면서 카테고리가 없을 시
+    if (loading) {
+      return null;
+    }
+    // 로딩중이 아니면서 카테고리가 없을 시
+    if (!loading) {
+      return <div>데이터가 없습니다.</div>;
+    }
+  }
+
   return (
     <DesignCategoryBlock>
       <Responsive>
         <ul>
-          <li>
-            <input
-              type="radio"
-              name="category"
-              value="Photoshop"
-              defaultChecked="true"
-            />
-            <label htmlFor="Photoshop">Photoshop</label>
-          </li>
-          <li>
-            <input type="radio" name="category" value="Illustration" />
-            <label htmlFor="Illustration">Illustration</label>
-          </li>
-          <li>
-            <input type="radio" name="category" value="Corelldraw" />
-            <label htmlFor="Corelldraw">Corelldraw</label>
-          </li>
-          <li>
-            <input type="radio" name="category" value="Drawing" />
-            <label htmlFor="Drawing">Drawing</label>
-          </li>
-          <li>
-            <input type="radio" name="category" value="Foodstyling" />
-            <label htmlFor="Foodstyling">Foodstyling</label>
-          </li>
-          <li>
-            <input type="radio" name="category" value="ETC" />
-            <label htmlFor="ETC">ETC</label>
-          </li>
+          {categories.map((category) => (
+            <li key={category}>
+              <input
+                type="radio"
+                name="category"
+                value={category}
+                defaultChecked={category === "Photoshop" && "true"}
+                onClick={clickDesignRadiobox}
+                className="designInput"
+              />
+              <label htmlFor={category}>{category}</label>
+            </li>
+          ))}
         </ul>
       </Responsive>
     </DesignCategoryBlock>

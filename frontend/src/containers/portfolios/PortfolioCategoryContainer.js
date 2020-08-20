@@ -5,7 +5,7 @@ import PortfolioCategory from "./../../components/portfoilos/PortfolioCategory";
 import { category, initializePortfolios } from "../../modules/portfolios";
 import { withRouter } from "react-router-dom";
 
-const CategoryContainer = ({ history, location }) => {
+const PortfolioCategoryContainer = ({ history, location }) => {
   const dispatch = useDispatch();
   const [skillCheckbox, setSkillCheckbox] = useState(null);
   const [typeCheckbox, setTypeCheckbox] = useState(null);
@@ -80,6 +80,7 @@ const CategoryContainer = ({ history, location }) => {
       ignoreQueryPrefix: true,
     });
 
+    console.log(history.action);
     if (history.action === "POP") {
       if (!!skill) {
         setSkillCheckbox(skill.split(","));
@@ -138,4 +139,4 @@ const CategoryContainer = ({ history, location }) => {
   );
 };
 
-export default withRouter(CategoryContainer);
+export default withRouter(PortfolioCategoryContainer);

@@ -35,11 +35,11 @@ const DesignListContainer = ({ location, history }) => {
     history.push("/writeDesign");
   };
 
-  const onRemove = async (id) => {
+  const onRemove = async (id, category) => {
     try {
       await removeDesign(id);
       dispatch(initializeDesign());
-      history.push("/design");
+      history.push(`/design?category=${category}`);
     } catch (e) {
       console.log(e);
     }
@@ -61,10 +61,12 @@ const DesignListContainer = ({ location, history }) => {
     [dispatch, location.search]
   );
 
-  // 디자인 API 호출 이벤트
   const searchDesign = useCallback(() => {
+    // 포트폴리오 리스트, currentPage 초기화
+    dispatch(initializeDesign());
+    // 디자인 API 호출 이벤트
     loadDesign();
-  }, [loadDesign]);
+  }, [dispatch, loadDesign]);
 
   // 다음 페이지 디자인 API 호츌 이벤트
   const loadMoreDesign = useCallback(async () => {
@@ -92,7 +94,9 @@ const DesignListContainer = ({ location, history }) => {
         if (target.tagName === "IMG") {
           target.src = target.dataset.src;
           target.classList.remove("lazy");
-          target.parentNode.parentNode.parentNode.classList.add("appear");
+          target.parentNode.parentNode.parentNode.parentNode.classList.add(
+            "appear"
+          );
           observer.unobserve(target);
         }
 
