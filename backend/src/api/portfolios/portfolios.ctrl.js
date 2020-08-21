@@ -87,9 +87,9 @@ export const list = async (ctx) => {
       };
       portfolioList.push(list);
     });
-    const portfolioCount = await Portfolio.countDocuments(query);
+    const countPortfolio = await Portfolio.countDocuments(query);
     // Last-Page라는 커스텀 HTTP 헤더를 설정
-    ctx.set("Last-Page", Math.ceil(portfolioCount / listLimit));
+    ctx.set("Last-Page", Math.ceil(countPortfolio / listLimit));
     ctx.body = portfolioList;
   } catch (e) {
     ctx.throw(500, e);
@@ -436,6 +436,19 @@ export const category = async (ctx) => {
     });
     const category = [...new Set(skillArray)];
     skillArray.length === 0 ? (ctx.body = null) : (ctx.body = category);
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+/* 디자인 개수 조회
+GET /api/portfolio/countPortfolio
+*/
+export const countPortfolio = async (ctx) => {
+  try {
+    const portfolio = await Portfolio.find();
+    console.log(portfolio.length);
+    ctx.body = portfolio.length;
   } catch (e) {
     ctx.throw(500, e);
   }

@@ -80,7 +80,6 @@ const PortfolioCategoryContainer = ({ history, location }) => {
       ignoreQueryPrefix: true,
     });
 
-    console.log(history.action);
     if (history.action === "POP") {
       if (!!skill) {
         setSkillCheckbox(skill.split(","));

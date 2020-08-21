@@ -7,6 +7,7 @@ const design = new Router();
 design.post("/", checkLoggedIn, designCtrl.write);
 design.get("/", designCtrl.list);
 design.get("/category", designCtrl.category);
+design.get("/countDesign", designCtrl.countDesign);
 
 const designId = new Router();
 

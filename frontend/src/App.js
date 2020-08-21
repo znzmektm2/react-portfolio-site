@@ -8,12 +8,12 @@ import PortfoliosPage from "./pages/PortfoliosPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import AboutPage from "./pages/AboutPage";
 import HomePage from "./pages/HomePage";
-import Header from "./components/common/Header";
+import HeaderContainer from "./containers/common/HeaderContainer";
 
 const App = () => {
   return (
     <>
-      <Header />
+      <HeaderContainer />
       <Route component={HomePage} path={["/home", "/"]} exact />
       <Route component={PortfoliosPage} path="/portfolios" />
       <Route component={PortfolioPage} path="/portfolio/:id" />

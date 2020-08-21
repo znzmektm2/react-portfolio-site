@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import qs from "qs";
 import DesignCategory from "./../../components/design/DesignCategory";
 import { useSelector, useDispatch } from "react-redux";
-import { category, initializeDesign } from "../../modules/design";
+import { category } from "../../modules/design";
 import { withRouter } from "react-router-dom";
 
 const DesignCategoryContainer = ({ history, location }) => {

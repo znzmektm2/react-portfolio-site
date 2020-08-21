@@ -57,7 +57,6 @@ export const list = async (ctx) => {
       .lean(); // JSON 형태로 조회
     const designList = [];
 
-    console.log("design ", design);
     design.map((d) => {
       const list = {
         _id: d._id,
@@ -67,12 +66,10 @@ export const list = async (ctx) => {
       };
       designList.push(list);
     });
-    const designCount = await Design.countDocuments(query);
-    console.log("designCount ", designCount);
+    const countDesign = await Design.countDocuments(query);
     // Last-Page라는 커스텀 HTTP 헤더를 설정
-    ctx.set("Last-Page", Math.ceil(designCount / listLimit));
+    ctx.set("Last-Page", Math.ceil(countDesign / listLimit));
     ctx.body = designList;
-    console.log("designList", designList);
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -249,6 +246,19 @@ export const category = async (ctx) => {
     const category = [...new Set(categoryArray)];
     categoryArray.length === 0 ? (ctx.body = null) : (ctx.body = category);
     console.log("category", category);
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+/* 디자인 개수 조회
+GET /api/design/countDesign
+*/
+export const countDesign = async (ctx) => {
+  try {
+    const design = await Design.find();
+    console.log(design.length);
+    ctx.body = design.length;
   } catch (e) {
     ctx.throw(500, e);
   }

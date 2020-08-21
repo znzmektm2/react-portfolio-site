@@ -506,7 +506,7 @@ const HeaderBlock = styled.header`
   }
 `;
 
-const Header = () => {
+const Header = ({ ...rest }) => {
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(true);
   const logo = document.getElementsByClassName("logo");
@@ -542,7 +542,7 @@ const Header = () => {
         <span className="btnLine step3" />
         <span className="btnLine step4" />
       </div>
-      <Menu addHeaderActiveClass={addHeaderActiveClass} open={open} />
+      <Menu addHeaderActiveClass={addHeaderActiveClass} open={open} {...rest} />
       <div className="bg step1" />
       <div className="bg step2" />
       <div className="bg step3" />

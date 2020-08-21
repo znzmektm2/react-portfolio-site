@@ -8,6 +8,7 @@ portfolios.post("/", checkLoggedIn, portfoliosCtrl.write);
 portfolios.get("/idCheck/:id", portfoliosCtrl.idCheck);
 portfolios.get("/", portfoliosCtrl.list);
 portfolios.get("/category", portfoliosCtrl.category);
+portfolios.get("/countPortfolio", portfoliosCtrl.countPortfolio);
 
 const portfolio = new Router();
 

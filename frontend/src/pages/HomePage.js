@@ -1,12 +1,12 @@
 import React from "react";
-import Home from "./../components/home/Home";
 import Footer from "../components/common/Footer";
+import HomeContainer from "./../containers/home/HomeContainer";
 
 const HomePage = () => {
   return (
     <>
       <div className="page">
-        <Home />
+        <HomeContainer />
       </div>
       <Footer to="/about" next="About" />
     </>

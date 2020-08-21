@@ -10,6 +10,8 @@ export const removeDesign = (id) => client.delete(`/api/design/${id}`);
 
 export const category = () => client.get("/api/design/category");
 
+export const countDesign = () => client.get("/api/design/countDesign");
+
 export const list = ({ category, page }) => {
   const queryString = qs.stringify({ category, page });
   return client.get(`/api/design?${queryString}`);

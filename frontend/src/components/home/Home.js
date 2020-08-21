@@ -160,7 +160,7 @@ const HomeBlock = styled.div`
   }
 `;
 
-const Home = () => {
+const Home = ({ designNumber, portfolioNumber }) => {
   useEffect(() => {
     const header = document.getElementsByTagName("header")[0];
     header.classList.add("home");
@@ -288,8 +288,8 @@ const Home = () => {
         </div>
       </div>
       <ul>
-        <li>PORTFOLIOS → 52</li>
-        <li>DESIGN → 23</li>
+        <li>PORTFOLIOS → {portfolioNumber ? portfolioNumber : ""}</li>
+        <li>DESIGN → {designNumber ? designNumber : ""}</li>
         <li>LAST UPDATE → AUGUST 2020</li>
       </ul>
       <div className="update">

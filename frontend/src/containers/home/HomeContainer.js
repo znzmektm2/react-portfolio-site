@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import Header from "./../../components/common/Header";
+import Home from "./../../components/home/Home";
 import { useDispatch, useSelector } from "react-redux";
 import { countDesign } from "../../modules/design";
 import { countPortfolio } from "../../modules/portfolios";
 
-const HeaderContainer = () => {
+const HomeContainer = () => {
   const dispatch = useDispatch();
   const { designNumber, portfolioNumber } = useSelector(
     ({ design, portfolios, loading }) => ({
@@ -20,9 +20,7 @@ const HeaderContainer = () => {
     dispatch(countPortfolio());
   }, [dispatch]);
 
-  return (
-    <Header designNumber={designNumber} portfolioNumber={portfolioNumber} />
-  );
+  return <Home designNumber={designNumber} portfolioNumber={portfolioNumber} />;
 };
 
-export default HeaderContainer;
+export default HomeContainer;

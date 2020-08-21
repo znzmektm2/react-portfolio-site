@@ -192,29 +192,51 @@ const MenuBlock = styled.div`
   }
 `;
 
-const Menu = ({ ...rest }) => {
+const Menu = ({
+  addHeaderActiveClass,
+  open,
+  designNumber,
+  portfolioNumber,
+}) => {
   return (
     <MenuBlock className="menu">
       <Responsive>
         <div className="menuWrap">
           <ul className="menuList">
             <li>
-              <DelayLink exact to="/" {...rest}>
+              <DelayLink
+                exact
+                to="/"
+                addHeaderActiveClass={addHeaderActiveClass}
+                open={open}
+              >
                 Home
               </DelayLink>
             </li>
             <li>
-              <DelayLink to="/about" {...rest}>
+              <DelayLink
+                to="/about"
+                addHeaderActiveClass={addHeaderActiveClass}
+                open={open}
+              >
                 About
               </DelayLink>
             </li>
             <li>
-              <DelayLink to="/portfolios" {...rest}>
+              <DelayLink
+                to="/portfolios"
+                addHeaderActiveClass={addHeaderActiveClass}
+                open={open}
+              >
                 Portfolios
               </DelayLink>
             </li>
             <li>
-              <DelayLink to="/design" {...rest}>
+              <DelayLink
+                to="/design"
+                addHeaderActiveClass={addHeaderActiveClass}
+                open={open}
+              >
                 Design
               </DelayLink>
             </li>
@@ -225,10 +247,12 @@ const Menu = ({ ...rest }) => {
                 FRONTEND DEVELOPER<span>·</span>
               </li>
               <li>
-                PORTFOLIOS → 52<span>·</span>
+                PORTFOLIOS → {portfolioNumber ? portfolioNumber : ""}
+                <span>·</span>
               </li>
               <li>
-                DESIGN → 23<span>·</span>
+                DESIGN → {designNumber ? designNumber : ""}
+                <span>·</span>
               </li>
               <li>LAST UPDATE → AUGUST 2020</li>
             </ul>

@@ -69,8 +69,8 @@ const DesignListBlock = styled.div`
             right: calc(100% + 4rem);
             padding-left: 1.1rem;
             font-family: "KoPub Batang", serif;
-            font-size: 12px;
-            line-height: 18px;
+            font-size: 0.75rem;
+            line-height: 1rem;
             color: #afafaf;
             white-space: nowrap;
             transform: rotate(-90deg);
@@ -145,13 +145,12 @@ const DesignListBlock = styled.div`
               }
             }
             .index {
-              position: absolute;
-              bottom: -1rem;
-              right: 0;
               display: inline-block;
               font-family: "KoPub Batang", serif;
-              color: #afafaf;
-              font-size: 12px;
+              color: #e0e0dc;
+              font-size: 0.75rem;
+              line-height: 1rem;
+              margin-top: 0.5rem;
             }
             &:hover {
               h3 {
