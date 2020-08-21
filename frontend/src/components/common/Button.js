@@ -3,18 +3,15 @@ import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
 const buttonStyle = css`
-  margin: 0.5rem 0;
-  line-height: 1.5rem;
-  vertical-align: middle;
-  border: none;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  color: white;
   outline: none;
+  background: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid #525252;
+  font-size: 0.83rem;
+  line-height: 0.95rem;
   cursor: pointer;
-  background: #aaa;
+
   &:hover {
-    background: #ddd;
   }
   & + & {
     margin-left: 1rem;
@@ -30,6 +27,8 @@ const StyleLink = styled(Link)`
     props.to &&
     css`
       margin-right: 1rem;
+      font-size: 0.83rem;
+      line-height: normal;
     `}
   ${buttonStyle}
 `;

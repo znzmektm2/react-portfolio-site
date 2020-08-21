@@ -8,7 +8,7 @@ const DesignPage = () => {
   return (
     <>
       <div className="page design">
-        <PageTitle subTitle="A small selection of my">Design</PageTitle>
+        <PageTitle subTitle="A small selection of my" title="Design" />
         <DesignCategoryContainer />
         <DesignListContainer />
       </div>

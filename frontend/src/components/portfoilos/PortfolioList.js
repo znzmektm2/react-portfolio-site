@@ -7,19 +7,14 @@ import { DelayLink } from "./../common/DelayLink";
 const PortfolioListBlock = styled.div`
   padding: 4rem 0 10rem;
   min-height: 500px;
-  background: #fff;
   .writeButtonArea {
     overflow: hidden;
     a {
+      padding: 0.3rem;
       float: right;
-      line-height: 1.5rem;
-      vertical-align: middle;
-      border: none;
       font-size: 1rem;
-      padding: 0.5rem 1rem;
-      color: white;
-      outline: none;
-      background: #aaa;
+      line-height: 2rem;
+
       cursor: pointer;
       &:hover {
         background: #ddd;

@@ -16,6 +16,7 @@ const HeaderBlock = styled.header`
       a {
         font-family: "LibreBarcode128Text-Regular";
         line-height: 3.2rem;
+        color: #222;
         transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
     }

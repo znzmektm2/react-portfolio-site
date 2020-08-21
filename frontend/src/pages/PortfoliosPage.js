@@ -8,7 +8,7 @@ const PortfoliosPage = () => {
   return (
     <>
       <div className="page">
-        <PageTitle subTitle="All about my">Portfolios</PageTitle>
+        <PageTitle subTitle="All about my" title="Portfolios" />
         <PortfolioCategoryContainer />
         <PortfolioListContainer />
       </div>

@@ -4,10 +4,10 @@ import styled from "styled-components";
 
 const UploadImageBlock = styled.div`
   position: relative;
-  margin-top: 2rem;
+  margin-bottom: 2rem;
   padding: 2.5rem 1rem 1rem;
   min-height: 300px;
-  border: 1px solid #eee;
+  border: 1px solid #e2e2e2;
 
   line-height: 0;
   .wrap {
@@ -32,12 +32,12 @@ const UploadImageBlock = styled.div`
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
       display: block !important;
     }
   }
   img {
     margin-top: 1rem;
+    position: relative;
   }
 `;
 
@@ -102,7 +102,9 @@ const UploadInput = ({
         reader.readAsDataURL(files[i]);
       }
 
-      setImageUrl(imageUrlArr);
+      setTimeout(() => {
+        setImageUrl(imageUrlArr);
+      }, 100);
     },
     [setImageUrl, thumbImageRef, contentImageRef, designImageRef]
   );
@@ -114,7 +116,7 @@ const UploadInput = ({
         {isDragActive && <div className="drop" />}
         <input {...getInputProps()} className="input" name={inputName} />
       </div>
-      {imageUrl
+      {typeof imageUrl === "object"
         ? imageUrl.map((url) => <img key={url} src={url} alt="img" />)
         : contentImage
         ? contentImage.map((contImg) => (

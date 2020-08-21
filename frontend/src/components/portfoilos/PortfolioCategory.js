@@ -1,52 +1,19 @@
 import React from "react";
+import Category from "./../common/Category";
 import styled from "styled-components";
+import Responsive from "./../common/Responsive";
 
-const CategoryBlock = styled.div`
-  background: #fff;
-  ul {
-    padding: 0.2rem 0;
-    &:first-child {
-      border-top: 1px solid #e2e2e2;
-    }
-    border-bottom: 1px solid #e2e2e2;
-    display: flex;
-    justify-content: center;
-    > li {
-      position: relative;
-      margin: 1rem 2rem;
-      padding-left: 40px;
-      input {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        cursor: pointer;
-        opacity: 0;
-        z-index: 1;
-      }
-      label {
-        display: inline-block;
-        padding: 0 1rem;
-        font-family: "KoPub Batang";
-        font-size: 1rem;
-        line-height: 2.5rem;
-        vertical-align: middle;
-        color: #fff;
-        background: #555;
-      }
-      label:before {
-        content: "";
-        position: absolute;
-        top: 5px;
-        left: 0;
-        width: 30px;
-        height: 30px;
-        background: url(/images/icon_img.png) 0 -31px no-repeat;
-        background-size: 30px 61px;
-      }
-      input:checked + label:before {
-        background-position: 0 0;
+const PortfolioCategoryBlock = styled.div`
+  position: relative;
+  .categoryBlock {
+    border: 1px solid #e4e4e4;
+
+    ul {
+      color: #222;
+      li {
+        input:checked + label {
+          border-bottom: 1px solid #222;
+        }
       }
     }
   }
@@ -71,56 +38,62 @@ const PortfolioCategory = ({
     // 로딩중이 아니면서 카테고리가 없을 시
     if (!loading) {
       return (
-        <CategoryBlock>
+        <Category>
           <ul>
             <li>데이터가 없습니다.</li>
           </ul>
-        </CategoryBlock>
+        </Category>
       );
     }
   }
 
   return (
-    <>
-      <CategoryBlock>
-        <ul>
-          {categories.map((category) => (
-            <li key={category}>
+    <PortfolioCategoryBlock>
+      <Category>
+        <Responsive>
+          <ul>
+            {categories.map((category) => (
+              <li key={category}>
+                <input
+                  type="checkbox"
+                  name={category}
+                  value={`${category}`}
+                  onClick={clickSkillCheckbox}
+                  className="skillInput"
+                />
+                <label htmlFor={category}>{category}</label>
+              </li>
+            ))}
+          </ul>
+        </Responsive>
+      </Category>
+      <Category>
+        <Responsive>
+          <ul>
+            <li key="web">
               <input
                 type="checkbox"
-                name={category}
-                value={`${category}`}
-                onClick={clickSkillCheckbox}
-                className="skillInput"
+                name="web"
+                value="web"
+                onClick={clickTypeCheckbox}
+                className="typeInput"
               />
-              <label htmlFor={category}>{category}</label>
+              <label htmlFor="web">Web</label>
             </li>
-          ))}
-        </ul>
-        <ul>
-          <li key="web">
-            <input
-              type="checkbox"
-              name="web"
-              value="web"
-              onClick={clickTypeCheckbox}
-              className="typeInput"
-            />
-            <label htmlFor="web">Web</label>
-          </li>
-          <li key="singlepage">
-            <input
-              type="checkbox"
-              name="singlePage"
-              value="singlePage"
-              onClick={clickTypeCheckbox}
-              className="typeInput"
-            />
-            <label htmlFor="singlePage">SinglePage</label>
-          </li>
-        </ul>
-      </CategoryBlock>
-    </>
+            <li key="singlepage">
+              <input
+                type="checkbox"
+                name="singlePage"
+                value="singlePage"
+                onClick={clickTypeCheckbox}
+                className="typeInput"
+              />
+              <label htmlFor="singlePage">SinglePage</label>
+            </li>
+          </ul>
+        </Responsive>
+      </Category>
+    </PortfolioCategoryBlock>
   );
 };
 

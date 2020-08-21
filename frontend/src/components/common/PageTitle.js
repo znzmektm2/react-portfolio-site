@@ -38,12 +38,12 @@ const TitleBlock = styled.div`
   }
 `;
 
-const PageTitle = ({ subTitle, children }) => {
+const PageTitle = (props) => {
   return (
     <TitleBlock className="pageTitle">
       <div>
-        <h3>{subTitle}</h3>
-        <h2>{children}</h2>
+        <h3>{props.subTitle}</h3>
+        <h2>{props.title}</h2>
       </div>
     </TitleBlock>
   );

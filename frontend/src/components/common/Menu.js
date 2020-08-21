@@ -14,7 +14,6 @@ const MenuBlock = styled.div`
   z-index: 4;
   overflow: hidden;
   .resposiveBlock {
-    padding: 60px 125px;
     height: 100%;
     .menuWrap {
       width: 100%;

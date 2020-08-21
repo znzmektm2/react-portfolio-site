@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Image from "./../common/Image";
 import Responsive from "./../common/Responsive";
 import { DelayLink } from "./../common/DelayLink";
+import Button from "./../common/Button";
 
 const DesignListBlock = styled.div`
   position: relative;
@@ -12,13 +13,11 @@ const DesignListBlock = styled.div`
   color: #c8c9b9;
   overflow: hidden;
   z-index: 1;
-  .resposiveBlock {
-    max-width: 1600px;
-  }
 
   .writeButtonArea {
     overflow: hidden;
     a {
+      padding: 0.3rem;
       float: right;
       font-size: 1rem;
       line-height: 2rem;
@@ -103,12 +102,7 @@ const DesignListBlock = styled.div`
               transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
               button {
                 margin: 0 0 1rem 1rem;
-                padding: 0.5rem 1rem;
                 color: #fff;
-                border: 1px solid #525252;
-                outline: none;
-                background: none;
-                cursor: pointer;
               }
             }
 
@@ -282,20 +276,20 @@ const DesignList = ({
                   <div className="buttonImgWrap" onClick={onClick}>
                     {user && (
                       <div className="buttonBox">
-                        <button
+                        <Button
                           onClick={() => {
                             onEdit(list);
                           }}
                         >
                           수정
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                           onClick={() => {
                             onRemove(list._id, list.category);
                           }}
                         >
                           삭제
-                        </button>
+                        </Button>
                       </div>
                     )}
 

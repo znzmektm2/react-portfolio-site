@@ -254,9 +254,11 @@ const PortfolioBlock = styled.div`
         text-align: left;
         a {
           margin: 0 1rem 0 0;
+          font-size: 0.9rem;
         }
         button {
           margin: 0 1rem 0 0;
+          font-size: 0.9rem;
         }
       }
 

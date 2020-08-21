@@ -7,7 +7,7 @@ const AboutPage = () => {
   return (
     <>
       <div className="page">
-        <PageTitle subTitle="About me more">About</PageTitle>
+        <PageTitle subTitle="About me more" title="About" />
         <About />
       </div>
       <Footer to="/portfolios" next="Portfolios" />

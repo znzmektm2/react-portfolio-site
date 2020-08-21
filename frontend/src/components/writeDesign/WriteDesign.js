@@ -6,11 +6,6 @@ import Button from "./../common/Button";
 
 const WriteDesignBlock = styled.div`
   margin: 5rem auto;
-  width: 1200px;
-  .red {
-    font-size: 0.9rem;
-    color: red;
-  }
 `;
 
 const WriteDesign = ({
@@ -57,7 +52,7 @@ const WriteDesign = ({
           onChange={onChange}
         />
         <br />
-        {designError && <p className="red">내용을 채워주세요</p>}
+        {designError && <p className="warning">내용을 채워주세요</p>}
         <Button onClick={onPublish}>{id ? "수정하기" : "등록하기"}</Button>
         <UploadInput
           inputName="designImage"
