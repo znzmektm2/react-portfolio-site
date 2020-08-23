@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
 const buttonStyle = css`
+  position: relative;
   outline: none;
   background: none;
   padding: 0.5rem 1rem;

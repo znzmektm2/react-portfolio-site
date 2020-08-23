@@ -164,9 +164,11 @@ export const write = async (ctx) => {
   // 파일 객체 담기
   const files = ctx.request.files;
   const thumbImageFile = files.thumbImage;
+  const clientImageFile = files.clientImage;
   const contentImageFile = files.contentImage;
 
   console.log("thumbImageFile ", thumbImageFile);
+  console.log("clientImageFile ", clientImageFile);
   console.log("contentImageFile ", contentImageFile);
 
   const generateUrl = (path) => {
@@ -177,6 +179,10 @@ export const write = async (ctx) => {
   const thumbImage = {
     name: thumbImageFile.name,
     url: generateUrl(thumbImageFile.path),
+  };
+  const clientImage = {
+    name: clientImageFile.name,
+    url: generateUrl(clientImageFile.path),
   };
 
   const array = new Array();
@@ -200,6 +206,7 @@ export const write = async (ctx) => {
     animationEvent,
     url,
     thumbImage,
+    clientImage,
     contentImage,
   });
 

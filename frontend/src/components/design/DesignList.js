@@ -287,6 +287,7 @@ const DesignList = ({
                           onClick={() => {
                             onRemove(list._id, list.category);
                           }}
+                          className="removeBtn"
                         >
                           삭제
                         </Button>

@@ -25,6 +25,10 @@ const PortfolioSchema = new Schema({
     name: String,
     url: String,
   },
+  clientImage: {
+    name: String,
+    url: String,
+  },
   contentImage: [ImageSchema],
 });
 

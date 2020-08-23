@@ -6,7 +6,7 @@ const UploadImageBlock = styled.div`
   position: relative;
   margin-bottom: 2rem;
   padding: 2.5rem 1rem 1rem;
-  min-height: 300px;
+  min-height: 10rem;
   border: 1px solid #e2e2e2;
 
   line-height: 0;
@@ -44,6 +44,8 @@ const UploadInput = ({
   inputName,
   thumbImage,
   thumbImageRef,
+  clientImage,
+  clientImageRef,
   contentImage,
   contentImageRef,
   designImage,
@@ -52,17 +54,20 @@ const UploadInput = ({
   const [imageUrl, setImageUrl] = useState();
   const onDrop = useCallback(
     (acceptedFiles, fileRejections, event) => {
-      console.log(event.target);
       const files = acceptedFiles;
       let imageUrlArr = [];
       const targetThumbImage = event.target.id === "thumbImage";
+      const targetClientImage = event.target.id === "clientImage";
       const targetContentImage = event.target.id === "contentImage";
       const targetDesignImage = event.target.id === "designImage";
       const contentImageArr = [];
 
-      // 썸네일 이미지는 하나만 등록하기
-      if (targetThumbImage && files.length > 1) {
-        alert("썸네일 이미지는 하나만 등록 가능합니다.");
+      // 썸네일, 로고 이미지는 하나만 등록하기
+      if (
+        (targetThumbImage || targetClientImage || targetDesignImage) &&
+        files.length > 1
+      ) {
+        alert("이미지는 하나만 등록 가능합니다.");
         event.target.value = "";
         return;
       }
@@ -78,6 +83,11 @@ const UploadInput = ({
         // thumbImage 폼데이터에 추가하기
         if (targetThumbImage) {
           thumbImageRef.current = files[i];
+        }
+
+        // clientImage 폼데이터에 추가하기
+        if (targetClientImage) {
+          clientImageRef.current = files[i];
         }
 
         // contentImage 폼데이터에 추가하기
@@ -106,7 +116,13 @@ const UploadInput = ({
         setImageUrl(imageUrlArr);
       }, 100);
     },
-    [setImageUrl, thumbImageRef, contentImageRef, designImageRef]
+    [
+      setImageUrl,
+      thumbImageRef,
+      clientImageRef,
+      contentImageRef,
+      designImageRef,
+    ]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -114,24 +130,27 @@ const UploadInput = ({
     <UploadImageBlock>
       <div {...getRootProps()} className="wrap" id={inputName}>
         {isDragActive && <div className="drop" />}
-        <input {...getInputProps()} className="input" name={inputName} />
+        <input {...getInputProps()} className="input" id={inputName} />
       </div>
       {typeof imageUrl === "object"
         ? imageUrl.map((url) => <img key={url} src={url} alt="img" />)
-        : contentImage
-        ? contentImage.map((contImg) => (
-            <img
-              key={contImg.url}
-              src={`../${contImg.url}`}
-              alt={contImg.name}
-            />
-          ))
-        : thumbImage && (
+        : (thumbImage && (
             <img src={`../${thumbImage.url}`} alt={thumbImage.name} />
-          )}
-      {designImage && (
-        <img src={`../${designImage.url}`} alt={designImage.name} />
-      )}
+          )) ||
+          (clientImage && (
+            <img src={`../${clientImage.url}`} alt={clientImage.name} />
+          )) ||
+          (contentImage &&
+            contentImage.map((contImg) => (
+              <img
+                key={contImg.url}
+                src={`../${contImg.url}`}
+                alt={contImg.name}
+              />
+            ))) ||
+          (designImage && (
+            <img src={`../${designImage.url}`} alt={designImage.name} />
+          ))}
     </UploadImageBlock>
   );
 };

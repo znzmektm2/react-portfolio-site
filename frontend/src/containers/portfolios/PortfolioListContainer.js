@@ -9,6 +9,7 @@ import {
   currentPage,
   initializePortfolios,
 } from "../../modules/portfolios";
+import { initializeWrite } from "../../modules/writePortfolio";
 
 const PortfolioListContainer = ({ location, history }) => {
   const dispatch = useDispatch();
@@ -106,6 +107,11 @@ const PortfolioListContainer = ({ location, history }) => {
       searchPortfolio();
     }
   }, [portfolioList.length, searchPortfolio]);
+
+  // 뒤로가기 시 포트폴리오 write 초기화
+  useEffect(() => {
+    dispatch(initializeWrite());
+  }, [dispatch]);
 
   return (
     <PortfolioList

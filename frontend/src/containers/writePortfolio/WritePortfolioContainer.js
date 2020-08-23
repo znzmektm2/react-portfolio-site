@@ -14,6 +14,7 @@ import { initializePortfolios } from "../../modules/portfolios";
 const WritePortfolioContainer = ({ history }) => {
   const dispatch = useDispatch();
   const thumbImageRef = useRef(null);
+  const clientImageRef = useRef(null);
   const contentImageRef = useRef(null);
   const {
     id,
@@ -34,6 +35,7 @@ const WritePortfolioContainer = ({ history }) => {
     worker,
     url,
     contentImage,
+    clientImage,
     thumbImage,
     portfolio,
     portfolioError,
@@ -58,6 +60,7 @@ const WritePortfolioContainer = ({ history }) => {
     worker: writePortfolio.worker,
     url: writePortfolio.url,
     contentImage: writePortfolio.contentImage,
+    clientImage: writePortfolio.clientImage,
     thumbImage: writePortfolio.thumbImage,
     portfolio: writePortfolio.portfolio,
     portfolioError: writePortfolio.portfolioError,
@@ -87,10 +90,7 @@ const WritePortfolioContainer = ({ history }) => {
     const formData = new FormData();
     formData.append("id", id);
     formData.append("client", client);
-    console.log("host ", host);
-    if (host) {
-      formData.append("host", host);
-    }
+    host && formData.append("host", host);
     formData.append("web", web);
     formData.append("singlePage", singlePage);
     formData.append("pcVer", pcVer);
@@ -103,10 +103,10 @@ const WritePortfolioContainer = ({ history }) => {
     formData.append("period", period);
     formData.append("worker", worker);
     formData.append("url", url);
-    console.log("2 ", thumbImageRef.current);
-    console.log("3 ", contentImageRef.current);
     thumbImageRef.current !== null &&
       formData.append("thumbImage", thumbImageRef.current);
+    clientImageRef.current !== null &&
+      formData.append("clientImage", clientImageRef.current);
     contentImageRef.current !== null &&
       contentImageRef.current.map((file) =>
         formData.append("contentImage", file)
@@ -169,8 +169,10 @@ const WritePortfolioContainer = ({ history }) => {
       worker={worker}
       url={url}
       thumbImage={thumbImage}
+      clientImage={clientImage}
       contentImage={contentImage}
       thumbImageRef={thumbImageRef}
+      clientImageRef={clientImageRef}
       contentImageRef={contentImageRef}
       onPublish={onPublish}
       portfolioError={portfolioError}

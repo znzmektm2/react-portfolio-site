@@ -343,12 +343,6 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
     contentImage,
   } = portfolio;
 
-  // console.log("id ", id);
-  // console.log("thumbImage.name ", thumbImage.name);
-  // console.log("thumbImage.url ", thumbImage.url);
-  console.log("url ", url);
-  contentImage.map((contImg) => console.log("contImg.name ", contImg.name));
-
   const skillArray = skill.join(", ");
   const insertTag = (host) => (
     <li>

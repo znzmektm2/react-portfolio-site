@@ -7,6 +7,7 @@ import useIO from "./../../lib/useIO";
 import { design, currentPage, initializeDesign } from "../../modules/design";
 import { setOriginalDesign } from "../../modules/writeDesign";
 import { removeDesign } from "./../../lib/api/design";
+import { initializeWrite } from "../../modules/writeDesign";
 
 const DesignListContainer = ({ location, history }) => {
   const dispatch = useDispatch();
@@ -138,6 +139,11 @@ const DesignListContainer = ({ location, history }) => {
       footer.classList.remove("dark");
     };
   }, [location]);
+
+  // 뒤로가기 시 디자인 write 초기화
+  useEffect(() => {
+    dispatch(initializeWrite());
+  }, [dispatch]);
 
   return (
     <>
