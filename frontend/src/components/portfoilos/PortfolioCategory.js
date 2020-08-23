@@ -7,12 +7,14 @@ const PortfolioCategoryBlock = styled.div`
   position: relative;
   .categoryBlock {
     border: 1px solid #e4e4e4;
-
     ul {
       color: #222;
       li {
-        input:checked + label {
-          border-bottom: 1px solid #222;
+        label {
+          &:before {
+            content: "";
+            background: #222;
+          }
         }
       }
     }

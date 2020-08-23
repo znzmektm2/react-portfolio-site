@@ -37,7 +37,6 @@ const UploadImageBlock = styled.div`
   }
   img {
     margin-top: 1rem;
-    position: relative;
   }
 `;
 
@@ -53,11 +52,12 @@ const UploadInput = ({
   const [imageUrl, setImageUrl] = useState();
   const onDrop = useCallback(
     (acceptedFiles, fileRejections, event) => {
+      console.log(event.target);
       const files = acceptedFiles;
       let imageUrlArr = [];
-      const targetThumbImage = event.target.name === "thumbImage";
-      const targetContentImage = event.target.name === "contentImage";
-      const targetDesignImage = event.target.name === "designImage";
+      const targetThumbImage = event.target.id === "thumbImage";
+      const targetContentImage = event.target.id === "contentImage";
+      const targetDesignImage = event.target.id === "designImage";
       const contentImageArr = [];
 
       // 썸네일 이미지는 하나만 등록하기

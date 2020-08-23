@@ -447,7 +447,7 @@ GET /api/portfolio/countPortfolio
 export const countPortfolio = async (ctx) => {
   try {
     const portfolio = await Portfolio.find();
-    console.log(portfolio.length);
+    console.log("포트폴리오 개수", portfolio.length);
     ctx.body = portfolio.length;
   } catch (e) {
     ctx.throw(500, e);

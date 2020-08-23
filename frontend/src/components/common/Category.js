@@ -24,12 +24,35 @@ const CategoryBlock = styled.div`
         cursor: pointer;
       }
       label {
+        position: relative;
         display: inline-block;
         padding: 0.3rem 1rem;
         font-family: "KoPub Batang", serif;
+        &:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 0;
+          height: 1px;
+          background: #e0e0dc;
+          opacity: 0.8;
+          transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
+        }
       }
-      input:checked + label {
-        border-bottom: 1px solid #e0e0dc;
+      input:checked + label:before {
+        content: "";
+        width: 100%;
+        opacity: 1;
+      }
+      &:hover {
+        label {
+          opacity: 0.8;
+          &:before {
+            content: "";
+            width: 100%;
+          }
+        }
       }
     }
   }

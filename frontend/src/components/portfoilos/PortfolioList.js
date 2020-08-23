@@ -14,11 +14,6 @@ const PortfolioListBlock = styled.div`
       float: right;
       font-size: 1rem;
       line-height: 2rem;
-
-      cursor: pointer;
-      &:hover {
-        background: #ddd;
-      }
     }
   }
   ul {

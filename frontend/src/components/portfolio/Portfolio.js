@@ -384,7 +384,7 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
                 </h3>
                 <div className="detailList">
                   <ul>
-                    {host !== " " && insertTag(host)}
+                    {host && insertTag(host)}
                     <li>
                       <span>TYPE</span>
                       <span>

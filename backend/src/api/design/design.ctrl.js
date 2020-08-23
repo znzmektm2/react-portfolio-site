@@ -257,7 +257,7 @@ GET /api/design/countDesign
 export const countDesign = async (ctx) => {
   try {
     const design = await Design.find();
-    console.log(design.length);
+    console.log("디자인 개수", design.length);
     ctx.body = design.length;
   } catch (e) {
     ctx.throw(500, e);

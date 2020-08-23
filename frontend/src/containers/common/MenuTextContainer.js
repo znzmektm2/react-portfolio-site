@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-import Header from "./../../components/common/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { countDesign } from "../../modules/design";
 import { countPortfolio } from "../../modules/portfolios";
+import MenuText from "./../../components/common/MenuText";
 
-const HeaderContainer = () => {
+const MenuTextContainer = React.memo(() => {
   const dispatch = useDispatch();
   const { designNumber, portfolioNumber } = useSelector(
-    ({ design, portfolios, loading }) => ({
+    ({ design, portfolios }) => ({
       designNumber: design.countDesign,
       portfolioNumber: portfolios.countPortfolio,
     })
@@ -21,8 +21,8 @@ const HeaderContainer = () => {
   }, [dispatch]);
 
   return (
-    <Header designNumber={designNumber} portfolioNumber={portfolioNumber} />
+    <MenuText designNumber={designNumber} portfolioNumber={portfolioNumber} />
   );
-};
+});
 
-export default HeaderContainer;
+export default MenuTextContainer;

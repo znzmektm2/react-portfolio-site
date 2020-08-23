@@ -11,8 +11,6 @@ const buttonStyle = css`
   line-height: 0.95rem;
   cursor: pointer;
 
-  &:hover {
-  }
   & + & {
     margin-left: 1rem;
   }

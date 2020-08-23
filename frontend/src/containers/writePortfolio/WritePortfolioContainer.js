@@ -19,7 +19,7 @@ const WritePortfolioContainer = ({ history }) => {
     id,
     hasId,
     client,
-    hostValue,
+    host,
     web,
     singlePage,
     pcVer,
@@ -43,7 +43,7 @@ const WritePortfolioContainer = ({ history }) => {
     id: writePortfolio.id,
     hasId: writePortfolio.hasId,
     client: writePortfolio.client,
-    hostValue: writePortfolio.host,
+    host: writePortfolio.host,
     web: writePortfolio.web,
     singlePage: writePortfolio.singlePage,
     pcVer: writePortfolio.pcVer,
@@ -85,11 +85,12 @@ const WritePortfolioContainer = ({ history }) => {
     }
 
     const formData = new FormData();
-    const host = hostValue ? hostValue : " ";
-
     formData.append("id", id);
     formData.append("client", client);
-    formData.append("host", host);
+    console.log("host ", host);
+    if (host) {
+      formData.append("host", host);
+    }
     formData.append("web", web);
     formData.append("singlePage", singlePage);
     formData.append("pcVer", pcVer);
@@ -102,6 +103,8 @@ const WritePortfolioContainer = ({ history }) => {
     formData.append("period", period);
     formData.append("worker", worker);
     formData.append("url", url);
+    console.log("2 ", thumbImageRef.current);
+    console.log("3 ", contentImageRef.current);
     thumbImageRef.current !== null &&
       formData.append("thumbImage", thumbImageRef.current);
     contentImageRef.current !== null &&
@@ -151,7 +154,7 @@ const WritePortfolioContainer = ({ history }) => {
       id={id}
       hasId={hasId}
       client={client}
-      hostValue={hostValue}
+      host={host}
       web={web}
       singlePage={singlePage}
       pcVer={pcVer}

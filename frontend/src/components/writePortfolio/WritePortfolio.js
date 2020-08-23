@@ -163,7 +163,7 @@ const WritePortfolio = ({
   id,
   hasId,
   client,
-  hostValue,
+  host,
   web,
   singlePage,
   pcVer,
@@ -242,9 +242,10 @@ const WritePortfolio = ({
     const input = document.getElementsByTagName("input");
     const inputArr = [...input];
     inputArr.map((i) => {
+      // console.log(i.name, !!i.value);
       return (
         i.type === "text" &&
-        i.value !== " " &&
+        i.value !== "" &&
         i.parentNode.classList.add("value")
       );
     });
@@ -291,7 +292,7 @@ const WritePortfolio = ({
               type="text"
               placeholder="host"
               name="host"
-              value={hostValue}
+              value={host && host}
               id="host"
               onChange={onChange}
               onFocus={onFocus}
