@@ -1,25 +1,6 @@
 import React from "react";
 import Category from "./../common/Category";
-import styled from "styled-components";
 import Responsive from "./../common/Responsive";
-
-const PortfolioCategoryBlock = styled.div`
-  position: relative;
-  .categoryBlock {
-    border: 1px solid #e4e4e4;
-    ul {
-      color: #222;
-      li {
-        label {
-          &:before {
-            content: "";
-            background: #222;
-          }
-        }
-      }
-    }
-  }
-`;
 
 const PortfolioCategory = ({
   categories,
@@ -40,18 +21,20 @@ const PortfolioCategory = ({
     // 로딩중이 아니면서 카테고리가 없을 시
     if (!loading) {
       return (
-        <Category>
-          <ul>
-            <li>데이터가 없습니다.</li>
-          </ul>
+        <Category portfolioCategory>
+          <Responsive>
+            <ul>
+              <li>데이터가 없습니다.</li>
+            </ul>
+          </Responsive>
         </Category>
       );
     }
   }
 
   return (
-    <PortfolioCategoryBlock>
-      <Category>
+    <>
+      <Category portfolioCategory>
         <Responsive>
           <ul>
             {categories.map((category) => (
@@ -69,7 +52,7 @@ const PortfolioCategory = ({
           </ul>
         </Responsive>
       </Category>
-      <Category>
+      <Category portfolioCategory>
         <Responsive>
           <ul>
             <li key="web">
@@ -95,7 +78,7 @@ const PortfolioCategory = ({
           </ul>
         </Responsive>
       </Category>
-    </PortfolioCategoryBlock>
+    </>
   );
 };
 

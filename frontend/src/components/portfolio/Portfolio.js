@@ -383,15 +383,14 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
                       <span>TYPE</span>
                       <span>
                         {web && "Web"}
-                        {singlePage && "singlePage"}
+                        {singlePage && "SinglePage"}
                       </span>
                     </li>
                     <li>
                       <span>VERSION</span>
                       <span>
-                        {pcVer && "PC "}
-                        {mobileVer && " / Mobile"}
-                        {responsiveWeb && "반응형 웹"}
+                        {pcVer ? (mobileVer ? "PC / Mobile" : "PC") : "Mobile"}
+                        {responsiveWeb && " / 반응형"}
                       </span>
                     </li>
                     <li>

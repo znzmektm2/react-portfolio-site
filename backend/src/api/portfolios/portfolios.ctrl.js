@@ -109,7 +109,6 @@ POST /api/portfolios
   "responsiveWeb": false,
   "IEVersion": "IE9",
   "skill": "JavaScript, jQuery, HTML5/CSS3",
-  "animationEvent": "slider, circle-progress-1.2.2.js",
   "workYear": "2019",
   "workMonth": "2",
   "period": "3 days",
@@ -130,7 +129,6 @@ export const write = async (ctx) => {
     responsiveWeb: Joi.boolean(),
     IEVersion: Joi.string(),
     skill: Joi.string().required(),
-    animationEvent: Joi.string().required(),
     workYear: Joi.string().required(),
     workMonth: Joi.string().required(),
     period: Joi.string().required(),
@@ -151,14 +149,13 @@ export const write = async (ctx) => {
     return;
   }
 
-  // skill, animationEvent, url 배열 만들기
+  // skill, url 배열 만들기
   const makeArray = (data) => {
     let dataArray = [...new Set(data.replace(/ /g, "").split(","))];
     return dataArray;
   };
 
   const skill = makeArray(requestBody.skill);
-  const animationEvent = makeArray(requestBody.animationEvent);
   const url = makeArray(requestBody.url);
 
   // 파일 객체 담기
@@ -203,7 +200,6 @@ export const write = async (ctx) => {
   const portfolio = new Portfolio({
     ...requestBody,
     skill,
-    animationEvent,
     url,
     thumbImage,
     clientImage,
@@ -232,7 +228,6 @@ PATCH /api/portfolios/:id
   "responsiveWeb": false,
   "IEVersion": "IE9",
   "skill": "JavaScript, jQuery, HTML5/CSS3",
-  "animationEvent": "slider, circle-progress-1.2.2.js",
   "workYear": "2019",
   "workMonth": "2",
   "period": "3 days",
@@ -255,7 +250,6 @@ export const update = async (ctx) => {
     responsiveWeb: Joi.boolean(),
     IEVersion: Joi.string(),
     skill: Joi.string().required(),
-    animationEvent: Joi.string().required(),
     workYear: Joi.string().required(),
     workMonth: Joi.string().required(),
     period: Joi.string().required(),
@@ -276,19 +270,19 @@ export const update = async (ctx) => {
     return;
   }
 
-  // skill, animationEvent, url 배열 만들기
+  // skill, url 배열 만들기
   const makeArray = (data) => {
     let dataArray = [...new Set(data.replace(/ /g, "").split(","))];
     return dataArray;
   };
 
   const skill = makeArray(requestBody.skill);
-  const animationEvent = makeArray(requestBody.animationEvent);
   const url = makeArray(requestBody.url);
 
   // 파일 객체 담기
   const files = ctx.request.files;
   const updateThumbImage = files.thumbImage;
+  const updateClientImage = files.clientImage;
   const updateContentImage = files.contentImage;
 
   // 이미지명 추출하기
@@ -311,12 +305,17 @@ export const update = async (ctx) => {
   const updatePortfolio = {
     ...requestBody,
     skill,
-    animationEvent,
     url,
     ...(updateThumbImage && {
       thumbImage: {
         name: updateThumbImage.name,
         url: generateUrl(updateThumbImage.path),
+      },
+    }),
+    ...(updateClientImage && {
+      thumbImage: {
+        name: updateClientImage.name,
+        url: generateUrl(updateClientImage.path),
       },
     }),
     ...(updateContentImage && {
@@ -342,6 +341,23 @@ export const update = async (ctx) => {
           console.log(
             "ThumbImage -",
             originalPortfolio.thumbImage.url,
+            "deleted"
+          );
+        }
+      );
+
+    updateClientImage &&
+      fs.unlink(
+        path.join(
+          __dirname,
+          "../../uploads",
+          originalPortfolio.clientImage.url
+        ),
+        (err) => {
+          if (err) throw err;
+          console.log(
+            "ClientImage -",
+            originalPortfolio.clientImage.url,
             "deleted"
           );
         }

@@ -28,7 +28,6 @@ const WritePortfolioContainer = ({ history }) => {
     responsiveWeb,
     IEVersion,
     skill,
-    animationEvent,
     workYear,
     workMonth,
     period,
@@ -53,7 +52,6 @@ const WritePortfolioContainer = ({ history }) => {
     responsiveWeb: writePortfolio.responsiveWeb,
     IEVersion: writePortfolio.IEVersion,
     skill: writePortfolio.skill,
-    animationEvent: writePortfolio.animationEvent,
     workYear: writePortfolio.workYear,
     workMonth: writePortfolio.workMonth,
     period: writePortfolio.period,
@@ -95,9 +93,9 @@ const WritePortfolioContainer = ({ history }) => {
     formData.append("singlePage", singlePage);
     formData.append("pcVer", pcVer);
     formData.append("mobileVer", mobileVer);
+    formData.append("responsiveWeb", responsiveWeb);
     formData.append("IEVersion", IEVersion);
     formData.append("skill", skill);
-    formData.append("animationEvent", animationEvent);
     formData.append("workYear", workYear);
     formData.append("workMonth", workMonth);
     formData.append("period", period);
@@ -162,7 +160,6 @@ const WritePortfolioContainer = ({ history }) => {
       responsiveWeb={responsiveWeb}
       IEVersion={IEVersion}
       skill={skill}
-      animationEvent={animationEvent}
       workYear={workYear}
       workMonth={workMonth}
       period={period}

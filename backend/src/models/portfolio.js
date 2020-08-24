@@ -15,7 +15,6 @@ const PortfolioSchema = new Schema({
   responsiveWeb: Boolean,
   IEVersion: String,
   skill: [String],
-  animationEvent: [String],
   workYear: String,
   workMonth: String,
   period: String,

@@ -2,13 +2,18 @@ import React from "react";
 import styled from "styled-components";
 
 const CategoryBlock = styled.div`
-  margin: -1px;
-  border: 1px solid #1b1b1b;
+  border-top: ${(props) =>
+    props.portfolioCategory ? "1px solid #e4e4e4" : "1px solid #1b1b1b"};
+  border-bottom: ${(props) =>
+    props.portfolioCategory ? "1px solid #e4e4e4" : "1px solid #1b1b1b"};
+  & ~ & {
+    border-top: none;
+  }
   ul {
     padding: 1rem 0;
     display: flex;
     justify-content: center;
-    color: #e0e0dc;
+    color: ${(props) => (props.portfolioCategory ? "#222" : "#e0e0dc")};
 
     li {
       position: relative;
@@ -35,7 +40,8 @@ const CategoryBlock = styled.div`
           bottom: 0;
           width: 0;
           height: 1px;
-          background: #e0e0dc;
+          background: ${(props) =>
+            props.portfolioCategory ? "#222" : "#e0e0dc"};
           opacity: 0.8;
           transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
         }
@@ -60,7 +66,9 @@ const CategoryBlock = styled.div`
 
 const Category = (props) => {
   return (
-    <CategoryBlock className="categoryBlock">{props.children}</CategoryBlock>
+    <CategoryBlock className="categoryBlock" {...props}>
+      {props.children}
+    </CategoryBlock>
   );
 };
 
