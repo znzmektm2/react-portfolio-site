@@ -149,12 +149,17 @@ const PortfolioBlock = styled.div`
 
               li {
                 margin-top: 1em;
+                padding-right: 1rem;
                 width: 33.333%;
                 float: left;
                 line-height: 1.2rem;
                 font-size: 1rem;
                 font-family: "trump-gothic-pro";
                 letter-spacing: 0.07rem;
+
+                &:nth-child(3n + 1) {
+                  clear: both;
+                }
                 span {
                   display: block;
                   color: #454545;
@@ -248,7 +253,8 @@ const PortfolioBlock = styled.div`
   .contentBox {
     background: #f5f5f7;
     .resposiveBlock {
-      padding: 9rem 0;
+      padding-top: 9rem;
+      padding-bottom: 9rem;
       text-align: center;
       .buttonBox {
         text-align: left;

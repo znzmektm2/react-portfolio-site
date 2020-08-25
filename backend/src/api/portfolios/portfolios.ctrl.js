@@ -285,6 +285,10 @@ export const update = async (ctx) => {
   const updateClientImage = files.clientImage;
   const updateContentImage = files.contentImage;
 
+  console.log("updateThumbImage ", updateThumbImage);
+  console.log("updateClientImage ", updateClientImage);
+  console.log("updateContentImage ", updateContentImage);
+
   // 이미지명 추출하기
   let generateUrl = (path) => {
     const pathSplit = path.split("\\");
@@ -313,7 +317,7 @@ export const update = async (ctx) => {
       },
     }),
     ...(updateClientImage && {
-      thumbImage: {
+      clientImage: {
         name: updateClientImage.name,
         url: generateUrl(updateClientImage.path),
       },
@@ -403,7 +407,7 @@ export const update = async (ctx) => {
       return;
     }
 
-    console.log("updated portfolio", portfolio);
+    console.log("updated portfolio", updatePortfolio);
     ctx.body = portfolio;
   } catch (e) {
     ctx.throw(500, e);
@@ -472,6 +476,29 @@ export const countPortfolio = async (ctx) => {
     const portfolio = await Portfolio.find();
     console.log("포트폴리오 개수", portfolio.length);
     ctx.body = portfolio.length;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+/* Clients 로고 조회
+GET /api/portfolio/clients
+*/
+export const clients = async (ctx) => {
+  try {
+    const portfolio = await Portfolio.find().sort({ _id: -1 });
+
+    const clientsList = [];
+    portfolio.map((portfolio) => {
+      const list = {
+        clientImage: portfolio.clientImage,
+        url: portfolio.url[0],
+      };
+      clientsList.push(list);
+    });
+
+    console.log("Clients 로고 조회", clientsList);
+    ctx.body = clientsList;
   } catch (e) {
     ctx.throw(500, e);
   }

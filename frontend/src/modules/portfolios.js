@@ -13,6 +13,9 @@ const [
   COUNTPORTFOLIO_SUCCESS,
   COUNTPORTFOLIO_FAILURE,
 ] = createRequestActionTypes("portfolios/COUNTPORTFOLIO");
+const [CLIENTS, CLIENTS_SUCCESS, CLIENTS_FAILURE] = createRequestActionTypes(
+  "portfolios/CLIENTS"
+);
 const [
   PORTFOLIOS,
   PORTFOLIOS_SUCCESS,
@@ -23,6 +26,7 @@ const CURRENT_PAGE = "portfolios/CURRENT_PAGE";
 
 export const category = createAction(CATEGORY);
 export const countPortfolio = createAction(COUNTPORTFOLIO);
+export const clients = createAction(CLIENTS);
 export const portfolios = createAction(
   PORTFOLIOS,
   ({ skill, web, singlePage, page }) => ({
@@ -43,11 +47,13 @@ const countPortfolioSaga = createRequestSaga(
   COUNTPORTFOLIO,
   portfoliosAPI.countPortfolio
 );
+const clientsSaga = createRequestSaga(CLIENTS, portfoliosAPI.clients);
 const listSaga = createRequestSaga(PORTFOLIOS, portfoliosAPI.list);
 
 export function* portfoliosSaga() {
   yield takeLatest(CATEGORY, categorySaga);
   yield takeLatest(COUNTPORTFOLIO, countPortfolioSaga);
+  yield takeLatest(CLIENTS, clientsSaga);
   yield takeLatest(PORTFOLIOS, listSaga);
 }
 
@@ -56,6 +62,8 @@ const initialState = {
   categoryError: null,
   countPortfolio: null,
   countPortfolioError: null,
+  clients: null,
+  clientsError: null,
   portfolios: [],
   portfoliosError: null,
   currentPage: 1,
@@ -81,6 +89,15 @@ export default handleActions(
     [COUNTPORTFOLIO_FAILURE]: (state, { payload: countPortfolioError }) => ({
       ...state,
       countPortfolioError,
+    }),
+    [CLIENTS_SUCCESS]: (state, { payload: clients }) => ({
+      ...state,
+      clientsError: null,
+      clients,
+    }),
+    [CLIENTS_FAILURE]: (state, { payload: clientsError }) => ({
+      ...state,
+      clientsError,
     }),
     [PORTFOLIOS_SUCCESS]: (state, { payload: portfolio, meta: response }) => ({
       ...state,

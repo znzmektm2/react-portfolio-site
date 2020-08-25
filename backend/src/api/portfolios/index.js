@@ -9,6 +9,7 @@ portfolios.get("/idCheck/:id", portfoliosCtrl.idCheck);
 portfolios.get("/", portfoliosCtrl.list);
 portfolios.get("/category", portfoliosCtrl.category);
 portfolios.get("/countPortfolio", portfoliosCtrl.countPortfolio);
+portfolios.get("/clients", portfoliosCtrl.clients);
 
 const portfolio = new Router();
 

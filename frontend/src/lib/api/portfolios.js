@@ -17,6 +17,8 @@ export const category = () => client.get("/api/portfolios/category");
 export const countPortfolio = () =>
   client.get("/api/portfolios/countPortfolio");
 
+export const clients = () => client.get("/api/portfolios/clients");
+
 export const list = ({ skill, web, singlePage, page }) => {
   const queryString = qs.stringify({ skill, web, singlePage, page });
   return client.get(`/api/portfolios?${queryString}`);

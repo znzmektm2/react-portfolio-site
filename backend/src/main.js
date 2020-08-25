@@ -60,7 +60,7 @@ app.use(
           }
           uploadFileName =
             name + "_" + (Math.max.apply(null, numArr) + 1) + "." + extension;
-          console.log("uploadFileName ", uploadFileName);
+          console.log("main-uploadFileName ", uploadFileName);
         }
         // 파일명이 없는 경우
         else {
