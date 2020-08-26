@@ -211,11 +211,6 @@ $translate1: translate(0, -100%);
   }
 }
 
-:not(.not).page {
-  opacity: 0;
-  animation: 0.5s ease-in-out forwards fadein;
-}
-
 .footer {
   opacity: 0;
   animation: 0.5s ease-in-out forwards 0.5s fadein;

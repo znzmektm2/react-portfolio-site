@@ -117,7 +117,7 @@ const PortfolioBlock = styled.div`
                 left: 0;
                 width: 30%;
                 height: 0.35rem;
-                background: #222;
+                background: #373646;
                 transform: translate3d(-100%, 0px, 0px);
                 animation: 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 0.6s
                   x-100;
@@ -358,132 +358,130 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
   );
 
   return (
-    <div className="page not">
-      <PortfolioBlock>
-        <div className="intro">
-          <div className="half introTxt">
-            <div className="lineBox">
-              <span className="line step1" />
-              <span className="line step2" />
-              <span className="line step3" />
-              <div className="txtWrap">
-                <h2>
-                  <a
-                    className="wrap"
-                    href={url[0]}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>{id}</span>
-                  </a>
-                </h2>
-                <h3>
-                  <a href={url[0]} target="_blank" rel="noopener noreferrer">
-                    {client}
-                  </a>
-                </h3>
-                <div className="detailList">
-                  <ul>
-                    {host && insertTag(host)}
-                    <li>
-                      <span>TYPE</span>
-                      <span>
-                        {web && "Web"}
-                        {singlePage && "SinglePage"}
-                      </span>
-                    </li>
-                    <li>
-                      <span>VERSION</span>
-                      <span>
-                        {pcVer ? (mobileVer ? "PC / Mobile" : "PC") : "Mobile"}
-                        {responsiveWeb && " / 반응형"}
-                      </span>
-                    </li>
-                    <li>
-                      <span>IE VERSION</span>
-                      <span>{IEVersion}</span>
-                    </li>
-                    <li>
-                      <span>WHEN</span>
-                      <span>
-                        {workYear} {workMonth}
-                      </span>
-                    </li>
-                    <li>
-                      <span>PERIOD</span>
-                      <span>{period}</span>
-                    </li>
-                    <li>
-                      <span>WORKER</span>
-                      <span>{worker}</span>
-                    </li>
-                    <li>
-                      <span>SKILL</span>
-                      <span>{skillArray}</span>
-                    </li>
-                    <li>
-                      <span>URL</span>
-                      {url.map((u) => {
-                        return (
-                          <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={u}
-                            key={u}
-                          >
-                            {u}
-                          </a>
-                        );
-                      })}
-                    </li>
-                  </ul>
-                </div>
+    <PortfolioBlock>
+      <div className="intro">
+        <div className="half introTxt">
+          <div className="lineBox">
+            <span className="line step1" />
+            <span className="line step2" />
+            <span className="line step3" />
+            <div className="txtWrap">
+              <h2>
+                <a
+                  className="wrap"
+                  href={url[0]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>{id}</span>
+                </a>
+              </h2>
+              <h3>
+                <a href={url[0]} target="_blank" rel="noopener noreferrer">
+                  {client}
+                </a>
+              </h3>
+              <div className="detailList">
+                <ul>
+                  {host && insertTag(host)}
+                  <li>
+                    <span>TYPE</span>
+                    <span>
+                      {web && "Web"}
+                      {singlePage && "SinglePage"}
+                    </span>
+                  </li>
+                  <li>
+                    <span>VERSION</span>
+                    <span>
+                      {pcVer ? (mobileVer ? "PC / Mobile" : "PC") : "Mobile"}
+                      {responsiveWeb && " / 반응형"}
+                    </span>
+                  </li>
+                  <li>
+                    <span>IE VERSION</span>
+                    <span>{IEVersion}</span>
+                  </li>
+                  <li>
+                    <span>WHEN</span>
+                    <span>
+                      {workYear} {workMonth}
+                    </span>
+                  </li>
+                  <li>
+                    <span>PERIOD</span>
+                    <span>{period}</span>
+                  </li>
+                  <li>
+                    <span>WORKER</span>
+                    <span>{worker}</span>
+                  </li>
+                  <li>
+                    <span>SKILL</span>
+                    <span>{skillArray}</span>
+                  </li>
+                  <li>
+                    <span>URL</span>
+                    {url.map((u) => {
+                      return (
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={u}
+                          key={u}
+                        >
+                          {u}
+                        </a>
+                      );
+                    })}
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-          <div className="half introImg">
-            <a href={url[0]} target="_blank" rel="noopener noreferrer">
-              <img src={`../${thumbImage.url}`} alt={thumbImage.name} />
-            </a>
-            <span className="bg">
-              <svg>
-                <defs>
-                  <filter id="filter">
-                    <feGaussianBlur stdDeviation="12" />
-                  </filter>
-                </defs>
-                <image
-                  href={`../${thumbImage.url}`}
-                  width="100%"
-                  height="100%"
-                  filter="url(#filter)"
-                  alt={thumbImage.name}
-                />
-              </svg>
-            </span>
-          </div>
         </div>
-        <div className="contentBox">
-          <Responsive>
-            {user && (
-              <div className="buttonBox">
-                <Button to="/portfolios">리스트로 가기</Button>
-                <Button onClick={onEdit}>수정</Button>
-                <Button onClick={onRemove}>삭제</Button>
-              </div>
-            )}
-            {contentImage.map((contImg) => (
-              <Image
-                key={contImg.url}
-                src={`../${contImg.url}`}
-                alt={contImg.name}
-                isLazy
+        <div className="half introImg">
+          <a href={url[0]} target="_blank" rel="noopener noreferrer">
+            <img src={`../${thumbImage.url}`} alt={thumbImage.name} />
+          </a>
+          <span className="bg">
+            <svg>
+              <defs>
+                <filter id="filter">
+                  <feGaussianBlur stdDeviation="12" />
+                </filter>
+              </defs>
+              <image
+                href={`../${thumbImage.url}`}
+                width="100%"
+                height="100%"
+                filter="url(#filter)"
+                alt={thumbImage.name}
               />
-            ))}
-          </Responsive>
+            </svg>
+          </span>
         </div>
-      </PortfolioBlock>
-    </div>
+      </div>
+      <div className="contentBox">
+        <Responsive>
+          {user && (
+            <div className="buttonBox">
+              <Button onClick={onEdit}>수정</Button>
+              <Button onClick={onRemove}>삭제</Button>
+              <Button to="/portfolios">리스트로 가기</Button>
+            </div>
+          )}
+          {contentImage.map((contImg) => (
+            <Image
+              key={contImg.url}
+              src={`../${contImg.url}`}
+              alt={contImg.name}
+              isLazy
+            />
+          ))}
+        </Responsive>
+      </div>
+    </PortfolioBlock>
   );
 };
 

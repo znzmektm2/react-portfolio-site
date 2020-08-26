@@ -7,7 +7,7 @@ import { countPortfolio } from "../../modules/portfolios";
 const HomeContainer = () => {
   const dispatch = useDispatch();
   const { designNumber, portfolioNumber } = useSelector(
-    ({ design, portfolios, loading }) => ({
+    ({ design, portfolios }) => ({
       designNumber: design.countDesign,
       portfolioNumber: portfolios.countPortfolio,
     })

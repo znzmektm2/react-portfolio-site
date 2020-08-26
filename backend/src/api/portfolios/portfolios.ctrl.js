@@ -71,7 +71,8 @@ export const list = async (ctx) => {
   try {
     const listLimit = 4; // 보이는 개수 설정
     const portfolios = await Portfolio.find(query)
-      .sort({ _id: -1 }) // 내림차순 정렬
+      .sort({ workYear: -1 }) // 년도 내림차순 정렬
+      .sort({ workMonth: -1 }) // 월 내림차순 정렬
       .limit(listLimit) // 보이는 개수 제한
       .skip((page - 1) * listLimit) // 계산한 값의 개수를 제외하고 그 다음 데이터 불러옴
       .lean(); // JSON 형태로 조회

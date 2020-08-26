@@ -35,9 +35,13 @@ const PortfolioContainer = ({ match, history }) => {
 
   const onRemove = async () => {
     try {
-      await removePortFolio(id);
-      dispatch(initializePortfolios());
-      history.push("/portfolios");
+      const result = window.confirm("삭제하시겠습니까?");
+
+      if (result) {
+        await removePortFolio(id);
+        dispatch(initializePortfolios());
+        history.push("/portfolios");
+      }
     } catch (e) {
       console.log(e);
     }
