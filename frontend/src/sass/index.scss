@@ -1,112 +1,4 @@
-@font-face {
-  font-family: "goku";
-  font-weight: 400;
-  font-style: normal;
-  src: url(/fonts/Goku.woff2) format("woff2"),
-    url(/fonts/Goku.woff) format("woff"),
-    url(/fonts/Goku.ttf) format("truetype");
-}
-@font-face {
-  font-family: "KoPub Batang";
-  font-weight: 400;
-  font-style: normal;
-  src: url(/fonts/KoPubBatang-Regular.woff2) format("woff2"),
-    url(/fonts/KoPubBatang-Regular.woff) format("woff"),
-    url(/fonts/KoPubBatang-Regular.ttf) format("truetype");
-}
-@font-face {
-  font-family: "Roboto";
-  font-weight: 400;
-  font-style: normal;
-  src: url(/fonts/Roboto-Regular.woff2) format("woff2"),
-    url(/fonts/Roboto-Regular.woff) format("woff"),
-    url(/fonts/Roboto-Regular.ttf) format("truetype");
-}
-@font-face {
-  font-family: "trump-gothic-pro";
-  font-weight: 400;
-  font-style: normal;
-  src: url(/fonts/TrumpGothicPro.woff2) format("woff2"),
-    url(/fonts/TrumpGothicPro.woff) format("woff"),
-    url(/fonts/TrumpGothicPro.ttf) format("truetype");
-}
-@font-face {
-  font-family: "LibreBarcode128Text-Regular";
-  font-weight: 400;
-  font-style: normal;
-  src: url(/fonts/LibreBarcode128Text-Regular.woff2) format("woff2"),
-    url(/fonts/LibreBarcode128Text-Regular.woff) format("woff"),
-    url(/fonts/LibreBarcode128Text-Regular.ttf) format("truetype");
-}
-
-html {
-  font-size: 16px;
-}
-body {
-  font-family: "goku", "KoPub Batang", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  font-size: 16px;
-  color: #373646;
-  line-height: 1.5em;
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-text-size-adjust: none;
-}
-* {
-  box-sizing: inherit;
-}
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-nav,
-section,
-summary {
-  display: block;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: normal;
-  margin: 0;
-  padding: 0;
-}
-button,
-p,
-ul,
-ol,
-input,
-textarea {
-  margin: 0;
-  padding: 0;
-  font-family: "goku", "KoPub Batang";
-}
-li {
-  list-style: none;
-}
-a {
-  display: inline-block;
-  text-decoration: none;
-  color: #373646;
-}
-img {
-  border: 0;
-  max-width: 100%;
-}
-address,
-em {
-  font-style: normal;
-}
+@import "./base/_reset";
 
 $ease-in-out_1s: all 1s ease-in-out;
 .ease-in-out_1s {
@@ -194,7 +86,7 @@ $translate1: translate(0, -100%);
       background-size: 396px;
       transform-style: preserve-3d;
       transform: translate3d(0, 0, 0);
-      animation: 0.51s grain steps(1, start) infinite;
+      animation: 0.51s grain steps(1, start) 0s infinite;
       opacity: 0.3;
     }
     .pageTitle {
@@ -209,6 +101,11 @@ $translate1: translate(0, -100%);
       }
     }
   }
+}
+
+:not(.not).page {
+  opacity: 0;
+  animation: 0.5s ease-in-out forwards fadein;
 }
 
 .footer {

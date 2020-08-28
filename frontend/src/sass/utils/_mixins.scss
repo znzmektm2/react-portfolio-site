@@ -1,0 +1,101 @@
+// Font Face
+@mixin font-face($font-family-name, $file) {
+  $filepath: "/fonts/" + $file;
+  @font-face {
+    font-family: "#{$font-family-name}";
+    src: url($filepath + ".woff2") format("woff2"),
+      url($filepath + ".woff") format("woff"),
+      url($filepath + ".ttf") format("truetype");
+  }
+}
+
+// Media Query
+$tablet-large: 1024px;
+$tablet-small: 768px;
+$mobile-large: 640px;
+$mobile-middle: 480px;
+$mobile-small: 375px;
+
+@mixin tablet-large {
+  @media screen and (max-width: #{$tablet-large}) {
+    @content;
+  }
+}
+
+@mixin tablet-small {
+  @media screen and (max-width: #{$tablet-small}) {
+    @content;
+  }
+}
+
+@mixin mobile-large {
+  @media screen and (max-width: #{$mobile-large}) {
+    @content;
+  }
+}
+
+@mixin mobile-middle {
+  @media screen and (max-width: #{$mobile-middle}) {
+    @content;
+  }
+}
+
+@mixin mobile-small {
+  @media screen and (max-width: #{$mobile-small}) {
+    @content;
+  }
+}
+
+// Prefix
+@mixin prefix($name, $content) {
+  @each $prefix in -webkit-, -moz-, -o-, "" {
+    #{$prefix}$name: $content;
+  }
+}
+
+// Transition
+@mixin transition($property, $duration, $timing, $delay) {
+  $content: $property $duration $timing $delay;
+  @include prefix("transition", $content);
+}
+
+// Transform
+@mixin transform($transform) {
+  @include prefix("transform", $transform);
+}
+
+// Keyframes
+@mixin keyframes($animation_name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+// Animation
+@mixin animation(
+  $name,
+  $duration,
+  $timing-function,
+  $delay,
+  $iteration-count,
+  $fill-mode
+) {
+  @include prefix(animation-name, $name);
+  @include prefix(animation-duration, $duration);
+  @include prefix(animation-timing-function, $timing-function);
+  @include prefix(animation-delay, $delay);
+  @include prefix(animation-iteration-count, $iteration-count);
+  @include prefix(animation-fill-mode, $fill-mode);
+}

@@ -132,25 +132,25 @@ const UploadInput = ({
         {isDragActive && <div className="drop" />}
         <input {...getInputProps()} className="input" id={inputName} />
       </div>
-      {typeof imageUrl === "object"
-        ? imageUrl.map((url) => <img key={url} src={url} alt="img" />)
-        : (thumbImage && (
-            <img src={`../${thumbImage.url}`} alt={thumbImage.name} />
-          )) ||
-          (clientImage && (
-            <img src={`../${clientImage.url}`} alt={clientImage.name} />
-          )) ||
-          (contentImage &&
-            contentImage.map((contImg) => (
-              <img
-                key={contImg.url}
-                src={`../${contImg.url}`}
-                alt={contImg.name}
-              />
-            ))) ||
-          (designImage && (
-            <img src={`../${designImage.url}`} alt={designImage.name} />
-          ))}
+      {(typeof imageUrl === "object" &&
+        imageUrl.map((url) => <img key={url} src={url} alt="img" />)) ||
+        (thumbImage && (
+          <img src={`../${thumbImage.url}`} alt={thumbImage.name} />
+        )) ||
+        (clientImage && (
+          <img src={`../${clientImage.url}`} alt={clientImage.name} />
+        )) ||
+        (contentImage &&
+          contentImage.map((contImg) => (
+            <img
+              key={contImg.url}
+              src={`../${contImg.url}`}
+              alt={contImg.name}
+            />
+          ))) ||
+        (designImage && (
+          <img src={`../${designImage.url}`} alt={designImage.name} />
+        ))}
     </UploadImageBlock>
   );
 };

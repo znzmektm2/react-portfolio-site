@@ -1,0 +1,90 @@
+@import "./utils/_mixins";
+@import "./utils/_variables";
+
+@include font-face("goku", "Goku");
+@include font-face("KoPub Batang", "KoPubBatang-Regular");
+@include font-face("Roboto", "Roboto-Regular");
+@include font-face("trump-gothic-pro", "TrumpGothicPro");
+@include font-face(
+  "LibreBarcode128Text-Regular",
+  "LibreBarcode128Text-Regular"
+);
+
+* {
+  box-sizing: inherit;
+}
+
+html {
+  font-size: $base-font-size;
+}
+
+body {
+  font-family: $font-family-goku, $font-family-KoPub, $font-family-Roboto,
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-size: $base-font-size;
+  color: $base-font-color;
+  line-height: $base-line-height;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-text-size-adjust: none;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+
+button,
+p,
+ul,
+ol,
+input,
+textarea {
+  margin: 0;
+  padding: 0;
+  font-family: $font-family-goku;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: $base-font-color;
+}
+
+img {
+  border: 0;
+  max-width: 100%;
+}
+
+address,
+em {
+  font-style: normal;
+}

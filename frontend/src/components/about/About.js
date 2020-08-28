@@ -229,7 +229,6 @@ const About = () => {
     ) {
       header.classList.add("effective");
       header.classList.add("scroll");
-      console.log(2);
     }
     // 타겟 지점이 아닌 경우
     else {

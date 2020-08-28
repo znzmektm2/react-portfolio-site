@@ -160,7 +160,7 @@ const PortfolioBlock = styled.div`
                 &:nth-child(3n + 1) {
                   clear: both;
                 }
-                span {
+                > span {
                   display: block;
                   color: #454545;
 
@@ -172,11 +172,17 @@ const PortfolioBlock = styled.div`
                   }
                 }
                 a {
-                  margin-right: 5px;
+                  margin-bottom: 0.4rem;
                   display: inline-block;
-                  margin-right: 20px;
                   color: #6ea4b9;
-                  border-bottom: 1px solid #6ea4b9;
+                  word-break: break-all;
+
+                  &:last-child {
+                    margin-bottom: 1px;
+                  }
+                  span {
+                    border-bottom: 1px solid #6ea4b9;
+                  }
                 }
                 img {
                   margin-top: 10px;
@@ -430,7 +436,7 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
                           href={u}
                           key={u}
                         >
-                          {u}
+                          <span>{u}</span>
                         </a>
                       );
                     })}
@@ -466,9 +472,9 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
         <Responsive>
           {user && (
             <div className="buttonBox">
-              <Button onClick={onEdit}>수정</Button>
-              <Button onClick={onRemove}>삭제</Button>
               <Button to="/portfolios">리스트로 가기</Button>
+              <Button onClick={onRemove}>삭제</Button>
+              <Button onClick={onEdit}>수정</Button>
             </div>
           )}
           {contentImage.map((contImg) => (

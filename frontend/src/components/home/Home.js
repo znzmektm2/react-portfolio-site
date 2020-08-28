@@ -1,164 +1,6 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
+import "./home.scss";
 import { TimelineMax } from "gsap";
-
-const HomeBlock = styled.div`
-  @keyframes height5vw {
-    0% {
-      height: 0;
-    }
-    100% {
-      height: 5vw;
-    }
-  }
-
-  @keyframes opacity05 {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0.5;
-    }
-  }
-
-  @keyframes y100 {
-    0% {
-      opacity: 0;
-      transform: translate3d(0px, 100%, 0px);
-    }
-    100% {
-      opacity: 1;
-      transform: translate3d(0px, 0%, 0px);
-    }
-  }
-
-  @keyframes x-100 {
-    0% {
-      transform: translate3d(-100%, 0px, 0px);
-    }
-    100% {
-      transform: translate3d(0%, 0%, 0px);
-    }
-  }
-
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background: #15222d;
-  &:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url(/images/home.jpg) bottom right no-repeat;
-    opacity: 0;
-    animation: 1.5s ease-in forwards 4s opacity05;
-  }
-  &:after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 1px;
-    height: 0;
-    background: linear-gradient(180deg, #ff2f00, #ed1931, #fd0c68, #cb018f);
-    animation: 2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 5.4s height5vw;
-  }
-  .textWrap {
-    position: relative;
-    margin-top: -1vh;
-    width: 70vw;
-    z-index: 1;
-    h2 {
-      width: 35vw;
-      line-height: 0;
-    }
-    .pTxt {
-      position: absolute;
-      top: 9vw;
-      right: 0;
-      width: 35vw;
-      overflow: hidden;
-      p {
-        padding-left: calc(1.1rem + 0.8vw);
-        font-family: "KoPub Batang", serif;
-        font-size: calc(0.42rem + 0.4vw);
-        line-height: calc(13px + 0.8vw);
-        color: #a3adb9;
-        opacity: 0;
-        transform: translate3d(0px, 100%, 0px);
-        animation: 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 4.3s y100;
-        .strong {
-          font-family: trump-gothic-pro;
-          color: #fff;
-          font-size: 1.4rem;
-          letter-spacing: 2px;
-        }
-      }
-    }
-  }
-  ul {
-    position: absolute;
-    top: 170px;
-    right: 74px;
-    width: calc(100vh - 220px);
-    display: flex;
-    justify-content: space-between;
-    font-family: trump-gothic-pro;
-    font-size: calc(0.42rem + 0.42vw);
-    color: #fff;
-    letter-spacing: 2px;
-    box-sizing: border-box;
-    transform-origin: top right;
-    transform: rotate(90deg) translate3d(100%, 0, 0);
-    overflow: hidden;
-    li {
-      transform: translate3d(0px, 100%, 0px);
-      animation: 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 4.8s y100;
-    }
-  }
-  .update {
-    position: absolute;
-    bottom: 50px;
-    left: 50px;
-    line-height: 0;
-    overflow: hidden;
-    span {
-      display: inline-block;
-      font-family: trump-gothic-pro;
-      transform: translate3d(0px, 100%, 0px);
-      animation: 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 4.8s y100;
-      &:nth-child(1) {
-        font-size: calc(0.35rem + 0.35vw);
-        line-height: calc(0.6rem + 0.35vw);
-        letter-spacing: 1.4px;
-        color: #a3adb9;
-      }
-      &:nth-child(2) {
-        font-size: calc(0.42rem + 0.42vw);
-        line-height: calc(0.6rem + 0.42vw);
-        letter-spacing: 2px;
-        color: #fff;
-      }
-    }
-  }
-
-  /* SVG 애니메이션 */
-  #svg {
-    path {
-      stroke-dasharray: 1372;
-      stroke-dashoffset: 1372;
-      fill-opacity: 0;
-      stroke-width: 1.3px;
-      stroke: #ff1f44;
-      stroke-linecap: round;
-    }
-  }
-`;
 
 const Home = ({ designNumber, portfolioNumber }) => {
   useEffect(() => {
@@ -180,10 +22,10 @@ const Home = ({ designNumber, portfolioNumber }) => {
   }, []);
 
   return (
-    <HomeBlock>
+    <div className="homeBlock">
       <div className="textWrap">
         <h2>
-          <svg id="svg" width="621px" height="519px" viewBox="1.5 -4.5 621 519">
+          <svg id="svg" viewBox="1.5 -4.5 621 519">
             <g>
               <linearGradient
                 id="SVGID_1_"
@@ -296,7 +138,7 @@ const Home = ({ designNumber, portfolioNumber }) => {
         <span>LAST UPDATE:</span>
         <span>&nbsp;AUGUST 2020</span>
       </div>
-    </HomeBlock>
+    </div>
   );
 };
 

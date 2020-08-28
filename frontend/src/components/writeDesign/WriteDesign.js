@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Responsive from "./../common/Responsive";
 import UploadInput from "./../common/UploadInput";
 import Button from "./../common/Button";

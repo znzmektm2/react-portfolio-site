@@ -2,6 +2,7 @@ import Portfolio from "../../models/portfolio";
 import Joi from "@hapi/joi";
 import fs from "fs";
 import path from "path";
+import { triggerAsyncId } from "async_hooks";
 
 // 포트폴리오 아이디 조회시
 export const getPortfolioById = async (ctx, next) => {
@@ -178,10 +179,12 @@ export const write = async (ctx) => {
     name: thumbImageFile.name,
     url: generateUrl(thumbImageFile.path),
   };
-  const clientImage = {
-    name: clientImageFile.name,
-    url: generateUrl(clientImageFile.path),
-  };
+  const clientImage = clientImageFile
+    ? {
+        name: clientImageFile.name,
+        url: generateUrl(clientImageFile.path),
+      }
+    : "";
 
   const array = new Array();
   let contentImage;
@@ -352,6 +355,7 @@ export const update = async (ctx) => {
       );
 
     updateClientImage &&
+      originalPortfolio.clientImage.name !== undefined &&
       fs.unlink(
         path.join(
           __dirname,
@@ -487,18 +491,26 @@ GET /api/portfolio/clients
 */
 export const clients = async (ctx) => {
   try {
-    const portfolio = await Portfolio.find().sort({ _id: -1 });
+    const portfolio = await Portfolio.find()
+      .sort({ workYear: -1 })
+      .sort({ workMonth: -1 });
 
     const clientsList = [];
+
     portfolio.map((portfolio) => {
+      if (portfolio.clientImage.name === undefined) {
+        return;
+      }
+
       const list = {
         clientImage: portfolio.clientImage,
         url: portfolio.url[0],
       };
+
       clientsList.push(list);
     });
 
-    console.log("Clients 로고 조회", clientsList);
+    // console.log("Clients 로고 조회", clientsList);
     ctx.body = clientsList;
   } catch (e) {
     ctx.throw(500, e);
