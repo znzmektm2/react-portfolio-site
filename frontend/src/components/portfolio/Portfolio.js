@@ -355,14 +355,6 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
     contentImage,
   } = portfolio;
 
-  const skillArray = skill.join(", ");
-  const insertTag = (host) => (
-    <li>
-      <span>HOST</span>
-      <span>{host}</span>
-    </li>
-  );
-
   return (
     <PortfolioBlock>
       <div className="intro">
@@ -389,7 +381,13 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
               </h3>
               <div className="detailList">
                 <ul>
-                  {host && insertTag(host)}
+                  {host ? (
+                    <li>
+                      <span>HOST</span>
+                      <span>{host}</span>
+                    </li>
+                  ) : null}
+
                   <li>
                     <span>TYPE</span>
                     <span>
@@ -424,7 +422,7 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
                   </li>
                   <li>
                     <span>SKILL</span>
-                    <span>{skillArray}</span>
+                    <span>{skill.join(", ")}</span>
                   </li>
                   <li>
                     <span>URL</span>

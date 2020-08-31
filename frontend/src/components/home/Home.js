@@ -16,6 +16,40 @@ const Home = ({ designNumber, portfolioNumber }) => {
       tl.to("#svg path", 2.5, { "fill-opacity": 1, "stroke-opacity": 0 });
     }, 1000);
 
+    const p1 = ["leo", "kiki", "eden"];
+    const c1 = ["eden", "kiki"];
+
+    const p2 = ["marina", "josipa", "nikola", "vinko", "filipa"];
+    const c2 = ["josipa", "filipa", "marina", "nikola"];
+
+    const p3 = ["mislav", "stanko", "mislav", "ana"];
+    const c3 = ["stanko", "ana", "mislav"];
+
+    /////////////////
+
+    function solution(p, c) {
+      for (let j = 0; j < c.length; j++) {
+        console.log(c, c[j]);
+        for (let i = 0; i < p.length; i++) {
+          console.log(c[j], p[i]);
+          if (p[i] === c[j]) {
+            p.splice(p.indexOf(c[j]), 1);
+            c.splice(c.indexOf(c[j]), 1);
+            console.log(2, p);
+            break;
+          }
+        }
+      }
+
+      console.log(1, p);
+
+      return p[0];
+    }
+
+    console.log(solution(p2, c2));
+
+    /////////////////////////
+
     return () => {
       header.classList.remove("home");
     };
