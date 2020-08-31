@@ -1,6 +1,6 @@
 // Typography
 $font-family-goku: "goku";
-$font-family-KoPub: "KoPub Batang";
+$font-family-KoPub: "KoPub Batang", serif;
 $font-family-Roboto: "Roboto";
 $font-family-trump: "trump-gothic-pro";
 $base-font-size: 16px;
@@ -11,3 +11,8 @@ $base-font-color: #373646;
 
 // Cubic Bezier
 $cubic-bezier-j: cubic-bezier(0.165, 0.84, 0.44, 1);
+
+// translate3d
+$x-100: translateX(-100%);
+$x100: translateX(100%);
+$y100: translateY(100%);

@@ -1,0 +1,22 @@
+@import "./../../../sass/utils/_mixins";
+@import "./../../../sass/utils/_variables";
+
+.menuText {
+  overflow: hidden;
+  ul {
+    transform: $x-100;
+    @include animation(fadeOut, 0.3s, ease, 0.8s, 1, forwards);
+
+    li {
+      position: relative;
+      display: inline-block;
+      font-family: "trump-gothic-pro";
+      color: #c8c9b9;
+      font-size: 1.15rem;
+      letter-spacing: 0.5px;
+      span {
+        padding: 0 10px;
+      }
+    }
+  }
+}

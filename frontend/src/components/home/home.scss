@@ -1,7 +1,7 @@
 @import "./../../sass/utils/_mixins";
 @import "./../../sass/utils/_variables";
 
-@include keyframes(height5vw) {
+@include keyframes(h21px4vw) {
   0% {
     height: 0;
   }
@@ -19,26 +19,6 @@
   }
 }
 
-@include keyframes(y100) {
-  0% {
-    opacity: 0;
-    transform: translate3d(0px, 100%, 0px);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0px, 0%, 0px);
-  }
-}
-
-@include keyframes(x-100) {
-  0% {
-    transform: translate3d(-100%, 0px, 0px);
-  }
-  100% {
-    transform: translate3d(0%, 0%, 0px);
-  }
-}
-
 .homeBlock {
   position: relative;
   display: flex;
@@ -46,6 +26,7 @@
   justify-content: center;
   height: 100vh;
   background: #15222d;
+
   &:before {
     content: "";
     position: absolute;
@@ -56,8 +37,9 @@
     background: url(/images/home.jpg) bottom right no-repeat;
     background-size: cover;
     opacity: 0;
-    animation: 1.5s ease-in forwards 4s opacity05;
+    @include animation(opacity05, 1.5s, ease-in, 4s, 1, forwards);
   }
+
   &:after {
     content: "";
     position: absolute;
@@ -66,54 +48,58 @@
     width: 1px;
     height: 0;
     background: linear-gradient(180deg, #ff2f00, #ed1931, #fd0c68, #cb018f);
-    @include animation(height5vw, 2s, $cubic-bezier-j, 5.4s, 1, forwards);
+    @include animation(h21px4vw, 2s, $cubic-bezier-j, 5.4s, 1, forwards);
   }
-  .textWrap {
+
+  .jarText {
     position: relative;
     margin-top: 2vh;
     display: flex;
     align-items: center;
-    flex-direction: unset;
     width: 70vw;
     z-index: 1;
+
     h2 {
       display: inline-block;
       line-height: 0;
-      svg {
-        width: 33vw;
-      }
     }
-    .pTxt {
-      margin-top: -6rem;
-      display: inline-block;
-      overflow: hidden;
-      p {
-        padding-left: calc(1.1rem + 0.8vw);
-        font-family: "KoPub Batang", serif;
-        font-size: calc(0.42rem + 0.4vw);
-        line-height: calc(13px + 0.8vw);
-        color: #a3adb9;
-        opacity: 0;
-        transform: translate3d(0px, 100%, 0px);
-        @include animation(y100, 1.5s, $cubic-bezier-j, 4.3s, 1, forwards);
 
-        .strong {
-          font-family: trump-gothic-pro;
-          color: #fff;
-          font-size: 1.4rem;
-          letter-spacing: 2px;
-        }
-      }
+    h2 svg {
+      width: 33vw;
     }
   }
-  ul {
+
+  .pText {
+    margin-top: -6rem;
+    display: inline-block;
+    overflow: hidden;
+
+    p {
+      padding-left: calc(1.1rem + 0.8vw);
+      font-family: $font-family-KoPub;
+      font-size: calc(0.42rem + 0.4vw);
+      line-height: calc(13px + 0.8vw);
+      color: #a3adb9;
+      transform: $y100;
+      @include animation(y100, 1.5s, $cubic-bezier-j, 4.3s, 1, forwards);
+    }
+
+    .strong {
+      font-family: $font-family-trump;
+      color: #fff;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+    }
+  }
+
+  .portfolioNumber {
     position: absolute;
     top: 170px;
     right: 74px;
     width: calc(100vh - 220px);
     display: flex;
     justify-content: space-between;
-    font-family: trump-gothic-pro;
+    font-family: $font-family-trump;
     font-size: calc(0.42rem + 0.42vw);
     color: #fff;
     letter-spacing: 2px;
@@ -121,34 +107,39 @@
     transform-origin: top right;
     transform: rotate(90deg) translate3d(100%, 0, 0);
     overflow: hidden;
+
     li {
-      transform: translate3d(0px, 100%, 0px);
+      transform: $y100;
       @include animation(y100, 1.5s, $cubic-bezier-j, 4.8s, 1, forwards);
     }
   }
+
   .update {
     position: absolute;
     bottom: 50px;
     left: 50px;
     line-height: 0;
     overflow: hidden;
+
     span {
       display: inline-block;
-      font-family: trump-gothic-pro;
-      transform: translate3d(0px, 100%, 0px);
+      font-family: $font-family-trump;
+      transform: $y100;
       @include animation(y100, 1.5s, $cubic-bezier-j, 4.8s, 1, forwards);
-      &:nth-child(1) {
-        font-size: calc(0.35rem + 0.35vw);
-        line-height: calc(0.6rem + 0.35vw);
-        letter-spacing: 1.4px;
-        color: #a3adb9;
-      }
-      &:nth-child(2) {
-        font-size: calc(0.42rem + 0.42vw);
-        line-height: calc(0.6rem + 0.42vw);
-        letter-spacing: 2px;
-        color: #fff;
-      }
+    }
+
+    span:nth-child(1) {
+      font-size: calc(0.35rem + 0.35vw);
+      line-height: calc(0.6rem + 0.35vw);
+      letter-spacing: 1.4px;
+      color: #a3adb9;
+    }
+
+    span:nth-child(2) {
+      font-size: calc(0.42rem + 0.42vw);
+      line-height: calc(0.6rem + 0.42vw);
+      letter-spacing: 2px;
+      color: #fff;
     }
   }
 
@@ -167,16 +158,16 @@
 
 @include tablet-large {
   .homeBlock {
-    .textWrap {
+    .jarText {
       margin-top: -4vh;
       width: 65vw;
       flex-direction: column;
-      h2 {
-        svg {
-          width: 50vw;
-        }
+
+      h2 svg {
+        width: 50vw;
       }
-      .pTxt {
+
+      .pText {
         margin-top: 3rem;
       }
     }
