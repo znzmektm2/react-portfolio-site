@@ -11,8 +11,20 @@ $base-font-color: #373646;
 
 // Cubic Bezier
 $cubic-bezier-j: cubic-bezier(0.165, 0.84, 0.44, 1);
+$cubic-bezier-m: cubic-bezier(0.16, 1.08, 0.38, 0.98);
+$cubic-bezier-h: cubic-bezier(0.2, 0.9, 0.1, 1);
 
 // translate3d
-$x-100: translateX(-100%);
+$x0: translateX(0);
 $x100: translateX(100%);
+$x110: translateX(110%);
+$x-100: translateX(-100%);
+$y0: translateY(0);
 $y100: translateY(100%);
+$y105: translateY(105%);
+$y110: translateY(110%);
+$y-100: translateY(-100%);
+$y-105: translateY(-105%);
+
+// Linear Gradient
+$linear-gradient: linear-gradient(180deg, #ff2f00, #ed1931, #fd0c68, #cb018f);

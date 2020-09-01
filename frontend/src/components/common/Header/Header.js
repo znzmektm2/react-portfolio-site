@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from "react";
+import "./Header.scss";
 import { NavLink } from "react-router-dom";
 import Menu from "./../Menu";
-import "./Header.scss";
+import LogoSvg from "./LogoSvg";
 
 const Header = () => {
   const [active, setActive] = useState(false);
@@ -25,7 +26,9 @@ const Header = () => {
     <header className="headerBlock" id={active ? "active" : ""}>
       <div className="logo">
         <h1>
-          <NavLink to="/">JeonAeRan</NavLink>
+          <NavLink to="/">
+            <LogoSvg />
+          </NavLink>
         </h1>
       </div>
       <div className="navBtn" onClick={addHeaderActiveClass}>

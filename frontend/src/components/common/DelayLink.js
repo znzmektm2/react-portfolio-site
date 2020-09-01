@@ -14,17 +14,16 @@ export const DelayLink = ({ to, addHeaderActiveClass, open, children }) => {
     e.target.classList.add("active");
 
     const header = document.getElementsByTagName("header")[0];
-
-    header.classList.remove("effective");
-    header.classList.remove("over");
+    const root = document.getElementById("root");
 
     if (open) {
       setTimeout(
         () => {
-          const root = document.getElementById("root");
           root.classList.add("fadeOut");
           setTimeout(() => {
             root.classList.remove("fadeOut");
+            header.classList.remove("effective");
+            header.classList.remove("over");
             history.push(to);
             window.scroll(0, 0);
           }, 500);

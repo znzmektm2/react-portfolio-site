@@ -10,11 +10,32 @@
 }
 
 // Media Query
+$tablet-xxxlarge: 1600px;
+$tablet-xxlarge: 1440px;
+$tablet-xlarge: 1280px;
 $tablet-large: 1024px;
 $tablet-small: 768px;
 $mobile-large: 640px;
 $mobile-middle: 480px;
 $mobile-small: 375px;
+
+@mixin tablet-xxxlarge {
+  @media screen and (max-width: #{$tablet-xxxlarge}) {
+    @content;
+  }
+}
+
+@mixin tablet-xxlarge {
+  @media screen and (max-width: #{$tablet-xxlarge}) {
+    @content;
+  }
+}
+
+@mixin tablet-xlarge {
+  @media screen and (max-width: #{$tablet-xlarge}) {
+    @content;
+  }
+}
 
 @mixin tablet-large {
   @media screen and (max-width: #{$tablet-large}) {
@@ -47,7 +68,7 @@ $mobile-small: 375px;
 }
 
 // Prefix
-@mixin prefix($name, $content) {
+@mixin prefix($name, $content...) {
   @each $prefix in -webkit-, -moz-, -o-, "" {
     #{$prefix}$name: $content;
   }
@@ -55,13 +76,15 @@ $mobile-small: 375px;
 
 // Transition
 @mixin transition($property, $duration, $timing, $delay) {
-  $content: $property $duration $timing $delay;
-  @include prefix("transition", $content);
+  transition-property: $property;
+  transition-duration: $duration;
+  transition-timing-function: $timing;
+  transition-delay: $delay;
 }
 
 // Transform
-@mixin transform($transform) {
-  @include prefix("transform", $transform);
+@mixin transform($transform...) {
+  @include prefix(transform, $transform);
 }
 
 // Keyframes

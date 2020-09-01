@@ -116,14 +116,10 @@ const DesignListContainer = ({ location, history }) => {
     }
   }, [location.search, history.action, dispatch]);
 
-  // 첫번째 카테고리 API 호출
+  // 디자인 API 호출
   useEffect(() => {
-    if (location.search === "") {
-      history.push("/design?category=Photoshop");
-    } else {
-      searchDesign();
-    }
-  }, [location, history, searchDesign]);
+    searchDesign();
+  }, [searchDesign]);
 
   // header와 footer에 클래스 dark 추가
   useEffect(() => {

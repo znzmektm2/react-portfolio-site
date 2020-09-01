@@ -1,8 +1,8 @@
 import React from "react";
-import DelayLink from "./../DelayLink";
-import Responsive from "./../Responsive";
-import MenuTextContainer from "./../../../containers/common/MenuTextContainer";
 import "./Menu.scss";
+import Responsive from "./../Responsive";
+import DelayLink from "./../DelayLink";
+import MenuTextContainer from "./../../../containers/common/MenuTextContainer";
 
 const Menu = ({ addHeaderActiveClass, open }) => {
   return (
@@ -19,6 +19,7 @@ const Menu = ({ addHeaderActiveClass, open }) => {
               >
                 Home
               </DelayLink>
+              <span />
             </li>
             <li>
               <DelayLink
@@ -28,6 +29,7 @@ const Menu = ({ addHeaderActiveClass, open }) => {
               >
                 About
               </DelayLink>
+              <span />
             </li>
             <li>
               <DelayLink
@@ -37,15 +39,17 @@ const Menu = ({ addHeaderActiveClass, open }) => {
               >
                 Portfolios
               </DelayLink>
+              <span />
             </li>
             <li>
               <DelayLink
-                to="/design"
+                to="/design?category=Photoshop"
                 addHeaderActiveClass={addHeaderActiveClass}
                 open={open}
               >
                 Design
               </DelayLink>
+              <span />
             </li>
           </ul>
           <MenuTextContainer />

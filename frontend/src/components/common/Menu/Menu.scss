@@ -1,160 +1,254 @@
 .menu {
+  @include transform($y-100);
+
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  transform: translate3d(0, -100%, 0);
-  transition-delay: 0.8s;
   z-index: 4;
   overflow: hidden;
+
   .resposiveBlock {
     height: 100%;
-    .menuWrap {
+  }
+
+  .menuWrap {
+    width: 100%;
+    height: 100%;
+  }
+
+  .line {
+    @include transform($x-100);
+
+    position: absolute;
+    left: 0;
+    bottom: 30px;
+    width: 100%;
+    height: 1px;
+    background: $linear-gradient;
+    opacity: 0.3;
+  }
+}
+
+.menuList {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-right: 14rem;
+  height: 100%;
+  text-align: right;
+  float: right;
+
+  li {
+    padding-left: 3rem;
+    overflow: hidden;
+
+    span {
+      @include transform(scale(1.1));
+      @include transition(all, 1s, ease-out, 0s);
+
+      opacity: 0;
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      display: flex;
-      text-align: center;
-      align-items: center;
-      justify-content: center;
-      flex-direction: row-reverse;
-      ul.menuList {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        text-align: right;
-        padding: 0 12rem 0 12rem;
-        li {
-          padding-left: 5rem;
-          overflow: hidden;
+      z-index: -2;
+    }
 
-          &:before {
-            content: "";
-            opacity: 0;
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transform: scale(1.1);
-            -webkit-transition: all 1s ease-out;
-            -moz-transition: all 1s ease-out;
-            -o-transition: all 1s ease-out;
-            transition: all 1s ease-out;
-            z-index: -2;
-          }
+    &:nth-child(1) span {
+      background: url(/images/home.jpg) right no-repeat;
+      background-size: cover;
+    }
 
-          &:nth-child(1) {
-            &:before {
-              background: url(/images/home.jpg) right no-repeat;
-              background-size: cover;
-            }
-          }
-          &:nth-child(2) {
-            &:before {
-              background: url(/images/about.jpg) center no-repeat;
-              background-size: cover;
-            }
-          }
-          &:nth-child(3) {
-            &:before {
-              background: url(/images/porfolios.png) center no-repeat;
-              transform: scale(0.9);
-            }
-          }
-          &:nth-child(4) {
-            &:before {
-              background: url(/images/design.jpg) center no-repeat;
-            }
-          }
+    &:nth-child(2) span {
+      background: url(/images/about.jpg) center no-repeat;
+      background-size: cover;
+    }
 
-          &:hover {
-            &:before {
-              z-index: -1;
-              transform: scale(1);
-            }
-            &:nth-child(1) {
-              &:before {
-                opacity: 0.3;
-              }
-            }
-            &:nth-child(2) {
-              &:before {
-                opacity: 0.06;
-              }
-            }
-            &:nth-child(3) {
-              &:before {
-                transform: scale(0.8);
-                opacity: 0.05;
-              }
-            }
-            &:nth-child(4) {
-              &:before {
-                opacity: 0.06;
-              }
-            }
-          }
+    &:nth-child(3) span {
+      @include transform(scale(0.9));
 
-          a {
-            position: relative;
-            padding-left: 2.5rem;
-            font-family: "goku";
-            font-size: 5rem;
-            line-height: 6rem;
-            color: #e0e0dc;
-            transform: translate3d(0, 110%, 0);
-            transition-delay: 0.8s;
-            animation: 0.3s ease forwards fadeOut;
+      background: url(/images/porfolios.png) center no-repeat;
+    }
 
-            @keyframes fadeOut {
-              0% {
-                opacity: 1;
-              }
-              100% {
-                opacity: 0;
-              }
-            }
-            &:before {
-              content: "";
-              position: absolute;
-              top: 10%;
-              left: 0;
-              display: block;
-              width: 117%;
-              height: 76%;
-              z-index: -1;
-              transform: translate3d(100%, 0, 0) skew(-45deg);
-              transition: all 0.4s cubic-bezier(0.16, 1.08, 0.38, 0.98);
-              background: linear-gradient(
-                180deg,
-                #ff2f00,
-                #ed1931,
-                #fd0c68,
-                #cb018f
-              );
-              opacity: 0.9;
-            }
-            &.active {
-              color: #141e27;
-              &:before {
-                transform: translate3d(0%, 0, 0) skew(-45deg);
-              }
-            }
-          }
-        }
+    &:nth-child(4) span {
+      background: url(/images/design.jpg) center no-repeat;
+    }
+  }
+
+  li a:hover + span {
+    z-index: -1;
+    @include transform(scale(1));
+  }
+
+  li:nth-child(1) a:hover + span {
+    opacity: 0.3;
+  }
+
+  li:nth-child(2) a:hover + span {
+    opacity: 0.06;
+  }
+
+  li:nth-child(3) a:hover + span {
+    @include transform(scale(0.8));
+    opacity: 0.05;
+  }
+
+  li:nth-child(4) a:hover + span {
+    opacity: 0.06;
+  }
+
+  a {
+    @include transform($y110);
+
+    padding-left: 2.5rem;
+    font-size: 5rem;
+    line-height: 6rem;
+    color: #e0e0dc;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 10%;
+      left: 0;
+      display: block;
+      width: 117%;
+      height: 76%;
+      z-index: -1;
+      background: $linear-gradient;
+      opacity: 0.9;
+      @include transform(skew(-45deg) $x110);
+      @include transition(all, 0.4s, $cubic-bezier-m, 0s);
+    }
+
+    a.active {
+      color: #141e27;
+
+      &:before {
+        @include transform(skew(-45deg) $x0);
       }
     }
-    .line {
-      position: absolute;
-      left: 0;
-      bottom: 30px;
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, #ff3000, #020faf, #ff096c, #d50082);
-      opacity: 0.3;
-      transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* 메뉴 클릭시 */
+#active {
+  .menu {
+    @include transform($y0);
+  }
+
+  .menuList li a {
+    @include transform($y0);
+    @include transition(transform, 1s, $cubic-bezier-j, 1.2s);
+    @include animation(fadeIn, 1s, ease, 1.2s, 1, forwards);
+
+    &:hover {
+      @include transition(all, 0.4s, $cubic-bezier-m, 0s);
+
+      color: #141e27;
+
+      &:before {
+        @include transform(skew(-45deg) $x0);
+      }
     }
+
+    &.active {
+      color: #141e27;
+
+      &:before {
+        @include transform(skew(-45deg) $x0);
+      }
+    }
+  }
+
+  .menuList li span {
+    display: block;
+  }
+}
+
+/* 미디어쿼리 */
+@include tablet-xxxlarge {
+  .menu {
+    .resposiveBlock {
+      padding: 0 12.8125rem;
+    }
+  }
+
+  .menuList {
+    padding-right: 0;
+    transform: scale(0.95);
+  }
+}
+
+@include tablet-xxlarge {
+  .menu {
+    .resposiveBlock {
+      padding: 0 10.8125rem;
+    }
+  }
+
+  .menuList {
+    transform: scale(0.9);
+  }
+}
+
+@include tablet-xlarge {
+  .menu .menuWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .menuList {
+    float: none;
+    height: auto;
+
+    li {
+      padding-left: 8rem;
+    }
+  }
+}
+
+@include tablet-large {
+  .menu {
+    .resposiveBlock {
+      padding: 0 4.3rem;
+    }
+  }
+}
+
+@include tablet-small {
+  .menuList {
+    transform: scale(0.75);
+
+    li {
+      padding-left: 7rem;
+    }
+  }
+}
+
+@include mobile-large {
+  .menuList {
+    transform: scale(0.65);
+
+    li {
+      padding-left: 3rem;
+    }
+  }
+}
+
+@include mobile-middle {
+  .menuList {
+    transform: scale(0.55);
+  }
+}
+
+@include mobile-small {
+  .menuList {
+    transform: scale(0.5);
   }
 }
