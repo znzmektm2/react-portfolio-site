@@ -7,10 +7,11 @@ import LogoSvg from "./LogoSvg";
 const Header = () => {
   const [active, setActive] = useState(false);
   const [open, setOpen] = useState(true);
-  const logo = document.getElementsByClassName("logo");
 
   // 메뉴 클릭시 header에 active 클래스 추가
   const addHeaderActiveClass = useCallback(() => {
+    const logo = document.getElementsByClassName("logo");
+
     if (open) {
       setActive(!active);
       setOpen(false);
@@ -20,7 +21,7 @@ const Header = () => {
         logo[0].classList.remove("cubicBezier");
       }, 1100);
     }
-  }, [active, open, logo]);
+  }, [active, open]);
 
   return (
     <header className="headerBlock" id={active ? "active" : ""}>

@@ -7,7 +7,7 @@ import { setOriginalPortfolio } from "../../modules/writePortfolio";
 import { removePortFolio } from "./../../lib/api/portfolios";
 import { initializePortfolios } from "./../../modules/portfolios";
 
-const PortfolioContainer = ({ match, history }) => {
+const PortfolioContainer = ({ match, history, location }) => {
   const { id } = match.params;
 
   const dispatch = useDispatch();
@@ -19,6 +19,18 @@ const PortfolioContainer = ({ match, history }) => {
       user: user.user,
     })
   );
+
+  // 포트폴리오 페이지일 경우 portfolios 메뉴에 active 클래스 추가
+  useEffect(() => {
+    const prtfolioMenu = document.getElementsByClassName("menuList")[0]
+      .childNodes[2].firstChild;
+
+    prtfolioMenu.classList.add("active");
+
+    return () => {
+      prtfolioMenu.classList.remove("active");
+    };
+  }, [location]);
 
   useEffect(() => {
     dispatch(readportfolio(id));
