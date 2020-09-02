@@ -18,9 +18,6 @@
 
 .homeBlock {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 100vh;
   background: #15222d;
 
@@ -50,24 +47,29 @@
 
   .jarText {
     position: relative;
-    margin-top: 2vh;
     display: flex;
     align-items: center;
-    width: 70vw;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
     z-index: 1;
 
     h2 {
+      margin-right: 11rem;
       display: inline-block;
       line-height: 0;
     }
 
     h2 svg {
       width: 33vw;
+      height: auto;
     }
   }
 
   .pText {
-    margin-top: -6rem;
+    margin-top: -5rem;
+    padding-right: 2rem;
     display: inline-block;
     overflow: hidden;
 
@@ -75,7 +77,6 @@
       @include transform($translateY-100);
       @include animation(y100, 1.5s, $cubic-bezier-j, 4.3s, 1, forwards);
 
-      padding-left: calc(1.1rem + 0.8vw);
       font-family: $font-family-KoPub;
       font-size: calc(0.42rem + 0.4vw);
       line-height: calc(13px + 0.8vw);
@@ -121,7 +122,7 @@
     overflow: hidden;
 
     span {
-      @include transform($translateY-100);
+      @include transform($translateY-120);
       @include animation(y100, 1.5s, $cubic-bezier-j, 4.8s, 1, forwards);
 
       display: inline-block;
@@ -157,19 +158,76 @@
 }
 
 /* 미디어쿼리 */
+@include max-width-1600 {
+  .homeBlock {
+    .update {
+      font-size: 16px;
+      bottom: calc(0.868em + 1.7vw);
+      left: calc(0.868em + 1.7vw);
+
+      span:nth-child(1) {
+        font-size: calc(0.35em + 0.35vw);
+        line-height: calc(1em + 0.35vw);
+      }
+
+      span:nth-child(2) {
+        font-size: calc(0.42em + 0.42vw);
+        line-height: calc(1em + 0.42vw);
+      }
+    }
+
+    .portfolioNumber {
+      font-size: 16px;
+      top: calc(0.868em + 1.7vw + 2.618em + 1.5vw);
+      right: calc((0.868em + 1.7vw) + ((2.618em + 1.5vw) / 2) - 0.73vw);
+      padding: 0 3em;
+      width: calc(100vh - (0.868em + 1.7vw) - (2.618em + 1.5vw));
+
+      li {
+        font-size: calc(0.42em + 0.42vw);
+      }
+    }
+  }
+}
+
 @include max-width-1280 {
   .homeBlock {
     .jarText {
-      margin-top: -4vh;
-      width: 65vw;
+      font-size: 16px;
+      padding: 0 calc(0.868em + 1.7vw + (2.618em + 1.5vw));
       flex-direction: column;
+      justify-content: center;
+
+      h2 {
+        margin-right: 0;
+      }
 
       h2 svg {
-        width: 50vw;
+        width: calc(32rem + 6vw);
       }
 
       .pText {
-        margin-top: 3rem;
+        margin-top: 6rem;
+        padding-right: 0;
+        display: flex;
+        justify-content: center;
+        width: calc(32rem + 6vw);
+      }
+
+      .pText p {
+        line-height: calc(11px + 0.8vw);
+      }
+    }
+  }
+}
+
+@include max-width-640 {
+  .homeBlock {
+    .portfolioNumber {
+      right: calc(0.868em + 1.7vw + 1px);
+
+      li {
+        letter-spacing: 1.5px;
       }
     }
   }

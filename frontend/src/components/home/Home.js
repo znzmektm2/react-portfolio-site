@@ -7,6 +7,7 @@ const Home = ({ designNumber, portfolioNumber }) => {
   useEffect(() => {
     const header = document.getElementsByTagName("header")[0];
     header.classList.add("home");
+    header.classList.add("ani");
 
     // SVG 애니메이션
     const tl = new TimelineMax();
@@ -15,6 +16,9 @@ const Home = ({ designNumber, portfolioNumber }) => {
         strokeDashoffset: 0,
       });
       tl.to("#svg path", 2.5, { "fill-opacity": 1, "stroke-opacity": 0 });
+
+      // 메뉴 버튼 이벤트
+      header.classList.remove("ani");
     }, 1000);
 
     return () => {
