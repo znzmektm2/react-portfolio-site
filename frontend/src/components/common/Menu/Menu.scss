@@ -1,5 +1,5 @@
 .menu {
-  @include transform($y-100);
+  @include transform($translateY-m-100);
 
   position: fixed;
   top: 0;
@@ -14,12 +14,16 @@
   }
 
   .menuWrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
     width: 100%;
     height: 100%;
   }
 
   .line {
-    @include transform($x-100);
+    @include transform($translateX-m-100);
 
     position: absolute;
     left: 0;
@@ -35,13 +39,12 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding-right: 14rem;
+  padding-right: 17rem;
   height: 100%;
   text-align: right;
-  float: right;
 
   li {
-    padding-left: 3rem;
+    padding-left: calc(1.2rem + 1vw);
     overflow: hidden;
 
     span {
@@ -79,6 +82,40 @@
     }
   }
 
+  a {
+    @include transform($translateY-110);
+
+    padding-left: calc(1.33rem + 1vw);
+    font-size: calc(2.5rem + 2.2vw);
+    line-height: calc(3.425rem + 2.2vw);
+    font-size: 5rem;
+    line-height: 6rem;
+    color: #e0e0dc;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 10%;
+      left: 0;
+      display: block;
+      width: 117%;
+      height: 76%;
+      z-index: -1;
+      background: $linear-gradient;
+      opacity: 0.9;
+      @include transform(skew(-45deg) $translateX-110);
+      @include transition(all, 0.4s, $cubic-bezier-m, 0s);
+    }
+
+    a.active {
+      color: #141e27;
+
+      &:before {
+        @include transform(skew(-45deg) $translateX-0);
+      }
+    }
+  }
+
   li a:hover + span {
     z-index: -1;
     @include transform(scale(1));
@@ -100,48 +137,16 @@
   li:nth-child(4) a:hover + span {
     opacity: 0.06;
   }
-
-  a {
-    @include transform($y110);
-
-    padding-left: 2.5rem;
-    font-size: 5rem;
-    line-height: 6rem;
-    color: #e0e0dc;
-
-    &:before {
-      content: "";
-      position: absolute;
-      top: 10%;
-      left: 0;
-      display: block;
-      width: 117%;
-      height: 76%;
-      z-index: -1;
-      background: $linear-gradient;
-      opacity: 0.9;
-      @include transform(skew(-45deg) $x110);
-      @include transition(all, 0.4s, $cubic-bezier-m, 0s);
-    }
-
-    a.active {
-      color: #141e27;
-
-      &:before {
-        @include transform(skew(-45deg) $x0);
-      }
-    }
-  }
 }
 
 /* 메뉴 클릭시 */
 #active {
   .menu {
-    @include transform($y0);
+    @include transform($translateY-0);
   }
 
   .menuList li a {
-    @include transform($y0);
+    @include transform($translateY-0);
     @include transition(transform, 1s, $cubic-bezier-j, 1.2s);
     @include animation(fadeIn, 1s, ease, 1.2s, 1, forwards);
 
@@ -151,7 +156,7 @@
       color: #141e27;
 
       &:before {
-        @include transform(skew(-45deg) $x0);
+        @include transform(skew(-45deg) $translateX-0);
       }
     }
 
@@ -159,7 +164,7 @@
       color: #141e27;
 
       &:before {
-        @include transform(skew(-45deg) $x0);
+        @include transform(skew(-45deg) $translateX-0);
       }
     }
   }
@@ -170,85 +175,14 @@
 }
 
 /* 미디어쿼리 */
-@include tablet-xxxlarge {
-  .menu {
-    .resposiveBlock {
-      padding: 0 12.8125rem;
-    }
-  }
-
-  .menuList {
-    padding-right: 0;
-    transform: scale(0.95);
-  }
-}
-
-@include tablet-xxlarge {
-  .menu {
-    .resposiveBlock {
-      padding: 0 10.8125rem;
-    }
-  }
-
-  .menuList {
-    transform: scale(0.9);
-  }
-}
-
-@include tablet-xlarge {
+@include max-width-1280 {
   .menu .menuWrap {
-    display: flex;
-    align-items: center;
     justify-content: center;
     flex-direction: column;
   }
 
   .menuList {
-    float: none;
+    padding-right: 0;
     height: auto;
-
-    li {
-      padding-left: 8rem;
-    }
-  }
-}
-
-@include tablet-large {
-  .menu {
-    .resposiveBlock {
-      padding: 0 4.3rem;
-    }
-  }
-}
-
-@include tablet-small {
-  .menuList {
-    transform: scale(0.75);
-
-    li {
-      padding-left: 7rem;
-    }
-  }
-}
-
-@include mobile-large {
-  .menuList {
-    transform: scale(0.65);
-
-    li {
-      padding-left: 3rem;
-    }
-  }
-}
-
-@include mobile-middle {
-  .menuList {
-    transform: scale(0.55);
-  }
-}
-
-@include mobile-small {
-  .menuList {
-    transform: scale(0.5);
   }
 }

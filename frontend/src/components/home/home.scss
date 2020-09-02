@@ -72,7 +72,7 @@
     overflow: hidden;
 
     p {
-      @include transform($y100);
+      @include transform($translateY-100);
       @include animation(y100, 1.5s, $cubic-bezier-j, 4.3s, 1, forwards);
 
       padding-left: calc(1.1rem + 0.8vw);
@@ -91,7 +91,7 @@
   }
 
   .portfolioNumber {
-    @include transform(rotate(90deg) $x100);
+    @include transform(rotate(90deg) $translateX-100);
 
     position: absolute;
     top: 170px;
@@ -108,7 +108,7 @@
     overflow: hidden;
 
     li {
-      @include transform($y100);
+      @include transform($translateY-100);
       @include animation(y100, 1.5s, $cubic-bezier-j, 4.8s, 1, forwards);
     }
   }
@@ -121,7 +121,7 @@
     overflow: hidden;
 
     span {
-      @include transform($y100);
+      @include transform($translateY-100);
       @include animation(y100, 1.5s, $cubic-bezier-j, 4.8s, 1, forwards);
 
       display: inline-block;
@@ -157,7 +157,7 @@
 }
 
 /* 미디어쿼리 */
-@include tablet-large {
+@include max-width-1280 {
   .homeBlock {
     .jarText {
       margin-top: -4vh;

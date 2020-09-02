@@ -1,12 +1,12 @@
 .menuText {
-  float: left;
   height: 100%;
   display: flex;
   align-items: center;
+  padding-left: 5rem;
   overflow: hidden;
 
   ul {
-    @include transform($x-100);
+    @include transform($translateX-m-100);
 
     line-height: 1.3rem;
     opacity: 0;
@@ -30,7 +30,7 @@
 #active {
   .menuText {
     ul {
-      @include transform($x0);
+      @include transform($translateX-0);
       @include transition(all, 1.1s, $cubic-bezier-j, 1.1s);
 
       opacity: 1;
@@ -39,49 +39,10 @@
 }
 
 /* 미디어쿼리 */
-@include tablet-xxxlarge {
+@include max-width-1280 {
   .menuText {
-    transform: scale(0.9);
-  }
-}
-
-@include tablet-xxlarge {
-  .menuText {
-    transform: scale(0.8);
-  }
-}
-
-@include tablet-xlarge {
-  .menuText {
-    float: none;
-    margin-top: 10vh;
+    margin-top: calc(5rem + 5vw);
+    padding-left: 0;
     height: auto;
-    transform: scale(1);
-
-    ul li {
-      font-size: 1.05rem;
-    }
-  }
-}
-
-@include tablet-small {
-  .menuText {
-    ul li {
-      font-size: 0.8rem;
-    }
-  }
-}
-
-@include mobile-middle {
-  .menuText {
-    margin-top: 7vh;
-
-    ul {
-      line-height: 1rem;
-    }
-
-    ul li {
-      font-size: 0.7rem;
-    }
   }
 }

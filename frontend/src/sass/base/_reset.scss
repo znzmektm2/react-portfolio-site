@@ -1,6 +1,3 @@
-@import "./utils/_mixins";
-@import "./utils/_variables";
-
 @include font-face("goku", "Goku");
 @include font-face("KoPub Batang", "KoPubBatang-Regular");
 @include font-face("Roboto", "Roboto-Regular");
@@ -87,4 +84,12 @@ img {
 address,
 em {
   font-style: normal;
+}
+
+/* 미디어쿼리 */
+@include max-width-1600 {
+  html,
+  body {
+    font-size: calc(4px + 0.75vw);
+  }
 }
