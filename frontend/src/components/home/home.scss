@@ -19,6 +19,7 @@
 .homeBlock {
   position: relative;
   height: 100vh;
+  min-height: 640px;
   background: #15222d;
 
   &:before {
@@ -52,6 +53,7 @@
     justify-content: center;
     width: 100vw;
     height: 100vh;
+    min-height: 640px;
     box-sizing: border-box;
     z-index: 1;
 
@@ -98,6 +100,7 @@
     top: 170px;
     right: 74px;
     width: calc(100vh - 220px);
+    min-width: calc(640px - (0.868em + 1.7vw) - (2.618em + 1.5vw));
     display: flex;
     justify-content: space-between;
     font-family: $font-family-trump;

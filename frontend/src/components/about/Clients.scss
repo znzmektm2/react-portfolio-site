@@ -71,6 +71,7 @@
     }
 
     @include max-width-640 {
+      margin-bottom: 0;
       width: 50%;
     }
   }
@@ -81,6 +82,10 @@
     .content {
       padding-left: 0;
       padding-right: 0;
+    }
+
+    ul {
+      padding-right: 8px;
     }
   }
 }

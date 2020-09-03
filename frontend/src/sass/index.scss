@@ -96,25 +96,6 @@
   }
 }
 
-/////////////////////
-// @keyframes fadeOut {
-//   0% {
-//     opacity: 1;
-//   }
-//   100% {
-//     opacity: 0;
-//   }
-// }
-
-// @keyframes fadein {
-//   0% {
-//     opacity: 0;
-//   }
-//   100% {
-//     opacity: 1;
-//   }
-// }
-
 @keyframes grain {
   0% {
     transform: translate3d(0, 0, 0);
@@ -223,7 +204,7 @@ $translate1: translate(0, -100%);
 
 .resposiveBlock {
   margin: 0 auto;
-  padding: 0 calc(0.868em + 1.7vw + (2.618em + 1.5vw) / 2);
+  padding: 0 calc(0.868em + 1.7vw);
   max-width: 1600px;
   font-size: 16px;
   box-sizing: border-box;
