@@ -1,5 +1,4 @@
 import React from "react";
-import "./Responsive.scss";
 
 const Responsive = ({ children, ...rest }) => {
   return (

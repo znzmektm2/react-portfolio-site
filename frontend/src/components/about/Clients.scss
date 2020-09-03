@@ -1,0 +1,86 @@
+.clients {
+  position: relative;
+  padding: 85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  text-align: center;
+  background: #fff;
+  border-bottom: 1px solid #000;
+  box-sizing: border-box;
+
+  h2 span {
+    color: #222;
+    background: #fff;
+  }
+
+  .content {
+    border: 1px solid #222;
+  }
+
+  .clientsList {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 96%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .scrollBars {
+    text-align: left;
+  }
+
+  .scrollBars ul li {
+    margin-bottom: 1.1rem;
+    width: 16.666%;
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+    text-align: center;
+
+    a {
+      width: 94%;
+      overflow: hidden;
+    }
+
+    a img {
+      opacity: 0;
+      transition: 3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    &.active a img {
+      opacity: 1;
+    }
+
+    @include max-width-1280 {
+      width: 20%;
+
+      a {
+        width: 100%;
+      }
+    }
+
+    @include max-width-1024 {
+      width: 25%;
+    }
+
+    @include max-width-768 {
+      width: 33.333%;
+    }
+
+    @include max-width-640 {
+      width: 50%;
+    }
+  }
+}
+
+@include max-width-640 {
+  article.clients {
+    .content {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}

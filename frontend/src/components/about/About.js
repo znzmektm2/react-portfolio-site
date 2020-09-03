@@ -1,182 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
-import styled from "styled-components";
+import "./About.scss";
 import { Link } from "react-router-dom";
 import useIO from "./../../lib/useIO";
 import introUseIO from "./../../lib/useIO";
 import ClientsContainer from "./../../containers/about/ClientsContainer";
-
-const AboutBlock = styled.div`
-  article {
-    position: relative;
-    padding: 85px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-    text-align: center;
-    border-bottom: 1px solid #000;
-    box-sizing: border-box;
-
-    .content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 9rem 4rem 4rem;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      h2 {
-        position: absolute;
-        top: 5.5vh;
-        left: 0;
-        width: 100%;
-        font-size: calc(3.5rem + 3vw);
-        line-height: 1.4em;
-        letter-spacing: -0.01em;
-        text-align: center;
-        span {
-          display: inline-block;
-          padding: 0 2vw;
-        }
-      }
-    }
-
-    &.intro {
-      overflow: hidden;
-      h2 {
-        top: 14vh;
-        color: #fff;
-      }
-      .content {
-        padding: 30vh 4vw 0;
-        border: 1px solid #46454d;
-        ul {
-          width: 100%;
-          height: 100%;
-          text-align: center;
-          li {
-            display: inline-block;
-            vertical-align: top;
-            max-width: 33.333%;
-            padding: 0 3rem;
-            color: #fff;
-            text-align: left;
-            h3 {
-              margin-bottom: 1rem;
-              font-family: trump-gothic-pro;
-              font-size: calc(0.7rem + 0.6vw);
-              letter-spacing: 1.6px;
-              overflow: hidden;
-              span {
-                display: inline-block;
-                transform: translate3d(0, 105%, 0);
-              }
-            }
-            .introText {
-              overflow: hidden;
-              .wrap {
-                transform: translate3d(0, 105%, 0);
-                div {
-                  margin-bottom: 1rem;
-                }
-              }
-            }
-            p {
-              font-family: "KoPub Batang", serif;
-              font-size: 0.96rem;
-              color: #a7a7a7;
-              span {
-                color: #ff1f44;
-              }
-            }
-            &.active {
-              h3 {
-                span {
-                  transform: translate3d(0, 0%, 0);
-                  transition: 1s cubic-bezier(0.165, 0.84, 0.44, 1) 0.3s;
-                }
-              }
-              .introText {
-                .wrap {
-                  transform: translate3d(0, 0%, 0);
-                  transition: 1s cubic-bezier(0.165, 0.84, 0.44, 1) 0.5s;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      .bg {
-        position: absolute;
-        top: 0;
-        left: -10%;
-        width: 120%;
-        height: 120%;
-        background: #000308;
-        z-index: -1;
-        img {
-          width: 100%;
-          opacity: 0.2;
-        }
-      }
-      &.active {
-        .bg {
-          position: fixed;
-        }
-      }
-    }
-
-    &.recongition {
-      position: relative;
-      background: #0d0e13;
-      h2 {
-        span {
-          color: #fff;
-          background: #0d0e13;
-        }
-      }
-      .content {
-        border: 1px solid #42390f;
-        .lists {
-          width: 84%;
-          display: flex;
-          justify-content: center;
-          li {
-            padding: 13vh 4.8vw 0;
-            line-height: 0;
-            overflow: hidden;
-            img {
-              opacity: 0;
-              width: 100%;
-              transform: translate3d(0, 20%, 0);
-            }
-          }
-          &.active {
-            li {
-              img {
-                opacity: 1;
-                transform: translate3d(0, 0%, 0);
-                transition: 1.2s cubic-bezier(0.76, 0, 0.24, 1);
-              }
-              &:nth-child(2) {
-                img {
-                  transition: 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.3s;
-                }
-              }
-              &:nth-child(3) {
-                img {
-                  transition: 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.6s;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 
 const About = () => {
   const [observer, setElements, entries] = useIO({
@@ -189,7 +16,7 @@ const About = () => {
     rootMargin: "-1px",
   });
 
-  const [top, setTop] = useState("0%");
+  const [translateY, setTranslateY] = useState("translateY(0%)");
   const [opacity, setOpacity] = useState("0.2");
 
   // 스크롤 이벤트
@@ -211,7 +38,7 @@ const About = () => {
 
     // 인트로 bg 애니메이션
     if (scrollLocation > 0 && scrollLocation <= introOffsetBottom - margin) {
-      setTop(-(scrollLocation * 0.018) + "%");
+      setTranslateY("translateY(-" + scrollLocation * 0.01 + "%)");
       setOpacity(0.38 - scrollLocation * 0.0002);
     }
     // 인트로 진입시 로고 밑 메뉴버튼 색 바꾸기
@@ -357,7 +184,7 @@ const About = () => {
   }, [entries, introEntry, observer]);
 
   return (
-    <AboutBlock>
+    <div className="aboutBlock">
       <article className="intro">
         <div className="content">
           <h2>
@@ -483,11 +310,13 @@ const About = () => {
           </ul>
         </div>
         <div className="bg">
-          <img
-            src="/images/about.jpg"
-            alt="about"
-            style={{ opacity: opacity, marginTop: top }}
-          />
+          <div className="imgWrap">
+            <img
+              src="/images/about.jpg"
+              alt="about"
+              style={{ opacity: opacity, transform: translateY }}
+            />
+          </div>
         </div>
       </article>
       <ClientsContainer />
@@ -515,7 +344,7 @@ const About = () => {
           </ul>
         </div>
       </article>
-    </AboutBlock>
+    </div>
   );
 };
 

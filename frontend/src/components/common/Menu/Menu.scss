@@ -175,29 +175,31 @@
 }
 
 /* 미디어쿼리 */
-@include max-width-1600 {
-  .menuList {
-    font-size: calc(6.13333px + 0.45vw);
+.menu {
+  @include max-width-1600 {
+    .menuList {
+      font-size: calc(6.13333px + 0.45vw);
 
-    li {
-      padding-left: calc(2.35em + 1vw);
-    }
+      li {
+        padding-left: calc(2.35em + 1vw);
+      }
 
-    li a {
-      padding-left: calc(0.5em + 1vw);
-      font-size: 6em;
-      line-height: 1.25em;
+      li a {
+        padding-left: calc(0.5em + 1vw);
+        font-size: 6em;
+        line-height: 1.25em;
+      }
     }
   }
-}
 
-@include max-width-1280 {
-  .menu .menuWrap {
-    justify-content: space-between;
-    flex-direction: column;
-  }
+  @include max-width-1280 {
+    .menuWrap {
+      justify-content: space-between;
+      flex-direction: column;
 
-  .menuList {
-    padding-right: 0;
+      .menuList {
+        padding-right: 0;
+      }
+    }
   }
 }

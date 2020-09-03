@@ -41,12 +41,13 @@
 /* 미디어쿼리 */
 @include max-width-1280 {
   .menuText {
-    margin-bottom: 6vh;
+    margin-bottom: 7vh;
     padding-left: 0;
     height: auto;
 
     ul li {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
+      letter-spacing: 0.5px;
     }
   }
 }

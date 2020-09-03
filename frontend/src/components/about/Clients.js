@@ -1,4 +1,5 @@
 import React from "react";
+import "./Clients.scss";
 import styled from "styled-components";
 import { Scrollbars } from "react-custom-scrollbars";
 
@@ -39,6 +40,11 @@ const ClientsBlock = styled.article`
             font-size: 0;
             line-height: 0;
             text-align: center;
+
+            @include max-width-1280 {
+              width: 20%;
+            }
+
             a {
               width: 94%;
               overflow: hidden;
@@ -63,7 +69,7 @@ const ClientsBlock = styled.article`
 
 const Clients = ({ clientsList }) => {
   return (
-    <ClientsBlock className="clients">
+    <article className="clients">
       <div className="content">
         <h2>
           <span>Clients</span>
@@ -83,7 +89,7 @@ const Clients = ({ clientsList }) => {
           </Scrollbars>
         </div>
       </div>
-    </ClientsBlock>
+    </article>
   );
 };
 
