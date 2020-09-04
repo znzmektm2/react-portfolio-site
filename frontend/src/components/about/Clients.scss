@@ -32,6 +32,9 @@
     text-align: left;
   }
 
+  .scrollBars ul {
+    padding-right: 8px;
+  }
   .scrollBars ul li {
     margin-bottom: 1.1rem;
     width: 16.666%;
@@ -82,10 +85,6 @@
     .content {
       padding-left: 0;
       padding-right: 0;
-    }
-
-    ul {
-      padding-right: 8px;
     }
   }
 }

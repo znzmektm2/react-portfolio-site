@@ -7,6 +7,7 @@
     align-items: center;
     flex-direction: column;
     height: 100vh;
+    min-height: 520px;
     text-align: center;
     border-bottom: 1px solid #000;
     box-sizing: border-box;
@@ -219,7 +220,7 @@
         position: absolute;
         top: 0;
         left: 50%;
-        margin-left: calc(82px - 100vh);
+        margin-left: calc(34px - 100vh);
         max-width: none;
         width: auto;
         height: 100%;
@@ -254,7 +255,7 @@
       }
 
       li {
-        margin-bottom: 5vh;
+        margin-bottom: 4rem;
         width: 100%;
       }
     }

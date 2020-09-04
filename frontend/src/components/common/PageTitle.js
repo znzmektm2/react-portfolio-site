@@ -4,6 +4,7 @@ import styled from "styled-components";
 const TitleBlock = styled.div`
   position: relative;
   height: 100vh;
+  min-height: 520px;
   display: flex;
   align-items: center;
   justify-content: center;

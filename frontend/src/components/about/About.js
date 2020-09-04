@@ -13,7 +13,7 @@ const About = () => {
   const [, setIntroElement, introEntry] = introUseIO({
     threshold: 0,
     root: null,
-    rootMargin: "-1px",
+    rootMargin: "10%",
   });
 
   const [translateY, setTranslateY] = useState("translateY(0%)");
