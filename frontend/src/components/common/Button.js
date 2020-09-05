@@ -5,15 +5,27 @@ import { Link } from "react-router-dom";
 const buttonStyle = css`
   position: relative;
   outline: none;
-  background: none;
-  padding: 0.5rem 1rem;
+  padding: 8px 16px;
+  font-size: 13px;
+  line-height: 1.2em;
   border: 1px solid #525252;
-  font-size: 0.83rem;
-  line-height: 0.95rem;
+  background: none;
   cursor: pointer;
 
   & + & {
     margin-left: 1rem;
+  }
+
+  @media screen and (max-width: 1024px) {
+    padding: 7px 14px;
+    font-size: 12px;
+    line-height: 1.1em;
+  }
+
+  @media screen and (max-width: 640px) {
+    padding: 6px 12px;
+    font-size: 10px;
+    line-height: 1em;
   }
 `;
 
@@ -26,7 +38,7 @@ const StyleLink = styled(Link)`
     props.to &&
     css`
       margin-right: 1rem;
-      font-size: 0.83rem;
+      font-size: 16px;
       line-height: normal;
     `}
   ${buttonStyle}

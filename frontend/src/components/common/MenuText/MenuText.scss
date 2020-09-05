@@ -24,6 +24,18 @@
       padding: 0 0.67rem;
     }
   }
+
+  /* 미디어쿼리 */
+  @include max-width-1280 {
+    margin-bottom: 7vh;
+    padding-left: 0;
+    height: auto;
+
+    ul li {
+      font-size: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+  }
 }
 
 /* 메뉴 클릭시 */
@@ -34,20 +46,6 @@
       @include transition(all, 1.1s, $cubic-bezier-j, 1.1s);
 
       opacity: 1;
-    }
-  }
-}
-
-/* 미디어쿼리 */
-@include max-width-1280 {
-  .menuText {
-    margin-bottom: 7vh;
-    padding-left: 0;
-    height: auto;
-
-    ul li {
-      font-size: 1.5rem;
-      letter-spacing: 0.5px;
     }
   }
 }

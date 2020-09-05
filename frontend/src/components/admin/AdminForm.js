@@ -4,9 +4,11 @@ import styled from "styled-components";
 import Responsive from "../common/Responsive";
 
 const AdminBlock = styled.div`
+  position: relative;
   padding: 5rem 0;
   text-align: center;
   background: #fff;
+  z-index: 1;
 
   input {
     margin-right: 1rem;

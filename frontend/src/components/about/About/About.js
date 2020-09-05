@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "./About.scss";
 import { Link } from "react-router-dom";
-import useIO from "./../../lib/useIO";
-import introUseIO from "./../../lib/useIO";
-import ClientsContainer from "./../../containers/about/ClientsContainer";
+import useIO from "./../../../lib/useIO";
+import introUseIO from "./../../../lib/useIO";
+import ClientsContainer from "./../../../containers/about/ClientsContainer";
 
 const About = () => {
   const [observer, setElements, entries] = useIO({

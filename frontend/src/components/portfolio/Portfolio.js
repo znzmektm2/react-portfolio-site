@@ -243,14 +243,18 @@ const PortfolioBlock = styled.div`
             height: 100%;
             background: #000;
             opacity: 0.7;
+            z-index: 1;
           }
+
+          img {
+            width: 100%;
+            height: 100%;
+            filter: blur(12px);
+          }
+
           svg {
             width: 100%;
             height: 100%;
-            image {
-              width: 100%;
-              height: 100%;
-            }
           }
         }
       }
@@ -449,20 +453,24 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
             <img src={`../${thumbImage.url}`} alt={thumbImage.name} />
           </a>
           <span className="bg">
-            <svg>
-              <defs>
-                <filter id="filter">
-                  <feGaussianBlur stdDeviation="12" />
-                </filter>
-              </defs>
-              <image
-                href={`../${thumbImage.url}`}
-                width="100%"
-                height="100%"
-                filter="url(#filter)"
-                alt={thumbImage.name}
-              />
-            </svg>
+            {navigator.userAgent.match(/Trident\/7\./) ? (
+              <svg>
+                <defs>
+                  <filter id="filter">
+                    <feGaussianBlur stdDeviation="12" />
+                  </filter>
+                </defs>
+                <image
+                  href={`../${thumbImage.url}`}
+                  width="100%"
+                  height="100%"
+                  filter="url(#filter)"
+                  alt={thumbImage.name}
+                />
+              </svg>
+            ) : (
+              <img src={`../${thumbImage.url}`} alt={thumbImage.name} />
+            )}
           </span>
         </div>
       </div>

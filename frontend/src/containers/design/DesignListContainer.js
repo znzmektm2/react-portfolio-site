@@ -92,7 +92,7 @@ const DesignListContainer = ({ location, history }) => {
       if (entry.isIntersecting) {
         // 이미지에 appear 클래스 추가
         let target = entry.target;
-        if (target.tagName === "IMG") {
+        if (target.className === "lazy") {
           target.src = target.dataset.src;
           target.classList.remove("lazy");
           target.parentNode.parentNode.parentNode.parentNode.classList.add(

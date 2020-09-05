@@ -7,15 +7,9 @@ import { DelayLink } from "./../common/DelayLink";
 const PortfolioListBlock = styled.div`
   padding: 4rem 0 10rem;
   min-height: 500px;
-  .writeButtonArea {
-    overflow: hidden;
-    a {
-      padding: 0.3rem;
-      float: right;
-      font-size: 1rem;
-      line-height: 2rem;
-    }
-  }
+  position: relative;
+  z-index: 1;
+
   ul {
     margin: 1rem -1rem;
     align-items: center;
@@ -185,7 +179,7 @@ const PortfolioList = ({
   if (portfoliosError) {
     return (
       <PortfolioListBlock>
-        <Responsive>에러가 발생했습니다.</Responsive>
+        <div className="wrap">에러가 발생했습니다.</div>
       </PortfolioListBlock>
     );
   }
@@ -199,7 +193,7 @@ const PortfolioList = ({
     if (!portfolioLoading) {
       return (
         <PortfolioListBlock>
-          <Responsive>
+          <div className="wrap">
             {user && (
               <div className="writeButtonArea">
                 <DelayLink
@@ -212,14 +206,14 @@ const PortfolioList = ({
               </div>
             )}
             <p>데이터가 없습니다.</p>
-          </Responsive>
+          </div>
         </PortfolioListBlock>
       );
     }
   }
   return (
     <PortfolioListBlock>
-      <Responsive>
+      <div className="wrap">
         {user && (
           <div className="writeButtonArea">
             <DelayLink to="/writePortfolio" open="true" className="writeBtn">
@@ -259,7 +253,7 @@ const PortfolioList = ({
           ))}
         </ul>
         <div className="bottomTarget" />
-      </Responsive>
+      </div>
     </PortfolioListBlock>
   );
 };

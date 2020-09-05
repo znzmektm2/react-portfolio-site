@@ -1,9 +1,8 @@
 import React from "react";
 import "./DesignList.scss";
-import Image from "./../common/Image";
-import Responsive from "./../common/Responsive";
-import { DelayLink } from "./../common/DelayLink";
-import Button from "./../common/Button";
+import Image from "./../../common/Image";
+import { DelayLink } from "./../../common/DelayLink";
+import Button from "./../../common/Button";
 
 const DesignList = ({
   designList,
@@ -15,25 +14,41 @@ const DesignList = ({
 }) => {
   const onClick = (e) => {
     const buttonImgWrap = e.currentTarget;
+    const listWrapWidth = buttonImgWrap.clientWidth;
     const imgWrap = buttonImgWrap.childNodes[1];
-    const wrapWidth =
-      imgWrap.parentNode.parentNode.parentNode.childNodes[0].clientWidth;
-    const img = imgWrap.childNodes[0];
+    const img = imgWrap.childNodes[0].childNodes[0].childNodes[0];
     const imgNaturalWidth = img.naturalWidth;
     const imgNaturalHeight = img.naturalHeight;
-    const calcHeight = (wrapWidth * imgNaturalHeight) / imgNaturalWidth;
+    const calcHeight = (listWrapWidth * imgNaturalHeight) / imgNaturalWidth;
 
     buttonImgWrap.parentNode.classList.toggle("active");
 
-    if (buttonImgWrap.parentNode.className === "wrap active") {
-      if (wrapWidth > imgNaturalWidth) {
-        buttonImgWrap.style.width = imgNaturalWidth + "px";
-        imgWrap.style.maxHeight = img.naturalHeight + "px";
+    console.log(imgNaturalWidth);
+    console.log(imgNaturalHeight);
+    if (buttonImgWrap.parentNode.className === "listWrap active") {
+      // 이미지 가로 사이즈가 .listWrap 가로 사이즈보다 작을 때
+      if (listWrapWidth > imgNaturalWidth) {
+        imgWrap.style.width = imgNaturalWidth + "px";
+
+        if (navigator.userAgent.match(/Trident\/7\./)) {
+          imgWrap.style.maxHeight = "none";
+          imgWrap.style.height = img.naturalHeight + "px";
+        } else {
+          imgWrap.style.maxHeight = img.naturalHeight + "px";
+        }
       } else {
-        imgWrap.style.maxHeight = calcHeight + "px";
+        imgWrap.style.width = "100%";
+
+        if (navigator.userAgent.match(/Trident\/7\./)) {
+          imgWrap.style.maxHeight = "none";
+          imgWrap.style.height = calcHeight + "px";
+        } else {
+          imgWrap.style.maxHeight = calcHeight + "px";
+        }
       }
     } else {
-      buttonImgWrap.style.removeProperty("width");
+      imgWrap.style.removeProperty("width");
+      imgWrap.style.removeProperty("height");
       imgWrap.style.removeProperty("max-height");
     }
   };
@@ -41,7 +56,7 @@ const DesignList = ({
   if (designError) {
     return (
       <div className="designListBlock">
-        <Responsive>에러가 발생했습니다.</Responsive>
+        <div className="wrap">에러가 발생했습니다.</div>
       </div>
     );
   }
@@ -55,7 +70,7 @@ const DesignList = ({
     if (!designLoading) {
       return (
         <div className="designListBlock">
-          <Responsive>
+          <div className="wrap">
             {user ? (
               <div className="writeButtonArea">
                 <DelayLink to="/writeDesign" open="true" className="writeBtn">
@@ -66,7 +81,7 @@ const DesignList = ({
               ""
             )}
             <p>데이터가 없습니다.</p>
-          </Responsive>
+          </div>
         </div>
       );
     }
@@ -74,7 +89,7 @@ const DesignList = ({
 
   return (
     <div className="designListBlock">
-      <Responsive>
+      <div className="wrap">
         {user ? (
           <div className="writeButtonArea">
             <DelayLink to="/writeDesign" open="true" className="writeBtn">
@@ -84,11 +99,12 @@ const DesignList = ({
         ) : (
           ""
         )}
+
         <div className="designList">
           <ul>
             {designList.map((list, index, array) => (
               <li key={list._id}>
-                <div className="wrap">
+                <div className="listWrap">
                   <h3>
                     <span className="category">{list.category}.</span>
                     {list.name}
@@ -119,6 +135,8 @@ const DesignList = ({
                         src={list.designImage.url}
                         alt={list.designImage.name}
                         isLazy
+                        design
+                        index={index}
                       />
                     </div>
                     <span className="index">{array.length - index}</span>
@@ -129,7 +147,7 @@ const DesignList = ({
           </ul>
         </div>
         <div className="bottomTarget" />
-      </Responsive>
+      </div>
     </div>
   );
 };

@@ -112,7 +112,7 @@
     overflow: hidden;
 
     li {
-      @include transform($translateY-100);
+      @include transform($translateY-110);
       @include animation(y100, 1.5s, $cubic-bezier-j, 4.8s, 1, forwards);
     }
   }
@@ -194,38 +194,39 @@
 }
 
 @include max-width-1280 {
-  .homeBlock {
-    .jarText {
-      font-size: 16px;
-      padding: 0 calc(0.868em + 1.7vw + (2.618em + 1.5vw));
-      flex-direction: column;
+  .jarText {
+    font-size: 16px;
+    padding: 0 calc(0.868em + 1.7vw + (2.618em + 1.5vw));
+    flex-direction: column;
+    justify-content: center;
+
+    h2 {
+      margin-right: 0;
+    }
+
+    h2 svg {
+      width: calc(32rem + 6vw);
+    }
+
+    .pText {
+      margin-top: 6rem;
+      padding-right: 0;
+      display: flex;
       justify-content: center;
+      width: calc(32rem + 6vw);
+    }
 
-      h2 {
-        margin-right: 0;
-      }
-
-      h2 svg {
-        width: calc(32rem + 6vw);
-      }
-
-      .pText {
-        margin-top: 6rem;
-        padding-right: 0;
-        display: flex;
-        justify-content: center;
-        width: calc(32rem + 6vw);
-      }
-
-      .pText p {
-        line-height: calc(11px + 0.8vw);
-      }
+    .pText p {
+      line-height: calc(11px + 0.8vw);
     }
   }
-}
 
-@include max-width-640 {
-  .homeBlock {
+  @include max-width-640 {
+    .pText p {
+      font-size: 8.5px;
+      line-height: 1.7em;
+    }
+
     .portfolioNumber {
       right: calc(0.868em + 1.7vw + 1px);
 

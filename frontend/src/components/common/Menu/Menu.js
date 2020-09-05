@@ -1,13 +1,12 @@
 import React from "react";
 import "./Menu.scss";
-import Responsive from "./../Responsive";
 import DelayLink from "./../DelayLink";
 import MenuTextContainer from "./../../../containers/common/MenuTextContainer";
 
 const Menu = ({ addHeaderActiveClass, open }) => {
   return (
     <div className="menu">
-      <Responsive>
+      <div className="wrap">
         <div className="menuWrap">
           <ul className="menuList">
             <li>
@@ -55,7 +54,7 @@ const Menu = ({ addHeaderActiveClass, open }) => {
           <MenuTextContainer />
         </div>
         <span className="line" />
-      </Responsive>
+      </div>
     </div>
   );
 };

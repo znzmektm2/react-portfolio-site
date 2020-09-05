@@ -1,6 +1,5 @@
 import React from "react";
-import Responsive from "./../common/Responsive";
-import Category from "./../common/Category";
+import Category from "./../../common/Category";
 
 const DesignCategory = ({
   categories,
@@ -21,11 +20,11 @@ const DesignCategory = ({
     if (!loading) {
       return (
         <Category>
-          <Responsive>
+          <div className="wrap">
             <ul>
               <li>데이터가 없습니다.</li>
             </ul>
-          </Responsive>
+          </div>
         </Category>
       );
     }
@@ -33,23 +32,25 @@ const DesignCategory = ({
 
   return (
     <Category>
-      <Responsive>
+      <div className="wrap">
         <ul>
           {categories.map((category) => (
             <li key={category}>
-              <input
-                type="radio"
-                name="category"
-                value={category}
-                defaultChecked={category === "Photoshop" && "true"}
-                onClick={clickDesignRadiobox}
-                className="designInput"
-              />
-              <label htmlFor={category}>{category}</label>
+              <div>
+                <input
+                  type="radio"
+                  name="category"
+                  value={category}
+                  defaultChecked={category === "Photoshop" && "true"}
+                  onClick={clickDesignRadiobox}
+                  className="designInput"
+                />
+                <label htmlFor={category}>{category}</label>
+              </div>
             </li>
           ))}
         </ul>
-      </Responsive>
+      </div>
     </Category>
   );
 };
