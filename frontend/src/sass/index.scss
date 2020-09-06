@@ -2,39 +2,39 @@
 
 @include keyframes(y100) {
   0% {
+    @include transform($translateY-100);
     opacity: 0;
-    transform: translateY(100%);
   }
   100% {
+    @include transform($translateY-0);
     opacity: 1;
-    transform: translateY(0%);
   }
 }
 
 @include keyframes(y105) {
   0% {
-    transform: translateY(105%);
+    @include transform($translateY-105);
   }
   100% {
-    transform: translateY(0%);
+    @include transform($translateY-0);
   }
 }
 
 @include keyframes(end-y-105) {
   0% {
-    transform: translateY(0%);
+    @include transform($translateY-0);
   }
   100% {
-    transform: translateY(-105%);
+    @include transform($translateY-m-105);
   }
 }
 
 @include keyframes(x-100) {
   0% {
-    transform: translateX(-100%);
+    @include transform($translateX-m-100);
   }
   100% {
-    transform: translateX(0%);
+    @include transform($translateX-0);
   }
 }
 
@@ -96,7 +96,7 @@
   }
 }
 
-@keyframes grain {
+@include keyframes(grain) {
   0% {
     transform: translate3d(0, 0, 0);
   }
@@ -113,46 +113,6 @@
     transform: translate3d(0, 0, 0);
   }
 }
-
-// $ease-in-out_1s: all 1s ease-in-out;
-// .ease-in-out_1s {
-//   -webkit-transition: $ease-in-out_1s;
-//   -moz-transition: $ease-in-out_1s;
-//   -o-transition: $ease-in-out_1s;
-//   transition: $ease-in-out_1s;
-// }
-
-// $ease-in-out_05s: all 0.5s ease-in-out;
-// .ease-in-out_05s {
-//   -webkit-transition: $ease-in-out_05s;
-//   -moz-transition: $ease-in-out_05s;
-//   -o-transition: $ease-in-out_05s;
-//   transition: $ease-in-out_05s;
-// }
-
-// $ease-in-out_03s: all 0.3s ease-in-out;
-// .ease-in-out_03s {
-//   -webkit-transition: $ease-in-out_03s;
-//   -moz-transition: $ease-in-out_03s;
-//   -o-transition: $ease-in-out_03s;
-//   transition: $ease-in-out_03s;
-// }
-
-// $ease-in-out_02s: all 0.2s ease-in-out;
-// .ease-in-out_02s {
-//   -webkit-transition: $ease-in-out_03s;
-//   -moz-transition: $ease-in-out_03s;
-//   -o-transition: $ease-in-out_03s;
-//   transition: $ease-in-out_03s;
-// }
-
-// $translate1: translate(0, -100%);
-// .translate1 {
-//   -webkit-transform: $translate1;
-//   -moz-transform: $translate1;
-//   -ms-transform: $translate1;
-//   transform: $translate1;
-// }
 
 .page {
   position: relative;
