@@ -1,0 +1,29 @@
+.admin {
+  .pageTitle {
+    background: #ebe1d8;
+
+    > div {
+      color: #222;
+    }
+  }
+
+  .adminFromBlock {
+    position: absolute;
+    top: 70%;
+    left: 0;
+    padding: 5rem 0;
+    width: 100%;
+    text-align: center;
+    background: unset;
+    z-index: 1;
+
+    input {
+      margin-right: 1rem;
+      padding: 0.6rem 1rem;
+      font-family: $font-family-KoPub;
+      border: 1px solid #525252;
+      outline: none;
+      background: none;
+    }
+  }
+}

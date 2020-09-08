@@ -6,7 +6,7 @@ import PageTitle from "./../components/common/PageTitle";
 const AdminPage = () => {
   return (
     <>
-      <div className="page">
+      <div className="page admin">
         <PageTitle subTitle="Login and Logout" title="Admin" />
         <AdminContainer />
       </div>
