@@ -65,6 +65,14 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
   return (
     <div className="portfolioBlock">
       <div className="intro">
+        <div className="lineBox">
+          <div>
+            <span className="line step1" />
+            <span className="line step2" />
+            <span className="line step3" />
+            <span className="line step4" />
+          </div>
+        </div>
         <div className="half introImg">
           <a href={url[0]} target="_blank" rel="noopener noreferrer">
             <img src={`../${thumbImage.url}`} alt={thumbImage.name} />
@@ -91,84 +99,78 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
           </span>
         </div>
         <div className="half introTxt">
-          <div className="lineBox">
-            <span className="line step1" />
-            <span className="line step2" />
-            <span className="line step3" />
-            <span className="line step4" />
-            <div className="txtWrap">
-              <h2>
-                <a href={url[0]} target="_blank" rel="noopener noreferrer">
-                  <span>{id}</span>
-                </a>
-              </h2>
-              <h3>
-                <a href={url[0]} target="_blank" rel="noopener noreferrer">
-                  {client}
-                </a>
-              </h3>
-              <div className="detailList">
-                <ul>
-                  {host ? (
-                    <li>
-                      <span>HOST</span>
-                      <span>{host}</span>
-                    </li>
-                  ) : null}
+          <div className="txtWrap">
+            <h2>
+              <a href={url[0]} target="_blank" rel="noopener noreferrer">
+                <span>{id}</span>
+              </a>
+            </h2>
+            <h3>
+              <a href={url[0]} target="_blank" rel="noopener noreferrer">
+                {client}
+              </a>
+            </h3>
+            <div className="detailList">
+              <ul>
+                {host ? (
+                  <li>
+                    <span>HOST</span>
+                    <span>{host}</span>
+                  </li>
+                ) : null}
 
-                  <li>
-                    <span>TYPE</span>
-                    <span>
-                      {web && "Web"}
-                      {singlePage && "SinglePage"}
-                    </span>
-                  </li>
-                  <li>
-                    <span>VERSION</span>
-                    <span>
-                      {pcVer ? (mobileVer ? "PC / Mobile" : "PC") : "Mobile"}
-                      {responsiveWeb && " / 반응형"}
-                    </span>
-                  </li>
-                  <li>
-                    <span>IE VERSION</span>
-                    <span>{IEVersion}</span>
-                  </li>
-                  <li>
-                    <span>WHEN</span>
-                    <span>
-                      {workYear} {workMonth}
-                    </span>
-                  </li>
-                  <li>
-                    <span>PERIOD</span>
-                    <span>{period}</span>
-                  </li>
-                  <li>
-                    <span>WORKER</span>
-                    <span>{worker}</span>
-                  </li>
-                  <li>
-                    <span>SKILL</span>
-                    <span>{skill.join(", ")}</span>
-                  </li>
-                  <li>
-                    <span>URL</span>
-                    {url.map((u) => {
-                      return (
-                        <a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href={u}
-                          key={u}
-                        >
-                          <span>{u}</span>
-                        </a>
-                      );
-                    })}
-                  </li>
-                </ul>
-              </div>
+                <li>
+                  <span>TYPE</span>
+                  <span>
+                    {web && "Web"}
+                    {singlePage && "SinglePage"}
+                  </span>
+                </li>
+                <li>
+                  <span>VERSION</span>
+                  <span>
+                    {pcVer ? (mobileVer ? "PC / Mobile" : "PC") : "Mobile"}
+                    {responsiveWeb && " / 반응형"}
+                  </span>
+                </li>
+                <li>
+                  <span>IE VERSION</span>
+                  <span>{IEVersion}</span>
+                </li>
+                <li>
+                  <span>WHEN</span>
+                  <span>
+                    {workYear} {workMonth}
+                  </span>
+                </li>
+                <li>
+                  <span>PERIOD</span>
+                  <span>{period}</span>
+                </li>
+                <li>
+                  <span>WORKER</span>
+                  <span>{worker}</span>
+                </li>
+                <li>
+                  <span>SKILL</span>
+                  <span>{skill.join(", ")}</span>
+                </li>
+                <li>
+                  <span>URL</span>
+                  {url.map((u) => {
+                    return (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={u}
+                        key={u}
+                      >
+                        <span>{u}</span>
+                      </a>
+                    );
+                  })}
+                </li>
+              </ul>
             </div>
           </div>
         </div>
