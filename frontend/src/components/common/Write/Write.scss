@@ -1,0 +1,86 @@
+.writeBlock {
+  font-family: $font-family-KoPub;
+  padding: 4.53rem 0 5rem;
+  background: #f5f5f7;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  .title {
+    margin-bottom: 4rem;
+  }
+
+  h2 {
+    position: relative;
+    padding-bottom: 1rem;
+    display: inline-block;
+    font-family: $font-family-goku;
+    font-size: 7rem;
+    line-height: 7rem;
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: inline-block;
+      width: 30%;
+      height: 0.3rem;
+      background: #373646;
+    }
+  }
+
+  .inputBox {
+    float: left;
+    padding-top: 0.5rem;
+    padding-right: calc(0.868em + 1.7vw);
+    width: 25%;
+    min-width: 210px;
+    font-size: 16px;
+    line-height: 0;
+
+    .selectBox {
+      margin: 0 -12px 20px;
+      position: relative;
+    }
+
+    .selectBox + .selectBox {
+      margin-bottom: 29px;
+    }
+
+    .selectBox input {
+      margin-right: 0;
+    }
+  }
+
+  .imgInput {
+    overflow: hidden;
+
+    h3 {
+      margin-bottom: calc(10px + 0.1vw);
+      font-size: calc(17px + 0.2vw);
+      line-height: calc(17px + 0.2vw);
+    }
+  }
+
+  /* 미디어쿼리 */
+  @include max-width-1600 {
+    padding-top: calc(47px + 10vw);
+  }
+
+  @include max-width-1024 {
+    padding-top: calc(133px + 2vw);
+  }
+
+  @include max-width-640 {
+    .inputBox {
+      padding-right: 0;
+      width: 100%;
+      float: none;
+    }
+
+    .imgInput {
+      margin-top: calc(36px + 1vw);
+      overflow: unset;
+    }
+  }
+}

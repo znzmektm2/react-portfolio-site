@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "../common/Button";
-import Responsive from "./../common/Responsive";
 import UploadInput from "./../common/UploadInput";
 import Write from "./../common/Write";
 import InputLabelBox from "./../common/InputLabelBox";
@@ -81,7 +80,7 @@ const WritePortfolio = ({
 
   return (
     <Write>
-      <Responsive>
+      <div className="wrap">
         <div className="title">
           <h2>Write Portfolio</h2>
         </div>
@@ -228,7 +227,7 @@ const WritePortfolio = ({
             contentImageRef={contentImageRef}
           />
         </div>
-      </Responsive>
+      </div>
     </Write>
   );
 };

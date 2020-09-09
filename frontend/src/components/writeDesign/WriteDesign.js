@@ -1,5 +1,4 @@
 import React from "react";
-import Responsive from "./../common/Responsive";
 import UploadInput from "./../common/UploadInput";
 import Button from "./../common/Button";
 import Write from "./../common/Write";
@@ -28,7 +27,7 @@ const WriteDesign = ({
 
   return (
     <Write>
-      <Responsive>
+      <div className="wrap">
         <div className="title">
           <h2>Write Design</h2>
         </div>
@@ -58,7 +57,7 @@ const WriteDesign = ({
             designImageRef={designImageRef}
           />
         </div>
-      </Responsive>
+      </div>
     </Write>
   );
 };

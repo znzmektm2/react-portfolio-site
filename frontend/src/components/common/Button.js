@@ -23,9 +23,9 @@ const buttonStyle = css`
   }
 
   @media screen and (max-width: 640px) {
-    padding: 6px 12px;
+    /* padding: 6px 12px;
     font-size: 10px;
-    line-height: 1em;
+    line-height: 1em; */
   }
 `;
 

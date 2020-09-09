@@ -1,0 +1,94 @@
+.footer {
+  position: relative;
+
+  .footerWrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+  }
+
+  .nextLink {
+    margin-bottom: 3rem;
+    overflow: hidden;
+  }
+
+  .nextLink a {
+    position: relative;
+    display: inline-block;
+    padding: 0 1rem;
+    display: inline-block;
+    font-size: 11rem;
+    line-height: 1.2em;
+    letter-spacing: -0.02rem;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      display: inline-block;
+      width: 0;
+      height: 0.7rem;
+      background: #c8c9b9;
+    }
+  }
+
+  &.over {
+    .footerWrap {
+      background: #0b0b0c;
+    }
+
+    .nextLink a {
+      color: #c8c9b9;
+    }
+
+    .nextLink a:after {
+      @include transition(all, 0.2s, ease, 0s);
+
+      width: 100%;
+    }
+  }
+
+  /* Design 페이지일 경우 */
+  &.dark {
+    .footerWrap {
+      background: #0b0b0c;
+    }
+
+    .nextLink a {
+      color: #c8c9b9;
+    }
+
+    .nextLink a:after {
+      background: #222;
+    }
+  }
+
+  &.dark.over .footerWrap {
+    background: #fff;
+
+    .nextLink a {
+      color: #222;
+    }
+
+    .nextLink a:after {
+      @include transition(all, 0.2s, ease, 0s);
+
+      width: 100%;
+    }
+  }
+
+  .footertarget {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 26px;
+  }
+}

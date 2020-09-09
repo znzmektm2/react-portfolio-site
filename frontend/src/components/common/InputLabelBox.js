@@ -3,9 +3,11 @@ import styled from "styled-components";
 
 const InputLabelBoxBlock = styled.div`
   position: relative;
-  margin-bottom: 1.2rem;
+  margin-bottom: 29px;
   display: flex;
   line-height: 0;
+  font-size: 16px;
+
   :before {
     content: "";
     position: absolute;
@@ -17,6 +19,7 @@ const InputLabelBoxBlock = styled.div`
     background: #e2e2e2;
     z-index: 1;
   }
+
   :after {
     content: "";
     position: absolute;
@@ -29,15 +32,16 @@ const InputLabelBoxBlock = styled.div`
     z-index: 1;
     transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
+
   input {
     flex-grow: 1;
     position: relative;
-    margin-right: 1rem;
+    margin-right: 1em;
     display: inline-block;
     width: 100%;
     font-family: "KoPub Batang", serif;
-    font-size: 0.8rem;
-    height: 1.7rem;
+    font-size: 13px;
+    line-height: 28px;
     outline: none;
     border: none;
     background: #f5f5f7;
@@ -52,8 +56,8 @@ const InputLabelBoxBlock = styled.div`
     top: 0;
     left: 0;
     display: inline-block;
-    font-size: 0.8rem;
-    line-height: 1.7rem;
+    font-size: 13px;
+    line-height: 28px;
     color: #b0aeb5;
     transition: 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
@@ -65,25 +69,28 @@ const InputLabelBoxBlock = styled.div`
     }
 
     label {
-      top: -1rem;
-      font-size: 0.7rem;
+      top: -20px;
+      font-size: 11px;
       opacity: 0.5;
     }
   }
+
   &.value {
     label {
-      top: -1rem;
-      font-size: 0.7rem;
+      top: -20px;
+      font-size: 11px;
       opacity: 0.5;
     }
   }
 
   &.select {
     display: inline-block;
-    margin: 0 0.5rem;
+    margin: 0 12px;
+
     &:before {
       display: none;
     }
+
     &:after {
       display: none;
     }
@@ -103,6 +110,7 @@ const InputLabelBoxBlock = styled.div`
         font-weight: bold;
       }
     }
+
     label {
       position: relative;
     }
