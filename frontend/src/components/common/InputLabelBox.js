@@ -104,11 +104,11 @@ const InputLabelBoxBlock = styled.div`
       height: 100%;
       z-index: 1;
       cursor: pointer;
+    }
 
-      &:checked + label {
-        color: #cb018f;
-        font-weight: bold;
-      }
+    input:checked + label {
+      color: #cb018f;
+      font-weight: bold;
     }
 
     label {

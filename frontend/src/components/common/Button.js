@@ -21,12 +21,6 @@ const buttonStyle = css`
     font-size: 12px;
     line-height: 1.1em;
   }
-
-  @media screen and (max-width: 640px) {
-    /* padding: 6px 12px;
-    font-size: 10px;
-    line-height: 1em; */
-  }
 `;
 
 const StyleButton = styled.button`

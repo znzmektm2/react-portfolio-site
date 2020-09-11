@@ -13,43 +13,30 @@ const DesignList = ({
   onRemove,
 }) => {
   const onClick = (e) => {
-    const buttonImgWrap = e.currentTarget;
-    const listWrapWidth = buttonImgWrap.clientWidth;
-    const imgWrap = buttonImgWrap.childNodes[1];
-    const img = imgWrap.childNodes[0].childNodes[0].childNodes[0];
+    const imgBox = e.currentTarget;
+    const contWrap = imgBox.parentNode;
+    const listWrap = imgBox.parentNode.parentNode;
+    const listWrapWidth = listWrap.clientWidth;
+    const imgDiv = imgBox.childNodes[0];
+    const img = imgDiv.childNodes[0].childNodes[0];
     const imgNaturalWidth = img.naturalWidth;
     const imgNaturalHeight = img.naturalHeight;
     const calcHeight = (listWrapWidth * imgNaturalHeight) / imgNaturalWidth;
 
-    buttonImgWrap.parentNode.classList.toggle("active");
+    listWrap.classList.toggle("active");
 
-    console.log(imgNaturalWidth);
-    console.log(imgNaturalHeight);
-    if (buttonImgWrap.parentNode.className === "listWrap active") {
+    if (listWrap.className === "listWrap active") {
       // 이미지 가로 사이즈가 .listWrap 가로 사이즈보다 작을 때
       if (listWrapWidth > imgNaturalWidth) {
-        imgWrap.style.width = imgNaturalWidth + "px";
-
-        if (navigator.userAgent.match(/Trident\/7\./)) {
-          imgWrap.style.maxHeight = "none";
-          imgWrap.style.height = img.naturalHeight + "px";
-        } else {
-          imgWrap.style.maxHeight = img.naturalHeight + "px";
-        }
+        contWrap.style.width = imgNaturalWidth + "px";
+        imgBox.style.maxHeight = img.naturalHeight + "px";
       } else {
-        imgWrap.style.width = "100%";
-
-        if (navigator.userAgent.match(/Trident\/7\./)) {
-          imgWrap.style.maxHeight = "none";
-          imgWrap.style.height = calcHeight + "px";
-        } else {
-          imgWrap.style.maxHeight = calcHeight + "px";
-        }
+        contWrap.style.width = "100%";
+        imgBox.style.maxHeight = calcHeight + "px";
       }
     } else {
-      imgWrap.style.removeProperty("width");
-      imgWrap.style.removeProperty("height");
-      imgWrap.style.removeProperty("max-height");
+      contWrap.style.removeProperty("width");
+      imgBox.style.removeProperty("max-height");
     }
   };
 
@@ -105,11 +92,7 @@ const DesignList = ({
             {designList.map((list, index, array) => (
               <li key={list._id}>
                 <div className="listWrap">
-                  <h3>
-                    <span className="category">{list.category}.</span>
-                    {list.name}
-                  </h3>
-                  <div className="buttonImgWrap" onClick={onClick}>
+                  <div className="contWrap">
                     {user && (
                       <div className="buttonBox">
                         <Button
@@ -129,8 +112,7 @@ const DesignList = ({
                         </Button>
                       </div>
                     )}
-
-                    <div className="imgWrap">
+                    <div className="imgBox" onClick={onClick}>
                       <Image
                         src={list.designImage.url}
                         alt={list.designImage.name}
@@ -141,6 +123,10 @@ const DesignList = ({
                     </div>
                     <span className="index">{array.length - index}</span>
                   </div>
+                  <h3>
+                    <span className="category">{list.category}.</span>
+                    {list.name}
+                  </h3>
                 </div>
               </li>
             ))}

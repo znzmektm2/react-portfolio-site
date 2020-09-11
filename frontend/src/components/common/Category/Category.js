@@ -11,7 +11,7 @@ const CategoryBlock = styled.div`
   }
 
   ul {
-    padding: 1rem 0;
+    padding: calc(13px + 0.1vw) 0;
     text-align: center;
 
     li {
@@ -38,11 +38,11 @@ const CategoryBlock = styled.div`
 
   label {
     position: relative;
+    padding: 0 0.4em;
     display: inline-block;
-    padding: 0.3rem 1rem;
     font-family: "KoPub Batang", serif;
     font-size: 16px;
-    line-height: 1.5em;
+    line-height: 1.7em;
     color: ${(props) => (props.portfolioCategory ? "#a3adb9" : "#afafaf")};
     transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
 
@@ -84,17 +84,11 @@ const CategoryBlock = styled.div`
   /* 미디어쿼리 */
   @media screen and (max-width: 1024px) {
     ul li {
-      padding: 1.3rem 1.3rem;
+      padding: 0.7rem 1.5rem;
     }
 
     label {
       font-size: 14px;
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    label {
-      font-size: 12px;
     }
   }
 `;

@@ -32,13 +32,16 @@
       text-align: right;
     }
 
+    &:nth-child(odd) .listWrap button {
+      margin: 0 1rem 1rem 0;
+    }
+
     &:nth-child(even) .listWrap h3 {
       @include transform(rotate(90deg));
 
       right: auto;
       left: calc(100% + 4rem);
-      top: -4rem;
-      transform-origin: left top;
+      transform-origin: left bottom;
     }
 
     &:nth-child(even) .listWrap.active h3 {
@@ -56,7 +59,6 @@
     @include transition(all, 0.5s, $cubic-bezier-d, 0s);
 
     position: relative;
-    opacity: 0.75;
 
     h3 {
       @include transform(rotate(-90deg));
@@ -91,9 +93,10 @@
     }
   }
 
-  .buttonImgWrap {
+  .contWrap {
     @include transition(all, 0.5s, $cubic-bezier-d, 0s);
 
+    opacity: 0.75;
     position: relative;
     display: inline-block;
     width: 40%;
@@ -109,12 +112,24 @@
     }
   }
 
-  .imgWrap {
+  .contWrap:hover {
+    opacity: 1;
+
+    + h3 {
+      color: #fff;
+    }
+
+    .imgBox &:before {
+      opacity: 0;
+    }
+  }
+
+  .imgBox {
     @include transition(all, 0.5s, $cubic-bezier-d, 0s);
 
     position: relative;
     display: inline-block;
-    max-height: 50vh;
+    max-height: 460px;
     overflow: hidden;
 
     &:before {
@@ -153,18 +168,6 @@
     margin-top: 8px;
   }
 
-  .listWrap:hover {
-    opacity: 1;
-
-    h3 {
-      color: #fff;
-    }
-
-    .imgWrap &:before {
-      opacity: 0;
-    }
-  }
-
   .listWrap.active {
     margin: 4rem 0;
     width: 100%;
@@ -175,40 +178,48 @@
       color: #fff;
     }
 
-    .buttonImgWrap {
-      width: auto;
-    }
-
-    .buttonImgWrap .imgWrap {
-      box-shadow: unset;
-    }
-
-    .buttonImgWrap .imgWrap &:before {
+    .contWrap .imgBox &:before {
       opacity: 0;
     }
 
-    .buttonImgWrap .imgWrap img {
+    .contWrap .imgBox img {
       filter: none;
     }
   }
 
   /* 미디어쿼리 */
+  @include max-width-1280 {
+    .imgBox {
+      max-height: 350px;
+    }
+  }
+
   @include max-width-768 {
     .listWrap {
       margin-bottom: 5rem;
+    }
+
+    .imgBox {
+      max-height: 300px;
     }
 
     .listWrap h3 {
       font-size: 10px;
     }
 
-    .imgWrap {
+    .contWrap {
       width: 70%;
     }
 
     .index {
       font-size: 10px;
       margin-top: 6px;
+    }
+  }
+
+  @include max-width-480 {
+    .imgBox {
+      max-height: 200px;
     }
   }
 }

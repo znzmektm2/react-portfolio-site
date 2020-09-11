@@ -19,11 +19,22 @@
 
     input {
       margin-right: 1rem;
-      padding: 0.6rem 1rem;
+      padding: 8px;
       font-family: $font-family-KoPub;
+      font-size: 13px;
+      line-height: 1.2em;
       border: 1px solid #525252;
       outline: none;
       background: none;
+    }
+  }
+
+  /* 미디어쿼리 */
+  @include max-width-1024 {
+    .adminFromBlock input {
+      padding: 7px;
+      font-size: 12px;
+      line-height: 1.1em;
     }
   }
 }
