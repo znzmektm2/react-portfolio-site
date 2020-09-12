@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import { tempSetUser, check } from "./modules/user";
+import { HelmetProvider } from "react-helmet-async";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import "react-app-polyfill/ie11";
@@ -39,7 +40,9 @@ loaderUser();
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")

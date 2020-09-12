@@ -1,8 +1,16 @@
 import React from "react";
 import WriteDesignContainer from "./../containers/writeDesign/WriteDesignContainer";
+import { Helmet } from "react-helmet-async";
 
 const WriteDesignPage = () => {
-  return <WriteDesignContainer />;
+  return (
+    <>
+      <Helmet>
+        <title>Write Design | JAR</title>
+      </Helmet>
+      <WriteDesignContainer />
+    </>
+  );
 };
 
 export default WriteDesignPage;

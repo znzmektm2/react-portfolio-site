@@ -32,7 +32,7 @@ const CategoryBlock = styled.div`
     width: 100%;
     height: 100%;
     opacity: 0;
-    z-index: 1;
+    z-index: 2;
     cursor: pointer;
   }
 
@@ -44,7 +44,8 @@ const CategoryBlock = styled.div`
     font-size: 16px;
     line-height: 1.7em;
     color: ${(props) => (props.portfolioCategory ? "#a3adb9" : "#afafaf")};
-    transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
+    z-index: 1;
+    transition: all 0.3s cubic-bezier(0.175, 0.825, 0.27, 1);
 
     &:before {
       content: "";
@@ -58,27 +59,18 @@ const CategoryBlock = styled.div`
           ? "linear-gradient(-90deg, #ff2f00, #ed1931, #fd0c68, #cb018f)"
           : "#e0e0dc"};
       opacity: 0.8;
-      transition: all 0.5s cubic-bezier(0.175, 0.825, 0.27, 1);
-    }
-  }
-
-  ul li:hover label {
-    color: ${(props) => (props.portfolioCategory ? "#222" : "#e0e0dc")};
-
-    &:before {
-      content: "";
-      width: 100%;
+      transition: all 0.3s cubic-bezier(0.175, 0.825, 0.27, 1);
     }
   }
 
   input:checked + label {
     color: ${(props) => (props.portfolioCategory ? "#222" : "#e0e0dc")};
-  }
 
-  input:checked + label:before {
-    content: "";
-    width: 100%;
-    opacity: 1;
+    &:before {
+      content: "";
+      width: 100%;
+      opacity: 1;
+    }
   }
 
   /* 미디어쿼리 */

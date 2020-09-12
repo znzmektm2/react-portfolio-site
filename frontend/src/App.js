@@ -9,10 +9,14 @@ import PortfolioPage from "./pages/PortfolioPage";
 import AboutPage from "./pages/AboutPage";
 import HomePage from "./pages/HomePage";
 import Header from "./components/common/Header";
+import { Helmet } from "react-helmet-async";
 
 const App = () => {
   return (
     <>
+      <Helmet>
+        <title>REACTERS</title>
+      </Helmet>
       <Header />
       <Route component={HomePage} path={["/home", "/"]} exact />
       <Route component={PortfoliosPage} path="/portfolios" />
