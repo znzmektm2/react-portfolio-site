@@ -23,6 +23,7 @@ const PortfolioCategoryContainer = ({ history, location }) => {
       // 포트폴리오 리스트, currentPage 초기화
       dispatch(initializePortfolios());
 
+      console.log(e.target.value, e.target.checked);
       // 스킬 체크박스 클릭시 useState에 배열 넣기
       e.target.checked
         ? setSkillCheckbox(
@@ -75,7 +76,7 @@ const PortfolioCategoryContainer = ({ history, location }) => {
   }, [skillCheckbox, typeCheckbox, history]);
 
   useEffect(() => {
-    // 뒤로가기 했을 시 URL query에 따라 useState에 체크박스 배열 넣기
+    // history.action POP일 경우, URL query에 따라 useState에 체크박스 배열 넣기
     const { skill, web, singlePage } = qs.parse(location.search, {
       ignoreQueryPrefix: true,
     });
@@ -94,38 +95,16 @@ const PortfolioCategoryContainer = ({ history, location }) => {
       }
     }
 
-    // 포트폴리오 메뉴 클릭시 useState에 체크박스 배열 초기화
     if (!location.search && history.action === "PUSH") {
+      // 포트폴리오 메뉴 클릭시 useState에 체크박스 배열 초기화
       setSkillCheckbox(null);
       setTypeCheckbox(null);
+
+      // 포트폴리오 메뉴 클릭시 체크박스 체크 모두 해제
+      const input = Array.from(document.getElementsByTagName("input"));
+      input.map((i) => (i.checked = false));
     }
   }, [location.search, history.action]);
-
-  // 체크박스 체크하는 함수
-  const applyCheckbox = useCallback((inputArr, queryArr) => {
-    inputArr.map((input) => {
-      input.checked = false;
-      return queryArr.map(
-        (query) => input.value === query && (input.checked = true)
-      );
-    });
-  }, []);
-
-  // URL query에 따라 체크박스 유지하기
-  useEffect(() => {
-    const { skill, web, singlePage } = qs.parse(location.search, {
-      ignoreQueryPrefix: true,
-    });
-    const skillInputArr = Array.from(
-      document.getElementsByClassName("skillInput")
-    );
-    const typeInputArr = Array.from(
-      document.getElementsByClassName("typeInput")
-    );
-
-    applyCheckbox(skillInputArr, !!skill ? skill.split(",") : []);
-    applyCheckbox(typeInputArr, [!!web && "web", !!singlePage && "singlePage"]);
-  });
 
   return (
     <PortfolioCategory
@@ -134,6 +113,9 @@ const PortfolioCategoryContainer = ({ history, location }) => {
       loading={loading}
       clickSkillCheckbox={clickSkillCheckbox}
       clickTypeCheckbox={clickTypeCheckbox}
+      skillCheckbox={skillCheckbox}
+      typeCheckbox={typeCheckbox}
+      location={location}
     />
   );
 };
