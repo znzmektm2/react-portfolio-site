@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
-import qs from "qs";
 import DesignCategory from "./../../components/design/DesignCategory";
 import { useSelector, useDispatch } from "react-redux";
 import { category } from "../../modules/design";
 import { withRouter } from "react-router-dom";
+import qs from "qs";
 
 const DesignCategoryContainer = ({ history, location }) => {
   const dispatch = useDispatch();
@@ -14,11 +14,22 @@ const DesignCategoryContainer = ({ history, location }) => {
     loading: loading["design/CATEGORY"],
   }));
 
-  // 디자인 라디오박스 클릭 이벤트
+  // 디자인 라디오박스 클릭시 클릭된 값 저장하는 이벤트
   const clickDesignRadiobox = useCallback((e) => {
-    // 디자인 라디오박스 클릭시 useState에 배열 넣기
     setDesignRadiobox(e.target.value);
   }, []);
+
+  // URL query에 따라 체크박스 유지하는 함수
+  const designInputCheckedByUrl = useCallback(
+    (value) => {
+      const { category } = qs.parse(location.search, {
+        ignoreQueryPrefix: true,
+      });
+
+      return value === category || false;
+    },
+    [location.search]
+  );
 
   // 카테고리 API 호출
   useEffect(() => {
@@ -30,24 +41,19 @@ const DesignCategoryContainer = ({ history, location }) => {
     !!designRadiobox && history.push(`/design?category=${designRadiobox}`);
   }, [history, designRadiobox]);
 
-  // URL query에 따라 체크박스 유지하기
+  // 라디오박스 체크 초기화
   useEffect(() => {
     const { category } = qs.parse(location.search, {
       ignoreQueryPrefix: true,
     });
-    const designInputArr = Array.from(
-      document.getElementsByClassName("designInput")
-    );
 
-    designInputArr.map((input) => {
-      input.checked = false;
-      return (() => {
-        if (input.value === category) {
-          input.checked = true;
-        }
-      })();
-    });
-  });
+    if (category === "Photoshop") {
+      const designInput = Array.from(
+        document.getElementsByClassName("designInput")
+      );
+      designInput.map((i) => (i.checked = i.value === "Photoshop" || false));
+    }
+  }, [location.search]);
 
   return (
     <DesignCategory
@@ -55,6 +61,8 @@ const DesignCategoryContainer = ({ history, location }) => {
       error={error}
       loading={loading}
       clickDesignRadiobox={clickDesignRadiobox}
+      designRadiobox={designRadiobox}
+      designInputCheckedByUrl={designInputCheckedByUrl}
     />
   );
 };

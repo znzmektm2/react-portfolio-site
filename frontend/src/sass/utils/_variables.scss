@@ -33,3 +33,118 @@ $translateY-m-105: translateY(-105%);
 
 // Linear Gradient
 $linear-gradient: linear-gradient(180deg, #ff2f00, #ed1931, #fd0c68, #cb018f);
+
+// keyframes
+@include keyframes(y100) {
+  0% {
+    @include transform($translateY-100);
+    opacity: 0;
+  }
+  100% {
+    @include transform($translateY-0);
+    opacity: 1;
+  }
+}
+
+@include keyframes(y105) {
+  0% {
+    @include transform($translateY-105);
+  }
+  100% {
+    @include transform($translateY-0);
+  }
+}
+
+@include keyframes(end-y-105) {
+  0% {
+    @include transform($translateY-0);
+  }
+  100% {
+    @include transform($translateY-m-105);
+  }
+}
+
+@include keyframes(x-100) {
+  0% {
+    @include transform($translateX-m-100);
+  }
+  100% {
+    @include transform($translateX-0);
+  }
+}
+
+@include keyframes(w100) {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@include keyframes(calcW) {
+  0% {
+    width: 0;
+    min-width: 0;
+    visibility: visible;
+  }
+  100% {
+    width: calc(0.782rem + 0.4vw);
+    min-width: 13.71px;
+    visibility: visible;
+  }
+}
+
+@include keyframes(h100) {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
+@include keyframes(fadeOut) {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@include keyframes(fadeIn) {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@include keyframes(visible) {
+  0% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+
+@include keyframes(grain) {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(-200px, 0, 0);
+  }
+  50% {
+    transform: translate3d(-200px, -200px, 0);
+  }
+  75% {
+    transform: translate3d(0, -200px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}

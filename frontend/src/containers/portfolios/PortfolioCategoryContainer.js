@@ -23,7 +23,6 @@ const PortfolioCategoryContainer = ({ history, location }) => {
       // 포트폴리오 리스트, currentPage 초기화
       dispatch(initializePortfolios());
 
-      console.log(e.target.value, e.target.checked);
       // 스킬 체크박스 클릭시 useState에 배열 넣기
       e.target.checked
         ? setSkillCheckbox(
@@ -95,7 +94,7 @@ const PortfolioCategoryContainer = ({ history, location }) => {
       }
     }
 
-    if (!location.search && history.action === "PUSH") {
+    if (!location.search) {
       // 포트폴리오 메뉴 클릭시 useState에 체크박스 배열 초기화
       setSkillCheckbox(null);
       setTypeCheckbox(null);
@@ -104,7 +103,7 @@ const PortfolioCategoryContainer = ({ history, location }) => {
       const input = Array.from(document.getElementsByTagName("input"));
       input.map((i) => (i.checked = false));
     }
-  }, [location.search, history.action]);
+  }, [location.search, history]);
 
   return (
     <PortfolioCategory

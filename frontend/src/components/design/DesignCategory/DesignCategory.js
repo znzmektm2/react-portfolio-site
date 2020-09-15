@@ -2,7 +2,13 @@ import React from "react";
 import Category from "./../../common/Category";
 
 const DesignCategory = React.memo(
-  ({ categories, error, loading, clickDesignRadiobox }) => {
+  ({
+    categories,
+    error,
+    loading,
+    clickDesignRadiobox,
+    designInputCheckedByUrl,
+  }) => {
     if (error) {
       return <div>에러가 발생했습니다.</div>;
     }
@@ -32,17 +38,15 @@ const DesignCategory = React.memo(
           <ul>
             {categories.map((category) => (
               <li key={category}>
-                <div>
-                  <input
-                    type="radio"
-                    name="category"
-                    value={category}
-                    defaultChecked={category === "Photoshop" && "true"}
-                    onClick={clickDesignRadiobox}
-                    className="designInput"
-                  />
-                  <label htmlFor={category}>{category}</label>
-                </div>
+                <input
+                  type="radio"
+                  name="category"
+                  value={category}
+                  defaultChecked={designInputCheckedByUrl(category)}
+                  onClick={clickDesignRadiobox}
+                  className="designInput"
+                />
+                <label htmlFor={category}>{category}</label>
               </li>
             ))}
           </ul>
