@@ -104,7 +104,7 @@ const DesignList = ({
                         </Button>
                         <Button
                           onClick={() => {
-                            onRemove(list._id, list.category);
+                            onRemove(list._id);
                           }}
                           className="removeBtn"
                         >

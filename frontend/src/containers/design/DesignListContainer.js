@@ -36,11 +36,14 @@ const DesignListContainer = ({ location, history }) => {
     history.push("/writeDesign");
   };
 
-  const onRemove = async (id, category) => {
+  const onRemove = async (id) => {
     try {
-      await removeDesign(id);
-      dispatch(initializeDesign());
-      history.push(`/design?category=${category}`);
+      const result = window.confirm("삭제하시겠습니까?");
+
+      if (result) {
+        await removeDesign(id);
+        history.go(0);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -118,6 +121,7 @@ const DesignListContainer = ({ location, history }) => {
 
   // 디자인 API 호출
   useEffect(() => {
+    console.log("디자인 API 호출");
     searchDesign();
   }, [searchDesign]);
 
