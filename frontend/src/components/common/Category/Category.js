@@ -64,7 +64,7 @@ const CategoryBlock = styled.div`
   }
 
   input:checked + label {
-    color: ${(props) => (props.portfolioCategory ? "#222" : "#e0e0dc")};
+    color: ${(props) => (props.portfolioCategory ? "#222" : "#8f9090")};
 
     &:before {
       content: "";

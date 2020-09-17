@@ -121,24 +121,8 @@ const DesignListContainer = ({ location, history }) => {
 
   // 디자인 API 호출
   useEffect(() => {
-    console.log("디자인 API 호출");
     searchDesign();
   }, [searchDesign]);
-
-  // header와 footer에 클래스 dark 추가
-  useEffect(() => {
-    const header = document.getElementsByTagName("header")[0];
-    const footer = document.getElementsByClassName("footer")[0];
-
-    if (location.pathname === "/design") {
-      header.classList.add("dark");
-      footer.classList.add("dark");
-    }
-    return () => {
-      header.classList.remove("dark");
-      footer.classList.remove("dark");
-    };
-  }, [location]);
 
   // 뒤로가기 시 디자인 write 초기화
   useEffect(() => {

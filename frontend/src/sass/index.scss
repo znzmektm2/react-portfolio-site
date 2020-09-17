@@ -29,6 +29,15 @@
   opacity: 0;
 }
 
+.page.portfolios {
+  .pageTitle {
+    background: #f1f1f1;
+    > div {
+      color: #222;
+    }
+  }
+}
+
 .page.design {
   background: #0b0b0c;
   overflow: hidden;

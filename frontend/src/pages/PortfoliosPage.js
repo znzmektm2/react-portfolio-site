@@ -11,12 +11,12 @@ const PortfoliosPage = () => {
       <Helmet>
         <title>Portfolios | JAR</title>
       </Helmet>
-      <div className="page">
+      <div className="page portfolios">
         <PageTitle subTitle="All about my" title="Portfolios" />
         <PortfolioCategoryContainer />
         <PortfolioListContainer />
       </div>
-      <Footer to="/design" next="Design" />
+      <Footer to="/design" next="Design" className="portfolios" />
     </>
   );
 };

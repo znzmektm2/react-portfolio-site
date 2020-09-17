@@ -3,7 +3,7 @@ import "./Footer.scss";
 import { DelayLink } from "./../DelayLink";
 import useIO from "./../../../lib/useIO";
 
-const Footer = ({ next, to }) => {
+const Footer = ({ next, to, className }) => {
   const targetRef = useRef();
   const [observer, setElements, entries] = useIO({
     threshold: 0,
@@ -37,7 +37,7 @@ const Footer = ({ next, to }) => {
   };
 
   return (
-    <div className="footer">
+    <div className={className ? `footer ${className}` : "footer"}>
       <div className="footerWrap">
         <div
           className="nextLink"
