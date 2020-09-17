@@ -16,6 +16,11 @@ const portfolio = new Router();
 portfolio.get("/", portfoliosCtrl.read);
 portfolio.delete("/", checkLoggedIn, portfoliosCtrl.remove);
 portfolio.patch("/", checkLoggedIn, portfoliosCtrl.update);
+portfolio.patch(
+  "/removeClientImage",
+  checkLoggedIn,
+  portfoliosCtrl.removeClientImage
+);
 
 portfolios.use("/:id", portfoliosCtrl.getPortfolioById, portfolio.routes());
 

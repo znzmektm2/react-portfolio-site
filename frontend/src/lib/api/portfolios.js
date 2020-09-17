@@ -12,6 +12,9 @@ export const readPortFolio = (id) => client.get(`/api/portfolios/${id}`);
 
 export const removePortFolio = (id) => client.delete(`/api/portfolios/${id}`);
 
+export const removeClientImageApi = (id) =>
+  client.patch(`/api/portfolios/${id}/removeClientImage`);
+
 export const category = () => client.get("/api/portfolios/category");
 
 export const countPortfolio = () =>

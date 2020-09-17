@@ -29,6 +29,8 @@ const WritePortfolio = ({
   thumbImageRef,
   clientImageRef,
   contentImageRef,
+  removeclientImage,
+  removeClientImageloading,
   onPublish,
   portfolioError,
   originalPortfolioId,
@@ -110,6 +112,7 @@ const WritePortfolio = ({
           <div className="selectBox">
             <InputLabelBox
               type="radio"
+              placeholder="Web"
               defaultChecked={web}
               name="type"
               id="web"
@@ -119,6 +122,7 @@ const WritePortfolio = ({
             />
             <InputLabelBox
               type="radio"
+              placeholder="SinglePage"
               defaultChecked={singlePage}
               name="type"
               id="singlePage"
@@ -130,6 +134,7 @@ const WritePortfolio = ({
           <div className="selectBox">
             <InputLabelBox
               type="checkbox"
+              placeholder="PC"
               defaultChecked={pcVer}
               id="pcVer"
               onChange={onChangeCheckbox}
@@ -138,6 +143,7 @@ const WritePortfolio = ({
             />
             <InputLabelBox
               type="checkbox"
+              placeholder="Mobile"
               defaultChecked={mobileVer}
               id="mobileVer"
               onChange={onChangeCheckbox}
@@ -146,6 +152,7 @@ const WritePortfolio = ({
             />
             <InputLabelBox
               type="checkbox"
+              placeholder="Responsive"
               defaultChecked={responsiveWeb}
               id="responsiveWeb"
               onChange={onChangeCheckbox}
@@ -219,6 +226,7 @@ const WritePortfolio = ({
             inputName="clientImage"
             clientImage={clientImage}
             clientImageRef={clientImageRef}
+            removeclientImage={removeclientImage}
           />
           <h3>Contents Image</h3>
           <UploadInput

@@ -21,6 +21,11 @@ const [
   UPDATE_PORTFOLIO_SUCCESS,
   UPDATE_PORTFOLIO_FAILURE,
 ] = createRequestActionTypes("writePortfolio/UPDATE_PORTFOLIO");
+const [
+  REMOVE_CLIENT_IMAGE,
+  REMOVE_CLIENT_IMAGE_SUCCESS,
+  REMOVE_CLIENT_IMAGE_FAILURE,
+] = createRequestActionTypes("writePortfolio/REMOVE_CLIENT_IMAGE");
 
 export const initializeWrite = createAction(INITIALIZEWRITE);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
@@ -29,11 +34,9 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
 }));
 export const checkId = createAction(CHECK_ID);
 export const writePortfolio = createAction(WRITE_PORTFOLIO);
-export const setOriginalPortfolio = createAction(
-  SET_ORIGINAL_PORTFOLIO,
-  (portfolio) => portfolio
-);
+export const setOriginalPortfolio = createAction(SET_ORIGINAL_PORTFOLIO);
 export const updatePortfolio = createAction(UPDATE_PORTFOLIO);
+export const removeClientImage = createAction(REMOVE_CLIENT_IMAGE);
 
 const checkIdSaga = createRequestSaga(CHECK_ID, portfoliosAPI.checkId);
 const writePortfolioSaga = createRequestSaga(
@@ -44,11 +47,16 @@ const updatePortfolioSaga = createRequestSaga(
   UPDATE_PORTFOLIO,
   portfoliosAPI.updatePortFolio
 );
+const removeClientImageSaga = createRequestSaga(
+  REMOVE_CLIENT_IMAGE,
+  portfoliosAPI.removeClientImageApi
+);
 
 export function* allWritePortfolioSaga() {
   yield takeLatest(CHECK_ID, checkIdSaga);
   yield takeLatest(WRITE_PORTFOLIO, writePortfolioSaga);
   yield takeLatest(UPDATE_PORTFOLIO, updatePortfolioSaga);
+  yield takeLatest(REMOVE_CLIENT_IMAGE, removeClientImageSaga);
 }
 
 const initialState = {
@@ -75,6 +83,7 @@ const initialState = {
   contentImage: null,
   portfolio: null,
   portfolioError: null,
+  removeClientImageError: null,
   originalPortfolioId: null,
 };
 
@@ -140,6 +149,37 @@ export default handleActions(
     [UPDATE_PORTFOLIO_FAILURE]: (state, { payload: portfolioError }) => ({
       ...state,
       portfolioError,
+    }),
+    [REMOVE_CLIENT_IMAGE_SUCCESS]: (state, { payload: portfolio }) => ({
+      ...state,
+      id: portfolio.id,
+      client: portfolio.client,
+      host: portfolio.host,
+      web: portfolio.web,
+      singlePage: portfolio.singlePage,
+      pcVer: portfolio.pcVer,
+      mobileVer: portfolio.mobileVer,
+      responsiveWeb: portfolio.responsiveWeb,
+      IEVersion: portfolio.IEVersion,
+      skill: portfolio.skill,
+      animationEvent: portfolio.animationEvent,
+      workYear: portfolio.workYear,
+      workMonth: portfolio.workMonth,
+      period: portfolio.period,
+      worker: portfolio.worker,
+      url: portfolio.url,
+      thumbImage: portfolio.thumbImage,
+      clientImage: portfolio.clientImage,
+      contentImage: portfolio.contentImage,
+      originalPortfolioId: portfolio.id,
+      removeClientImageError: null,
+    }),
+    [REMOVE_CLIENT_IMAGE_FAILURE]: (
+      state,
+      { payload: removeClientImageError }
+    ) => ({
+      ...state,
+      removeClientImageError,
     }),
   },
   initialState

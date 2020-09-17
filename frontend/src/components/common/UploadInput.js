@@ -33,6 +33,38 @@ const UploadImageBlock = styled.div`
       font-size: calc(11px + 0.1vw);
     }
   }
+
+  .remove {
+    position: absolute;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 10px;
+    width: 22px;
+    height: 22px;
+    z-index: 11;
+    cursor: pointer;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      vertical-align: top;
+      width: 28px;
+      height: 1px;
+      background: #555;
+      transform: rotate(45deg) translateX(1px) translateY(0px);
+      transform-origin: left top;
+    }
+
+    &:after {
+      content: "";
+      display: inline-block;
+      vertical-align: top;
+      width: 28px;
+      height: 1px;
+      background: #555;
+      transform: rotate(-45deg) translateX(-9px) translateY(4px);
+    }
+  }
 `;
 
 const UploadInput = ({
@@ -45,11 +77,12 @@ const UploadInput = ({
   contentImageRef,
   designImage,
   designImageRef,
+  removeclientImage,
 }) => {
   const [imageUrl, setImageUrl] = useState();
+
   const onDrop = useCallback(
     (acceptedFiles, fileRejections, event) => {
-      const files = acceptedFiles;
       let imageUrlArr = [];
       const targetThumbImage = event.target.id === "thumbImage";
       const targetClientImage = event.target.id === "clientImage";
@@ -60,16 +93,27 @@ const UploadInput = ({
       // 썸네일, 로고 이미지는 하나만 등록하기
       if (
         (targetThumbImage || targetClientImage || targetDesignImage) &&
-        files.length > 1
+        acceptedFiles.length > 1
       ) {
         alert("이미지는 하나만 등록 가능합니다.");
         event.target.value = "";
         return;
       }
 
-      for (let i = 0; i < files.length; i++) {
+      // drop 하는 경우 input의 value 없애기
+      if (event.type === "drop") {
+        event.target.value = "";
+      }
+
+      // 첨부파일을 취소 하는 경우 이미지 없애기
+      if (event.type === "change" && event.target.value === "") {
+        clientImageRef.current = null;
+        removeclientImage();
+      }
+
+      for (let i = 0; i < acceptedFiles.length; i++) {
         // 이미지 확장자만 가능
-        if (!files[i].type.match("image.*")) {
+        if (!acceptedFiles[i].type.match("image.*")) {
           alert("이미지 확장자만 가능합니다.");
           event.target.value = "";
           return;
@@ -77,23 +121,23 @@ const UploadInput = ({
 
         // thumbImage 폼데이터에 추가하기
         if (targetThumbImage) {
-          thumbImageRef.current = files[i];
+          thumbImageRef.current = acceptedFiles[i];
         }
 
         // clientImage 폼데이터에 추가하기
         if (targetClientImage) {
-          clientImageRef.current = files[i];
+          clientImageRef.current = acceptedFiles[i];
         }
 
         // contentImage 폼데이터에 추가하기
         if (targetContentImage) {
-          contentImageArr.push(files[i]);
+          contentImageArr.push(acceptedFiles[i]);
           contentImageRef.current = contentImageArr;
         }
 
         // designImage 폼데이터에 추가하기
         if (targetDesignImage) {
-          designImageRef.current = files[i];
+          designImageRef.current = acceptedFiles[i];
         }
 
         const reader = new FileReader();
@@ -104,7 +148,7 @@ const UploadInput = ({
           },
           false
         );
-        reader.readAsDataURL(files[i]);
+        reader.readAsDataURL(acceptedFiles[i]);
       }
 
       setTimeout(() => {
@@ -117,22 +161,39 @@ const UploadInput = ({
       clientImageRef,
       contentImageRef,
       designImageRef,
+      removeclientImage,
     ]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  // clientImage 삭제 이벤트
+  const removeImg = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    removeclientImage();
+  };
   return (
     <UploadImageBlock>
       <div {...getRootProps()} className="uploadWrap" id={inputName}>
         {isDragActive && <div className="drop" />}
         <input {...getInputProps()} className="input" id={inputName} />
         {(typeof imageUrl === "object" &&
-          imageUrl.map((url) => <img key={url} src={url} alt="img" />)) ||
+          imageUrl.map((url) => (
+            <>
+              {" "}
+              <img key={url} src={url} alt="img" />
+              <span className="remove" onClick={removeImg} />
+            </>
+          ))) ||
           (thumbImage && (
             <img src={`../${thumbImage.url}`} alt={thumbImage.name} />
           )) ||
           (clientImage && (
-            <img src={`../${clientImage.url}`} alt={clientImage.name} />
+            <>
+              <img src={`../${clientImage.url}`} alt={clientImage.name} />
+              <span className="remove" onClick={removeImg} />
+            </>
           )) ||
           (contentImage &&
             contentImage.map((contImg) => (

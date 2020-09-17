@@ -6,6 +6,7 @@ import {
   writePortfolio,
   initializeWrite,
   updatePortfolio,
+  removeClientImage,
 } from "../../modules/writePortfolio";
 import { withRouter } from "react-router-dom";
 import WritePortfolio from "./../../components/writePortfolio/WritePortfolio";
@@ -40,7 +41,8 @@ const WritePortfolioContainer = ({ history }) => {
     portfolioError,
     originalPortfolioId,
     user,
-  } = useSelector(({ writePortfolio, user }) => ({
+    removeClientImageloading,
+  } = useSelector(({ writePortfolio, user, loading }) => ({
     id: writePortfolio.id,
     hasId: writePortfolio.hasId,
     client: writePortfolio.client,
@@ -64,8 +66,20 @@ const WritePortfolioContainer = ({ history }) => {
     portfolioError: writePortfolio.portfolioError,
     originalPortfolioId: writePortfolio.originalPortfolioId,
     user: user.user,
+    removeClientImageloading:
+      loading["writePortfolio/REMOVE_CLIENT_IMAGE_FAILURE"],
   }));
 
+  // ClientImage 삭제
+  const removeclientImage = async () => {
+    try {
+      await dispatch(removeClientImage(id));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // 아이디 중복 체크
   const onCheckId = useCallback(
     (id) => {
       dispatch(checkId(id));
@@ -73,11 +87,13 @@ const WritePortfolioContainer = ({ history }) => {
     [dispatch]
   );
 
+  // input 값 관리
   const onChangeField = useCallback(
     (payload) => dispatch(changeField(payload)),
     [dispatch]
   );
 
+  // 등록하기
   const onPublish = () => {
     // 아이디 중복일 경우
     if (originalPortfolioId !== id && hasId) {
@@ -171,6 +187,8 @@ const WritePortfolioContainer = ({ history }) => {
       thumbImageRef={thumbImageRef}
       clientImageRef={clientImageRef}
       contentImageRef={contentImageRef}
+      removeclientImage={removeclientImage}
+      removeClientImageloading={removeClientImageloading}
       onPublish={onPublish}
       portfolioError={portfolioError}
       originalPortfolioId={originalPortfolioId}

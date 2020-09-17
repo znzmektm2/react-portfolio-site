@@ -419,6 +419,44 @@ export const update = async (ctx) => {
   }
 };
 
+/* Client Image 삭제
+DELETE /api/portfolios/:id
+*/
+export const removeClientImage = async (ctx) => {
+  const { id } = ctx.params;
+  try {
+    const originalPortfolio = await Portfolio.findOne({ id: id });
+
+    if (originalPortfolio.clientImage) {
+      console.log(1);
+    }
+
+    const clientImageUrl = originalPortfolio.clientImage.url;
+
+    fs.unlink(path.join(__dirname, "../../uploads", clientImageUrl), (err) => {
+      if (err) throw err;
+      console.log("clientImage -", clientImageUrl, "deleted");
+    });
+
+    console.log(1, originalPortfolio.clientImage);
+    originalPortfolio.clientImage = null;
+    console.log(2, originalPortfolio.clientImage);
+
+    const portfolio = await Portfolio.findOneAndUpdate(
+      { id: id },
+      { $set: originalPortfolio },
+      {
+        new: true,
+      }
+    );
+
+    ctx.body = portfolio;
+    console.log(portfolio);
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
 /* 포트폴리오 삭제
 DELETE /api/portfolios/:id
 */

@@ -4,6 +4,7 @@
   background: #f5f5f7;
   min-height: 100vh;
   box-sizing: border-box;
+  overflow: hidden;
 
   .title {
     margin-bottom: 4rem;
@@ -38,6 +39,17 @@
     font-size: 16px;
     line-height: 0;
 
+    .idCheck {
+      display: inline-block;
+      font-size: 13px;
+      line-height: 28px;
+      white-space: nowrap;
+
+      &.possible {
+        color: #b0aeb5;
+      }
+    }
+
     .selectBox {
       margin: 0 -12px 20px;
       position: relative;
@@ -60,6 +72,18 @@
       font-size: calc(17px + 0.2vw);
       line-height: calc(17px + 0.2vw);
     }
+  }
+
+  .warning {
+    color: #cb018f;
+  }
+
+  p.warning {
+    text-align: right;
+    margin-bottom: 1rem;
+    font-family: $font-family-KoPub;
+    font-size: 13px;
+    line-height: 28px;
   }
 
   /* 미디어쿼리 */

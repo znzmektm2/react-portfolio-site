@@ -34,17 +34,20 @@ const InputLabelBoxBlock = styled.div`
   }
 
   input {
-    flex-grow: 1;
     position: relative;
-    margin-right: 1em;
     display: inline-block;
     width: 100%;
+    height: 28px;
     font-family: "KoPub Batang", serif;
     font-size: 13px;
     line-height: 28px;
     outline: none;
     border: none;
     background: #f5f5f7;
+
+    &#id {
+      margin-right: 1em;
+    }
 
     &::placeholder {
       color: transparent;
@@ -144,30 +147,20 @@ const InputLabelBox = ({
       target.parentNode.classList.remove("value");
     });
   };
-
-  return placeholder ? (
-    <InputLabelBoxBlock>
+  return (
+    <InputLabelBoxBlock className={className ? className : ""}>
       <input
         type={type}
-        placeholder={placeholder}
-        value={value}
-        id={id}
-        onChange={onChange}
-        onFocus={onFocus}
-      />
-      <label htmlFor={id}>{placeholder}</label>
-      {checkDuplicatedId && checkDuplicatedId()}
-    </InputLabelBoxBlock>
-  ) : (
-    <InputLabelBoxBlock className={className}>
-      <input
-        type={type}
-        defaultChecked={defaultChecked}
+        placeholder={placeholder && placeholder}
+        value={value && value}
         name={name && name}
         id={id}
         onChange={onChange}
+        onFocus={className ? undefined : onFocus}
+        defaultChecked={defaultChecked && defaultChecked}
       />
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id}>{placeholder}</label>
+      {checkDuplicatedId && checkDuplicatedId()}
     </InputLabelBoxBlock>
   );
 };

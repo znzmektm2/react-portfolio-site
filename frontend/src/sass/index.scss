@@ -82,28 +82,6 @@
   }
 }
 
-.idCheck {
-  display: inline-block;
-  font-size: 0.8rem;
-  line-height: 1.7rem;
-  white-space: nowrap;
-}
-
-.possible {
-  color: #b0aeb5;
-}
-
-.warning {
-  color: #cb018f;
-}
-
-p.warning {
-  text-align: right;
-  margin-bottom: 1rem;
-  font-size: 0.8rem;
-  line-height: 1rem;
-}
-
 /* 미디어쿼리 */
 @media screen and (max-width: 1024px) {
   .writeButtonArea a {
