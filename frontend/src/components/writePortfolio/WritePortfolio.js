@@ -30,7 +30,6 @@ const WritePortfolio = ({
   clientImageRef,
   contentImageRef,
   removeclientImage,
-  removeClientImageloading,
   onPublish,
   portfolioError,
   originalPortfolioId,

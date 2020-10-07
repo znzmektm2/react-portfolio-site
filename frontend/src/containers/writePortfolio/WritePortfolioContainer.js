@@ -41,7 +41,6 @@ const WritePortfolioContainer = ({ history }) => {
     portfolioError,
     originalPortfolioId,
     user,
-    removeClientImageloading,
   } = useSelector(({ writePortfolio, user, loading }) => ({
     id: writePortfolio.id,
     hasId: writePortfolio.hasId,
@@ -66,8 +65,6 @@ const WritePortfolioContainer = ({ history }) => {
     portfolioError: writePortfolio.portfolioError,
     originalPortfolioId: writePortfolio.originalPortfolioId,
     user: user.user,
-    removeClientImageloading:
-      loading["writePortfolio/REMOVE_CLIENT_IMAGE_FAILURE"],
   }));
 
   // ClientImage 삭제
@@ -188,7 +185,6 @@ const WritePortfolioContainer = ({ history }) => {
       clientImageRef={clientImageRef}
       contentImageRef={contentImageRef}
       removeclientImage={removeclientImage}
-      removeClientImageloading={removeClientImageloading}
       onPublish={onPublish}
       portfolioError={portfolioError}
       originalPortfolioId={originalPortfolioId}

@@ -180,11 +180,10 @@ const UploadInput = ({
         <input {...getInputProps()} className="input" id={inputName} />
         {(typeof imageUrl === "object" &&
           imageUrl.map((url) => (
-            <>
+            <div key={url}>
               {" "}
-              <img key={url} src={url} alt="img" />
-              <span className="remove" onClick={removeImg} />
-            </>
+              <img src={url} alt="img" />
+            </div>
           ))) ||
           (thumbImage && (
             <img src={`../${thumbImage.url}`} alt={thumbImage.name} />
