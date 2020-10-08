@@ -4,8 +4,8 @@ import fs from "fs";
 import path from "path";
 
 // 이미지명 추출하기
-const generateUrl = (path) => {
-  const pathSplit = path.split("\\");
+const generateUrl = (imgPath) => {
+  const pathSplit = imgPath.split(path.sep);
   return pathSplit[pathSplit.length - 1];
 };
 
