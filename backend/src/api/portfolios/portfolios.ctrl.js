@@ -2,7 +2,6 @@ import Portfolio from "../../models/portfolio";
 import Joi from "@hapi/joi";
 import fs from "fs";
 import path from "path";
-import { triggerAsyncId } from "async_hooks";
 
 // 포트폴리오 아이디 조회시
 export const getPortfolioById = async (ctx, next) => {
@@ -170,8 +169,8 @@ export const write = async (ctx) => {
   console.log("clientImageFile ", clientImageFile);
   console.log("contentImageFile ", contentImageFile);
 
-  const generateUrl = (path) => {
-    const pathSplit = path.split("\\");
+  const generateUrl = (portfolioPath) => {
+    const pathSplit = portfolioPath.split(path.sep);
     return pathSplit[pathSplit.length - 1];
   };
 
