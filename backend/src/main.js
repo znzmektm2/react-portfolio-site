@@ -7,6 +7,7 @@ import jwtMiddleware from "./lib/jwtMiddleware";
 import koaBody from "koa-body";
 import serve from "koa-static";
 import fs from "fs";
+import path from "path";
 
 const { PORT, MONGO_URI } = process.env;
 mongoose
@@ -26,7 +27,7 @@ app.use(
   koaBody({
     formLimit: "1mb",
     formidable: {
-      uploadDir: __dirname + "\\uploads", // upload directory
+      uploadDir: path.join(__dirname, "uploads"), // upload directory
       keepExtensions: true, // keep file extensions
       // 중복된 파일명 숫자 붙이기
       onFileBegin: (uploadName, uploadFile) => {
@@ -34,12 +35,12 @@ app.use(
         const splitFile = file.split(".");
         const name = splitFile[0];
         const extension = splitFile[1];
-        const fileList = fs.readdirSync(__dirname + "\\uploads\\");
+        const fileList = fs.readdirSync(path.join(__dirname, "uploads", ""));
         const numArr = [];
         let uploadFileName;
 
         // 파일명이 있는 경우
-        if (fs.existsSync(__dirname + "\\uploads\\" + file)) {
+        if (fs.existsSync(path.join(__dirname, "uploads", file))) {
           for (const index in fileList) {
             const savedFile = fileList[index];
             const splitSavedFile = savedFile.split(".");
@@ -67,7 +68,7 @@ app.use(
           uploadFileName = file;
         }
 
-        uploadFile.path = __dirname + `\\uploads\\${uploadFileName}`;
+        uploadFile.path = path.join(__dirname, "uploads", uploadFileName);
       },
     },
     multipart: true,
