@@ -18,8 +18,8 @@ const AdminForm = ({ password, onChange, onSubmit, onLogout, user, error }) => {
               onChange={onChange}
               value={password}
             />
-            {error && <div>{error}</div>}
             <Button onClick={onSubmit}>로그인</Button>
+            {error && <div className="error">{error}</div>}
           </form>
         )}
       </div>

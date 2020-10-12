@@ -3,6 +3,12 @@ import Joi from "@hapi/joi";
 import fs from "fs";
 import path from "path";
 
+// 이미지명 추출하기
+const generateUrl = (portfolioPath) => {
+  const pathSplit = portfolioPath.split(path.sep);
+  return pathSplit[pathSplit.length - 1];
+};
+
 // 포트폴리오 아이디 조회시
 export const getPortfolioById = async (ctx, next) => {
   const { id } = ctx.params;
@@ -169,11 +175,6 @@ export const write = async (ctx) => {
   console.log("clientImageFile ", clientImageFile);
   console.log("contentImageFile ", contentImageFile);
 
-  const generateUrl = (portfolioPath) => {
-    const pathSplit = portfolioPath.split(path.sep);
-    return pathSplit[pathSplit.length - 1];
-  };
-
   const thumbImage = {
     name: thumbImageFile.name,
     url: generateUrl(thumbImageFile.path),
@@ -291,12 +292,6 @@ export const update = async (ctx) => {
   console.log("updateThumbImage ", updateThumbImage);
   console.log("updateClientImage ", updateClientImage);
   console.log("updateContentImage ", updateContentImage);
-
-  // 이미지명 추출하기
-  let generateUrl = (path) => {
-    const pathSplit = path.split("\\");
-    return pathSplit[pathSplit.length - 1];
-  };
 
   // 업로드 이미지가 배열일 경우
   let updateCntImg = [];
