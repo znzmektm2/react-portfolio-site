@@ -181,7 +181,7 @@
 
       display: inline-block;
       font-size: 6rem;
-      line-height: 1.1em;
+      line-height: 1.2em;
       font-weight: 400;
       letter-spacing: -1px;
       cursor: pointer;
@@ -211,7 +211,7 @@
       font-family: $font-family-KoPub;
       font-size: 1.1em;
       line-height: 1.5em;
-      color: #454545;
+      color: #222;
       cursor: pointer;
     }
   }
@@ -241,13 +241,13 @@
 
     span {
       display: block;
-      color: #454545;
+      color: #000;
     }
 
     span:nth-child(2) {
       font-family: $font-family-KoPub;
       font-size: 0.9rem;
-      color: #b1b1b1;
+      color: #aaa;
       letter-spacing: -0.01rem;
     }
 
