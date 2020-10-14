@@ -6,10 +6,7 @@ import { Helmet } from "react-helmet-async";
 const NotFound = () => {
   return (
     <>
-      <Helmet>
-        <title>About | NotFound</title>
-      </Helmet>
-      <div className="page">
+      <div className="page notFound">
         <PageTitle subTitle="Page not found" title="404" />
       </div>
       <Footer to="/portfolios" next="Portfolios" />
