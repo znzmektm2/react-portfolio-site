@@ -33,7 +33,7 @@ const Portfolio = ({ portfolio, error, loading, user, onEdit, onRemove }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       console.log(error.response);
-      return <div>존재하지 않는 포트폴리오 입니다.</div>;
+      return <div className="wrap">존재하지 않는 포트폴리오 입니다.</div>;
     }
   }
 

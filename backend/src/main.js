@@ -8,6 +8,7 @@ import koaBody from "koa-body";
 import serve from "koa-static";
 import fs from "fs";
 import path from "path";
+import send from "koa-send";
 
 const { PORT, MONGO_URI } = process.env;
 mongoose
@@ -82,6 +83,19 @@ router.use("/api", api.routes());
 // app 인스턴스에 라우터 적용
 app.use(router.routes()).use(router.allowedMethods());
 
+const buildDirectory = path.resolve(__dirname, "../../frontend/build");
+app.use(serve(buildDirectory));
+app.use(async ctx => {
+  console.log("ctx.status",ctx.status);
+  // Not Found이고, 주소가 /api로 시작하지 않는 경우
+  if(ctx.status === 404 && ctx.path.indexOf('/api') !== 0) {
+    // index.html 내용을 반환
+    console.log(404, buildDirectory);
+    await send(ctx, 'index.html', {root: buildDirectory});
+  }
+})
+
+// 포트가 지정되어 있지 않다면 4000을 사용
 const port = PORT || 4000;
 app.listen(port, () => {
   console.log("Listening to port", port);
