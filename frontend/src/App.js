@@ -8,6 +8,7 @@ import PortfoliosPage from "./pages/PortfoliosPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import AboutPage from "./pages/AboutPage";
 import HomePage from "./pages/HomePage";
+import NotFound from "./pages/NotFound";
 import Header from "./components/common/Header";
 import { Helmet } from "react-helmet-async";
 
@@ -26,6 +27,7 @@ const App = () => {
       <Route component={DesignPage} path="/design" />
       <Route component={WriteDesignPage} path="/writeDesign" />
       <Route component={AdminPage} path="/admin" />
+      <Route component={NotFound} path="*"/>
     </>
   );
 };
