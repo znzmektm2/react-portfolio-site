@@ -1,9 +1,15 @@
 import React from "react";
 import PageTitle from "./../components/common/PageTitle";
 import Footer from "../components/common/Footer";
-import { Helmet } from "react-helmet-async";
+import { withRouter } from "react-router-dom";
 
-const NotFound = () => {
+const NotFound = ({ match}) => {
+  console.log(match.url);
+
+  if(match.url === "/" ) {
+    return null;
+  }
+  
   return (
     <>
       <div className="page notFound">
@@ -14,4 +20,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default withRouter(NotFound);

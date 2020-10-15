@@ -19,7 +19,7 @@ const App = () => {
         <title>REACTERS</title>
       </Helmet>
       <Header />
-      <Route component={HomePage} path={["/home", "/"]} exact />
+      <Route component={HomePage} path="/" exact />
       <Route component={PortfoliosPage} path="/portfolios" />
       <Route component={PortfolioPage} path="/portfolio/:id" />
       <Route component={AboutPage} path="/about" />
@@ -27,7 +27,7 @@ const App = () => {
       <Route component={DesignPage} path="/design" />
       <Route component={WriteDesignPage} path="/writeDesign" />
       <Route component={AdminPage} path="/admin" />
-      <Route component={NotFound} path="*"/>
+      <Route component={NotFound} path="*" />
     </>
   );
 };
