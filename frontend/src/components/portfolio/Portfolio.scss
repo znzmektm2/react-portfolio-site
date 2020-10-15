@@ -31,6 +31,18 @@
   }
 }
 
+.wrap.none {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  p {
+    font-family: $font-family-KoPub;
+    text-align: center;
+  }
+}
+
 .portfolioBlock {
   .intro {
     position: relative;

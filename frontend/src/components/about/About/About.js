@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "./About.scss";
-import { Link } from "react-router-dom";
 import useIO from "./../../../lib/useIO";
 import introUseIO from "./../../../lib/useIO";
 import ClientsContainer from "./../../../containers/about/ClientsContainer";
@@ -327,19 +326,19 @@ const About = () => {
           </h2>
           <ul className="lists">
             <li>
-              <Link to="http://ccej.or.kr/">
-                <img src="/images/wa_ccej.png" alt="" />
-              </Link>
+              <a href="http://ccej.or.kr/" target="_blank" rel="noopener noreferrer">
+                <img src="/images/wa_ccej.png" alt="WA 비영리기관분야 경실련 최우수상" />
+              </a>
             </li>
             <li>
-              <Link to="http://www.postech.ac.kr/">
-                <img src="/images/wa_postech.png" alt="" />
-              </Link>
+              <a href="http://www.postech.ac.kr/" target="_blank" rel="noopener noreferrer">
+                <img src="/images/wa_postech.png" alt="WA 대학분야 포항공과대학교 최우수상" />
+              </a>
             </li>
             <li>
-              <Link to="http://www.kriso.re.kr/">
-                <img src="/images/wa_kriso.png" alt="" />
-              </Link>
+              <a href="http://www.kriso.re.kr/" target="_blank" rel="noopener noreferrer">
+                <img src="/images/wa_kriso.png" alt="WA 연구기관분야 선박해양플랜트연구소 우수상" />
+              </a>
             </li>
           </ul>
         </div>

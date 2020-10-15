@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import WritePortfolioPage from "./pages/WritePortfolioPage";
 import AdminPage from "./pages/AdminPage";
 import DesignPage from "./pages/DesignPage";
@@ -19,15 +19,17 @@ const App = () => {
         <title>REACTERS</title>
       </Helmet>
       <Header />
-      <Route component={HomePage} path="/" exact />
-      <Route component={PortfoliosPage} path="/portfolios" />
-      <Route component={PortfolioPage} path="/portfolio/:id" />
-      <Route component={AboutPage} path="/about" />
-      <Route component={WritePortfolioPage} path="/writePortfolio" />
-      <Route component={DesignPage} path="/design" />
-      <Route component={WriteDesignPage} path="/writeDesign" />
-      <Route component={AdminPage} path="/admin" />
-      <Route component={NotFound} path="*" />
+      <Switch>
+        <Route component={HomePage} path="/" exact />
+        <Route component={PortfoliosPage} path="/portfolios" />
+        <Route component={PortfolioPage} path="/portfolio/:id" />
+        <Route component={AboutPage} path="/about" />
+        <Route component={WritePortfolioPage} path="/writePortfolio" />
+        <Route component={DesignPage} path="/design" />
+        <Route component={WriteDesignPage} path="/writeDesign" />
+        <Route component={AdminPage} path="/admin" />
+        <Route component={NotFound} />
+      </Switch>
     </>
   );
 };

@@ -1,15 +1,8 @@
 import React from "react";
 import PageTitle from "./../components/common/PageTitle";
 import Footer from "../components/common/Footer";
-import { withRouter } from "react-router-dom";
 
-const NotFound = ({ match}) => {
-  console.log(match.url);
-
-  if(match.url === "/" ) {
-    return null;
-  }
-  
+const NotFound = () => {
   return (
     <>
       <div className="page notFound">
@@ -20,4 +13,4 @@ const NotFound = ({ match}) => {
   );
 };
 
-export default withRouter(NotFound);
+export default NotFound;

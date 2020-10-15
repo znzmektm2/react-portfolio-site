@@ -51,11 +51,11 @@ const Home = ({ designNumber, portfolioNumber }) => {
       <ul className="portfolioNumber">
         <li>PORTFOLIOS → {portfolioNumber ? portfolioNumber : ""}</li>
         <li>DESIGN → {designNumber ? designNumber : ""}</li>
-        <li>LAST UPDATE → AUGUST 2020</li>
+        <li>LAST UPDATE → OCTOBER 2020</li>
       </ul>
       <div className="update">
         <span>LAST UPDATE:</span>
-        <span>&nbsp;AUGUST 2020</span>
+        <span>&nbsp;OCTOBER 2020</span>
       </div>
     </div>
   );
