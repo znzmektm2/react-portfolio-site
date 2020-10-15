@@ -40,9 +40,9 @@ const Home = ({ designNumber, portfolioNumber }) => {
             I create and build websites to communicate a feeling of joy and
             comfort.
             <br />
-            For me, that means that the frontend development like HTML &amp;
-            Scss, JS, and <br className="br" />
-            WordPress is a part of my field of activity.
+            For me, that means that the front-end development like HTML5 &amp;
+            SCSS, JavaScript, and <br className="br" />
+            React is a part of my field of activity.
             <br />
             If you want to know more about me, feel free to contact me.
           </p>
