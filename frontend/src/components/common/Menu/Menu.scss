@@ -147,8 +147,8 @@
 
   .menuList li a {
     @include transform($translateY-0);
-    @include transition(transform, 1s, $cubic-bezier-j, 1.2s);
-    @include animation(fadeIn, 1s, ease, 1.2s, 1, forwards);
+    @include transition(transform, 1s, $cubic-bezier-j, 1.1s);
+    @include animation(fadeIn, 1s, ease, 1.1s, 1, forwards);
 
     &:hover {
       @include transition(all, 0.4s, $cubic-bezier-m, 0s);

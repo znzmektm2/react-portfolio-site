@@ -406,6 +406,6 @@
 
   .line {
     @include transform($translateX-0);
-    @include transition(transform, 1s, ease-out, 1s);
+    @include transition(transform, 1s, ease-out, 0.9s);
   }
 }

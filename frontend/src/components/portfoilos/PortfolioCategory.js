@@ -83,7 +83,7 @@ const PortfolioCategory = React.memo(
     return (
       <>
         <Category portfolioCategory>
-          <div className="wrap">
+          <div className="wrap skill">
             <ul>
               {categories.map((category) => (
                 <li key={category}>
@@ -102,7 +102,7 @@ const PortfolioCategory = React.memo(
           </div>
         </Category>
         <Category portfolioCategory>
-          <div className="wrap">
+          <div className="wrap type">
             <ul>
               <li key="web">
                 <input

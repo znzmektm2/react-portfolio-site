@@ -25,6 +25,10 @@ const CategoryBlock = styled.div`
     }
   }
 
+  .wrap.type ul li {
+    padding:0.5rem 2rem;
+  }
+
   input {
     position: absolute;
     top: 0;
@@ -38,12 +42,12 @@ const CategoryBlock = styled.div`
 
   label {
     position: relative;
-    padding: 0 0.4em;
+    padding: 0 0.1em;
     display: inline-block;
     font-family: "KoPub Batang", serif;
     font-size: 16px;
-    line-height: 1.7em;
-    color: ${(props) => (props.portfolioCategory ? "#a3adb9" : "#afafaf")};
+    line-height: 1.8em;
+    color: ${(props) => (props.portfolioCategory ? "#a3adb9" : "#979797")};
     z-index: 1;
     transition: all 0.3s cubic-bezier(0.175, 0.825, 0.27, 1);
 
@@ -57,14 +61,14 @@ const CategoryBlock = styled.div`
       background: ${(props) =>
         props.portfolioCategory
           ? "linear-gradient(-90deg, #ff2f00, #ed1931, #fd0c68, #cb018f)"
-          : "#e0e0dc"};
+          : "#e0e0e0"};
       opacity: 0.8;
       transition: all 0.3s cubic-bezier(0.175, 0.825, 0.27, 1);
     }
   }
 
   input:checked + label {
-    color: ${(props) => (props.portfolioCategory ? "#222" : "#8f9090")};
+    color: ${(props) => (props.portfolioCategory ? "#222" : "#e0e0e0")};
 
     &:before {
       content: "";
@@ -79,8 +83,23 @@ const CategoryBlock = styled.div`
       padding: 0.7rem 1.5rem;
     }
 
+    .wrap.type ul li {
+      padding:0.3rem 1.5rem;
+    }
+
     label {
       font-size: 14px;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    
+    ul {
+      padding: 1.8rem 1.5rem;
+    }
+
+    ul li {
+      padding: 0.9rem 1.5rem;
     }
   }
 `;
