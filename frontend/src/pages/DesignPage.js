@@ -16,7 +16,7 @@ const DesignPage = () => {
         <DesignCategoryContainer />
         <DesignListContainer />
       </div>
-      <Footer to="/home" next="Home" />
+      <Footer to="/" next="Home" />
     </>
   );
 };

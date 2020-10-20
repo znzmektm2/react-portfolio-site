@@ -16,7 +16,7 @@ const PortfoliosPage = () => {
         <PortfolioCategoryContainer />
         <PortfolioListContainer />
       </div>
-      <Footer to="/design" next="Design" className="portfolios" />
+      <Footer to="/design?category=Photoshop" next="Design" className="portfolios" />
     </>
   );
 };

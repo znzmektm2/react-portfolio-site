@@ -190,6 +190,169 @@
       display: none;
     }
   }
+
+  /* Home 페이지일 경우 */
+  &.home {
+    .logo h1 a svg path {
+      @include animation(fadeIn, 1.5s, $cubic-bezier-j, 4.3s, 1, forwards);
+
+      transition: unset;
+      opacity: 0;
+      fill: #d0d0d0;
+    }
+
+    .navBtn {
+      @include animation(visible, 0s, ease, 4.3s, 1, forwards);
+
+      visibility: hidden;
+    }
+
+    .navBtn:before {
+      @include animation(y105, 0.7s, $cubic-bezier-j, 4.3s, 1, none);
+
+      opacity: 1;
+    }
+
+    .navBtn:after {
+      @include animation(end-y-105, 0.7s, $cubic-bezier-j, 5s, 1, none);
+    }
+
+    .burgerLine {
+      opacity: 0.9;
+    }
+
+    .burgerLine span {
+      min-width: 0;
+      width: 0;
+      background: #c8c9b9;
+    }
+
+    .burgerLine span:nth-child(1) {
+      @include animation(calcW, 1s, $cubic-bezier-j, 5.25s, 1, forwards);
+    }
+
+    .burgerLine span:nth-child(2) {
+      @include animation(calcW, 1s, $cubic-bezier-j, 5.4s, 1, forwards);
+    }
+
+    .burgerLine span:nth-child(3) {
+      @include animation(calcW, 1s, $cubic-bezier-j, 5.55s, 1, forwards);
+    }
+
+    .btnLine.step1 {
+      @include animation(w100, 0s, ease, 5.1s, 1, forwards);
+
+      width: 0;
+    }
+
+    .btnLine.step2 {
+      @include animation(h100, 0.8s, $cubic-bezier-j, 4.3s, 1, forwards);
+
+      height: 0;
+    }
+
+    .btnLine.step3 {
+      @include animation(w100, 0s, ease, 4.3s, 1, forwards);
+
+      width: 0;
+    }
+
+    .btnLine.step4 {
+      @include animation(h100, 0.8s, $cubic-bezier-j, 4.3s, 1, forwards);
+
+      height: 0;
+    }
+  }
+
+  &.ani {
+    .burgerLine span {
+      transition: unset;
+    }
+  }
+
+  &.effective {
+    .logo h1 a svg path {
+      fill: #222;
+    }
+
+    .navBtn .burgerLine span {
+      background: #222;
+    }
+  }
+
+  /* Design 페이지일 경우 */
+  &.dark {
+    .logo h1 a svg path {
+      fill: #c8c9b9;
+    }
+
+    .navBtn .burgerLine {
+      opacity: 0.9;
+    }
+
+    .navBtn .burgerLine span {
+      background: #c8c9b9;
+    }
+
+    &.effective {
+      &.over,
+      &.scroll {
+        .logo h1 a svg path {
+          fill: #222;
+        }
+
+        .navBtn .burgerLine span {
+          background: #222;
+        }
+      }
+    }
+  }
+
+  /* 페이지 하단 텍스트 호버시 */
+  &.effective {
+    &.over,
+    &.scroll {
+      .logo h1 a svg path {
+        fill: #c8c9b9;
+      }
+
+      .burgerLine {
+        opacity: 0.9;
+      }
+
+      .burgerLine span {
+        background: #c8c9b9;
+      }
+    }
+  }
+
+  /* 미디어쿼리 */
+  @include max-width-1600 {
+    .logo,
+    .navBtn {
+      font-size: 16px;
+    }
+
+    .logo {
+      top: calc(0.868em + 1.7vw);
+      left: calc(0.868em + 1.7vw);
+      width: calc(2.618em + 1.5vw);
+    }
+
+    .navBtn {
+      top: calc(0.868em + 1.7vw);
+      right: calc(0.868em + 1.7vw);
+      width: calc(2.618em + 1.5vw);
+      height: calc(2.618em + 1.5vw);
+    }
+  }
+
+  @include max-width-768 {
+    .logo,
+    .navBtn {
+      font-size: 15px;
+    }
+  }
 }
 
 /* 메뉴 클릭시 */
@@ -244,181 +407,5 @@
   .line {
     @include transform($translateX-0);
     @include transition(transform, 1s, ease-out, 1s);
-  }
-}
-
-/* Home 페이지일 경우 */
-.headerBlock.home {
-  .logo {
-    h1 a svg path {
-      @include animation(fadeIn, 1.5s, $cubic-bezier-j, 4.3s, 1, forwards);
-
-      transition: unset;
-      opacity: 0;
-      fill: #d0d0d0;
-    }
-  }
-
-  .navBtn {
-    @include animation(visible, 0s, ease, 4.3s, 1, forwards);
-
-    visibility: hidden;
-
-    &:before {
-      @include animation(y105, 0.7s, $cubic-bezier-j, 4.3s, 1, none);
-
-      opacity: 1;
-    }
-
-    &:after {
-      @include animation(end-y-105, 0.7s, $cubic-bezier-j, 5s, 1, none);
-    }
-  }
-
-  .burgerLine {
-    opacity: 0.9;
-
-    span {
-      min-width: 0;
-      width: 0;
-      background: #c8c9b9;
-    }
-
-    span:nth-child(1) {
-      @include animation(calcW, 1s, $cubic-bezier-j, 5.25s, 1, forwards);
-    }
-
-    span:nth-child(2) {
-      @include animation(calcW, 1s, $cubic-bezier-j, 5.4s, 1, forwards);
-    }
-
-    span:nth-child(3) {
-      @include animation(calcW, 1s, $cubic-bezier-j, 5.55s, 1, forwards);
-    }
-  }
-
-  .btnLine {
-    &.step1 {
-      @include animation(w100, 0s, ease, 5.1s, 1, forwards);
-
-      width: 0;
-    }
-
-    &.step2 {
-      @include animation(h100, 0.8s, $cubic-bezier-j, 4.3s, 1, forwards);
-
-      height: 0;
-    }
-
-    &.step3 {
-      @include animation(w100, 0s, ease, 4.3s, 1, forwards);
-
-      width: 0;
-    }
-
-    &.step4 {
-      @include animation(h100, 0.8s, $cubic-bezier-j, 4.3s, 1, forwards);
-
-      height: 0;
-    }
-  }
-}
-
-.headerBlock.ani {
-  .burgerLine span {
-    transition: unset;
-  }
-}
-
-.headerBlock.effective {
-  .logo {
-    h1 a svg path {
-      fill: #222;
-    }
-  }
-
-  .navBtn .burgerLine {
-    span {
-      background: #222;
-    }
-  }
-}
-
-/* Design 페이지일 경우 */
-.headerBlock.dark {
-  .logo {
-    h1 a svg path {
-      fill: #c8c9b9;
-    }
-  }
-
-  .navBtn {
-    .burgerLine {
-      opacity: 0.9;
-
-      span {
-        background: #c8c9b9;
-      }
-    }
-  }
-
-  &.effective {
-    &.over,
-    &.scroll {
-      .logo {
-        h1 a svg path {
-          fill: #222;
-        }
-      }
-
-      .navBtn {
-        .burgerLine {
-          span {
-            background: #222;
-          }
-        }
-      }
-    }
-  }
-}
-
-/* 페이지 하단 텍스트 호버시 */
-.headerBlock.effective {
-  &.over,
-  &.scroll {
-    .logo h1 a svg path {
-      fill: #c8c9b9;
-    }
-
-    .burgerLine {
-      opacity: 0.9;
-    }
-
-    .burgerLine span {
-      background: #c8c9b9;
-    }
-  }
-}
-
-/* 미디어쿼리 */
-@include max-width-1600 {
-  .headerBlock {
-    .logo,
-    .navBtn {
-      font-size: 16px;
-    }
-
-    .logo {
-      top: calc(0.868em + 1.7vw);
-      left: calc(0.868em + 1.7vw);
-      width: calc(2.618em + 1.5vw);
-    }
-
-    .navBtn {
-      top: calc(0.868em + 1.7vw);
-      right: calc(0.868em + 1.7vw);
-      width: calc(2.618em + 1.5vw);
-      height: calc(2.618em + 1.5vw);
-    }
   }
 }
