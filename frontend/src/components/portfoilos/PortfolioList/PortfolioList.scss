@@ -45,7 +45,7 @@
     right: 0;
     width: 100%;
     height: 100%;
-    padding: 3rem 2rem;
+    padding: 3em 2em;
 
     &:before {
       content: "";
@@ -87,7 +87,7 @@
   h3 {
     position: relative;
     display: inline-block;
-    padding-bottom: 2.2rem;
+    padding-bottom: 2rem;
     overflow: hidden;
 
     &:after {
@@ -96,7 +96,7 @@
       left: 0;
       bottom: 0;
       width: 4rem;
-      height: 3px;
+      height: 0.2rem;
       background: #c8c9b9;
       opacity: 0;
       @include transform($translateX-m-100);
@@ -105,18 +105,18 @@
     span {
       display: inline-block;
       font-family: "goku";
-      font-size: 3.2rem;
-      line-height: 3.5rem;
+      font-size: calc(1px + 3vw);
+      line-height: 1.1em;
       color: #c8c9b9;
       font-weight: 400;
-      letter-spacing: -1px;
+      letter-spacing: -0.5px;
       opacity: 0;
       @include transform($translateY-m-100);
     }
   }
 
   h4 {
-    margin-top: 1rem;
+    margin-top: 1em;
     display: inline-block;
     overflow: hidden;
 
@@ -125,8 +125,8 @@
 
       display: inline-block;
       font-family: "KoPub Batang", serif;
-      font-size: 1em;
-      line-height: 2rem;
+      font-size: calc(10px + 0.3vw);
+      line-height: 2em;
       color: #c8c9b9;
       opacity: 0;
     }
@@ -168,9 +168,69 @@
   }
 
   /* 미디어쿼리 */
+
+  @include max-width-1440 {
+    ul li {
+      font-size: 15px;
+
+      .type {
+        margin-bottom: 1rem;
+      }
+
+      .type span {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+      }
+
+      .textBox {
+        padding: 2rem;
+      }
+    }
+  }
+
   @include max-width-768 {
     ul li {
       width: 33.333%;
+
+      h3 span {
+        font-size: calc(1px + 4.5vw);
+      }
+
+      h4 span {
+        font-size: calc(12px + 0.4vw);
+        line-height: 1.4em;
+      }
+    }
+  }
+
+  @include max-width-640 {
+    ul li {
+      .textBox {
+        padding: 1.8rem;
+      }
+
+      .textWrap {
+        justify-content: space-between;
+      }
+
+      .type span {
+        font-size: 1.4rem;
+        letter-spacing: 1px;
+      }
+
+      h3 {
+        display: none;
+      }
+
+      h4 {
+        margin-top: 0;
+        text-align: right;
+      }
+
+      h4 span {
+        font-size: calc(11px + 0.1vw);
+        line-height: 1.4em;
+      }
     }
   }
 }
