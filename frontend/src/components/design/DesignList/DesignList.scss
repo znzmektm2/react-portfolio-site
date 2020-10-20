@@ -1,6 +1,6 @@
 .designListBlock {
   position: relative;
-  padding: 10rem 0;
+  padding: 7rem 0 10rem;
   min-height: 100vh;
   background: none;
   color: #c8c9b9;
@@ -12,13 +12,17 @@
     text-align: center;
   }
 
-  .writeButtonArea a {
-    color: #afafaf;
+  .writeButtonArea {
+    margin-bottom: 4rem;
+
+    a {
+      color: #afafaf;
+    }
   }
 
   .designList {
     position: relative;
-    margin: 4rem auto 0;
+    margin: 0 auto;
     max-width: 100%;
   }
 
@@ -26,7 +30,6 @@
     @include transform(translateY(120px));
     @include transition(all, 1.5s, ease, 0s);
 
-    padding: 0 5rem;
     width: 100%;
     display: inline-block;
     vertical-align: top;
@@ -45,12 +48,8 @@
       @include transform(rotate(90deg));
 
       right: auto;
-      left: calc(100% + 4rem);
+      left: calc(100% - 1.6em);
       transform-origin: left bottom;
-    }
-
-    &:nth-child(even) .listWrap.active h3 {
-      top: 0.1rem;
     }
 
     &.appear {
@@ -64,18 +63,19 @@
     @include transition(all, 0.5s, $cubic-bezier-d, 0s);
 
     position: relative;
+    padding: 0 5rem;
 
     h3 {
       @include transform(rotate(-90deg));
       @include transition(all, 0.5s, $cubic-bezier-d, 0s);
 
       position: absolute;
-      top: -5rem;
-      right: calc(100% + 4rem);
+      top: -6rem;
+      right: calc(100% - 1.6em);
       padding-left: 1.1rem;
       font-family: $font-family-KoPub;
-      font-size: 12px;
-      line-height: 1.5em;
+      font-size: 13px;
+      line-height: 1.6em;
       color: #afafaf;
       white-space: nowrap;
       transform-origin: right bottom;
@@ -88,7 +88,7 @@
       left: 0;
       width: 0.7rem;
       height: 1px;
-      background: #fff;
+      background: #afafaf;
     }
 
     h3 .category {
@@ -120,7 +120,11 @@
   .contWrap:hover {
     opacity: 1;
 
-    + h3 {
+    h3 {
+      color: #fff;
+    }
+
+    h3:before {
       color: #fff;
     }
 
@@ -179,8 +183,17 @@
     opacity: 1;
 
     h3 {
-      top: -1.1rem;
+      top: -1.4em;
+      font-size: 16px;
       color: #fff;
+    }
+
+    h3:before {
+      color: #fff;
+    }
+
+    .contWrap {
+      opacity: 1;
     }
 
     .contWrap .imgBox &:before {
@@ -200,31 +213,98 @@
   }
 
   @include max-width-768 {
+    .designList ul li {
+      margin-bottom: 8rem;
+    }
+
+    .designList ul li:nth-child(even) {
+      .listWrap h3 {
+        left: calc(100% - 1.3em);
+      }
+    }
+
     .listWrap {
-      margin-bottom: 5rem;
-    }
+      &.active h3 {
+        font-size: 14px;
+      }
 
-    .imgBox {
-      max-height: 300px;
-    }
+      h3 {
+        top: -7.5rem;
+        right: calc(100% - 1.3em);
+        padding-left: 14px;
+        font-size: 11px;
+      }
 
-    .listWrap h3 {
-      font-size: 10px;
-    }
+      h3:before {
+        width: 8px;
+        top: 42%;
+      }
 
-    .contWrap {
-      width: 70%;
-    }
+      .contWrap {
+        width: 70%;
+      }
 
-    .index {
-      font-size: 10px;
-      margin-top: 6px;
+      .imgBox {
+        max-height: 300px;
+      }
+
+      .index {
+        font-size: 10px;
+        margin-top: 6px;
+      }
     }
   }
 
   @include max-width-480 {
-    .imgBox {
-      max-height: 200px;
+    .designList ul li {
+      margin-bottom: 0;
+      padding: 4rem 0 5rem;
+
+      &:nth-child(even) .listWrap h3 {
+        @include transform(rotate(0deg));
+        @include transform($translateX-100);
+
+        right: 100%;
+        left: auto;
+      }
+
+      &:nth-child(even) .listWrap.active h3 {
+        @include transform($translateX-0);
+
+        right: 0;
+      }
+    }
+
+    .listWrap {
+      padding: 0;
+
+      &.active {
+        margin: 0;
+      }
+
+      &.active h3 {
+        top: -4rem;
+      }
+
+      h3 {
+        @include transform(rotate(0deg));
+        @include transform($translateX-m-100);
+
+        top: -4rem;
+        right: auto;
+        left: 100%;
+      }
+
+      .imgBox {
+        max-height: 240px;
+      }
+    }
+
+    .listWrap.active h3 {
+      @include transform($translateX-0);
+
+      left: 0;
+      font-size: 12px;
     }
   }
 }
