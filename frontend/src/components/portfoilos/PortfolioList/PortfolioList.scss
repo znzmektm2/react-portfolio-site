@@ -148,7 +148,7 @@
 
     h3 span {
       @include transform($translateY-0);
-      @include transition(transform, 0.5s, $cubic-bezier-d, 0s);
+      @include transition(transform, 0.5s, ease, 0s);
 
       opacity: 1;
     }
