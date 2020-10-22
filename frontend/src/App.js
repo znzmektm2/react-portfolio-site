@@ -18,10 +18,10 @@ const App = () => {
       <Helmet>
         <meta name="description" content="Aeran Jeon's Portfolio Website" />
         <title>REACTERS</title>
-        <meta property="og:type" content="website"/>
-        <meta property="og:url" content="http://www.aeran-jeon.me/" />
+        {/* <meta property="og:type" content="website"/>
+        <meta property="og:url" content="http://aeran-jeon.me/" />
         <meta property="og:title" content="Aeran Jeon's Portfolio Website"/>
-        <meta property="og:image" content="%PUBLIC_URL%/images/og-image.png"/>
+        <meta property="og:image" content="%PUBLIC_URL%/images/og-image.png"/> */}
       </Helmet>
       <Header />
       <Switch>
