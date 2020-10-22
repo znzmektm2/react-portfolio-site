@@ -413,6 +413,10 @@
   }
 
   @include max-width-480 {
+    h2 a span {
+      font-size: 8.1rem;
+    }
+
     .detailList ul {
       @include transform($translateY-20);
       @include animation(fadeIn-3, 1s, ease, 1.25s, 1, forwards);
