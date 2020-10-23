@@ -11,10 +11,10 @@ const AdminPage = () => {
         <title>Admin | JAR</title>
       </Helmet>
       <div className="page admin">
-        <PageTitle subTitle="Login and Logout" title="Admin" />
+        <PageTitle subTitle="Login and Logout" title="ADMIN" />
         <AdminContainer />
       </div>
-      <Footer to="/portfolios" next="Portfolios" />
+      <Footer to="/portfolios" next="PORTFOLIOS" />
     </>
   );
 };

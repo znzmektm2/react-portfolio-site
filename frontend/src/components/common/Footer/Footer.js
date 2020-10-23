@@ -48,6 +48,7 @@ const Footer = ({ next, to, className }) => {
             {next}
           </DelayLink>
         </div>
+        <span className="copyright">JeonAeRan © 2020</span>
       </div>
       <span className="footertarget" ref={targetRef} />
     </div>

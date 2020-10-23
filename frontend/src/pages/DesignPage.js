@@ -12,11 +12,11 @@ const DesignPage = () => {
         <title>Design | JAR</title>
       </Helmet>
       <div className="page design">
-        <PageTitle subTitle="A small selection of my" title="Design" />
+        <PageTitle subTitle="A small selection of my" title="DESIGN" />
         <DesignCategoryContainer />
         <DesignListContainer />
       </div>
-      <Footer to="/" next="Home" />
+      <Footer to="/" next="HOME" />
     </>
   );
 };

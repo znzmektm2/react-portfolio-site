@@ -88,8 +88,8 @@
     .strong {
       font-family: $font-family-trump;
       color: #fff;
-      font-size: 1.4rem;
-      letter-spacing: 2px;
+      font-size: calc(12px + 0.55vw);
+      letter-spacing: calc(1px + 0.01vw);
     }
   }
 

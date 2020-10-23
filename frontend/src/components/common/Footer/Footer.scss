@@ -5,10 +5,7 @@
 
   &.portfolios .footerWrap {
     background: #f1f1f1;
-
-    .nextLink a {
-      color: #222;
-    }
+    color: #222;
   }
 
   .footerWrap {
@@ -24,7 +21,7 @@
   }
 
   .nextLink {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
     overflow: hidden;
   }
 
@@ -33,9 +30,12 @@
     display: inline-block;
     padding: 0 1rem;
     display: inline-block;
+    font-family: "KoPub Batang", serif;
+    color: inherit;
     font-size: 11rem;
     line-height: 1.2em;
-    letter-spacing: -0.02rem;
+    font-weight: bold;
+    letter-spacing: -0.1rem;
 
     &:after {
       content: "";
@@ -52,9 +52,6 @@
   &.over {
     .footerWrap {
       background: #0b0b0c;
-    }
-
-    .nextLink a {
       color: #c8c9b9;
     }
 
@@ -69,9 +66,6 @@
   &.portfolios.over {
     .footerWrap {
       background: #0b0b0c;
-    }
-
-    .nextLink a {
       color: #c8c9b9;
     }
 
@@ -86,9 +80,6 @@
   &.dark {
     .footerWrap {
       background: #0b0b0c;
-    }
-
-    .nextLink a {
       color: #c8c9b9;
     }
 
@@ -99,10 +90,7 @@
 
   &.dark.over .footerWrap {
     background: #fff;
-
-    .nextLink a {
-      color: #222;
-    }
+    color: #222;
 
     .nextLink a:after {
       @include transition(all, 0.2s, ease, 0s);
@@ -111,11 +99,33 @@
     }
   }
 
+  .copyright {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    width: 100%;
+    font-family: "Roboto";
+    font-size: calc(12px + 0.4vw);
+    text-align: center;
+    letter-spacing: -0.05rem;
+  }
+
   .footertarget {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 26px;
+  }
+
+  @include max-width-640 {
+    .nextLink a {
+      font-size: 7rem;
+      line-height: 9rem;
+    }
+
+    .copyright {
+      bottom: 4rem;
+    }
   }
 }

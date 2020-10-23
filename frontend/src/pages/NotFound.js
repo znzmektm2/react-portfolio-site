@@ -8,7 +8,7 @@ const NotFound = () => {
       <div className="page notFound">
         <PageTitle subTitle="Page not found" title="404" />
       </div>
-      <Footer to="/portfolios" next="Portfolios" />
+      <Footer to="/portfolios" next="PORTFOLIOS" />
     </>
   );
 };

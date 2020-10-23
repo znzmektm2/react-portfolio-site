@@ -7,7 +7,7 @@
   overflow: hidden;
   z-index: 1;
 
-  &:after {
+  > &:after {
     content: "";
     position: absolute;
     top: 0;
@@ -31,10 +31,12 @@
 
 .page.portfolios {
   .pageTitle {
+    color: #222;
     background: #f1f1f1;
-    > div {
-      color: #222;
-    }
+  }
+
+  .scroll > div svg path {
+    fill: #222;
   }
 }
 
@@ -52,14 +54,12 @@
     background: none;
   }
 
-  .pageTitle div {
-    h3 {
-      color: #c8c9b9;
-    }
+  .pageTitle {
+    color: #c8c9b9;
+  }
 
-    h2 {
-      color: #c8c9b9;
-    }
+  .scroll > div svg path {
+    fill: #c8c9b9;
   }
 }
 

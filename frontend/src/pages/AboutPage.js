@@ -11,10 +11,10 @@ const AboutPage = () => {
         <title>About | JAR</title>
       </Helmet>
       <div className="page">
-        <PageTitle subTitle="About me more" title="About" />
+        <PageTitle subTitle="As for my experience" title="ABOUT" />
         <About />
       </div>
-      <Footer to="/portfolios" next="Portfolios" />
+      <Footer to="/portfolios" next="PORTFOLIOS" />
     </>
   );
 };
