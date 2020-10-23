@@ -55,7 +55,7 @@ const TitleBlock = styled.div`
 
     .scroll span {
       font-family:"trump-gothic-pro";
-      font-size:calc(15px + 0.3vw);
+      font-size:calc(14px + 0.3vw);
       line-height:calc(12px + 0.3vw);
       letter-spacing:0.01rem;
     }
