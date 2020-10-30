@@ -8,7 +8,6 @@ const Write = (props) => {
     const inputArr = [...input];
     inputArr.map((i) => {
       return (
-        i.type === "text" &&
         i.value !== "" &&
         i.parentNode.classList.add("value")
       );

@@ -10,6 +10,7 @@ portfolios.get("/", portfoliosCtrl.list);
 portfolios.get("/category", portfoliosCtrl.category);
 portfolios.get("/countPortfolio", portfoliosCtrl.countPortfolio);
 portfolios.get("/clients", portfoliosCtrl.clients);
+portfolios.get("/change", portfoliosCtrl.change);
 
 const portfolio = new Router();
 

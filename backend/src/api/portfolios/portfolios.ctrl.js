@@ -116,8 +116,8 @@ POST /api/portfolios
   "responsiveWeb": false,
   "IEVersion": "IE9",
   "skill": "JavaScript, jQuery, HTML5/CSS3",
-  "workYear": "2019",
-  "workMonth": "2",
+  "workYear": 2019,
+  "workMonth": 2,
   "period": "3 days",
   "worker": "me",
   "url": "https://campaign.happybean.naver.com/lgupluscsr, https://m.campaign.happybean.naver.com/lgupluscsr"
@@ -136,8 +136,8 @@ export const write = async (ctx) => {
     responsiveWeb: Joi.boolean(),
     IEVersion: Joi.string(),
     skill: Joi.string().required(),
-    workYear: Joi.string().required(),
-    workMonth: Joi.string().required(),
+    workYear: Joi.number().required(),
+    workMonth: Joi.number().required(),
     period: Joi.string().required(),
     worker: Joi.string().required(),
     url: Joi.string().required(),
@@ -232,8 +232,8 @@ PATCH /api/portfolios/:id
   "responsiveWeb": false,
   "IEVersion": "IE9",
   "skill": "JavaScript, jQuery, HTML5/CSS3",
-  "workYear": "2019",
-  "workMonth": "2",
+  "workYear": 2019,
+  "workMonth": 2,
   "period": "3 days",
   "worker": "me",
   "url": "https://campaign.happybean.naver.com/lgupluscsr, https://m.campaign.happybean.naver.com/lgupluscsr"
@@ -254,8 +254,8 @@ export const update = async (ctx) => {
     responsiveWeb: Joi.boolean(),
     IEVersion: Joi.string(),
     skill: Joi.string().required(),
-    workYear: Joi.string().required(),
-    workMonth: Joi.string().required(),
+    workYear: Joi.number().required(),
+    workMonth: Joi.number().required(),
     period: Joi.string().required(),
     worker: Joi.string().required(),
     url: Joi.string().required(),
@@ -548,3 +548,32 @@ export const clients = async (ctx) => {
     ctx.throw(500, e);
   }
 };
+
+/* 문자타입 숫자타입으로 바꾸기
+GET /api/portfolio/change
+*/
+export const change = async (ctx) => {
+  try {
+    const portfolio = await Portfolio.find();
+
+    portfolio.map(async (p) => {
+      console.log("오리지날",p);
+
+      p.workYear = parseInt(p.workYear);
+      p.workMonth = parseInt(p.workMonth);
+
+      console.log("체인지 ", p);
+
+      await Portfolio.findOneAndUpdate(
+        { id: p.id },
+        { $set: p },
+        {
+          new: true,
+        }
+      );
+    });
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+

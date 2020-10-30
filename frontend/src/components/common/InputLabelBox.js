@@ -130,7 +130,6 @@ const InputLabelBox = ({
   onChange,
   checkDuplicatedId,
   className,
-  label,
 }) => {
   const onFocus = (e) => {
     const target = e.target;

@@ -174,14 +174,14 @@ const WritePortfolio = ({
             onChange={onChange}
           />
           <InputLabelBox
-            type="text"
+            type="number"
             placeholder="Work Year"
             value={workYear}
             id="workYear"
             onChange={onChange}
           />
           <InputLabelBox
-            type="text"
+            type="number"
             placeholder="Work Month"
             value={workMonth}
             id="workMonth"
