@@ -1,3 +1,7 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import "react-app-polyfill/ie11";
+import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./sass/index.scss";
@@ -11,10 +15,6 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import { tempSetUser, check } from "./modules/user";
 import { HelmetProvider } from "react-helmet-async";
-import "core-js/stable";
-import "regenerator-runtime/runtime";
-import "react-app-polyfill/ie11";
-import "react-app-polyfill/stable";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
