@@ -20,7 +20,6 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      z-index: 1;
     }
     .content h2 {
       position: absolute;
@@ -117,7 +116,7 @@
 
     .bg {
       position: absolute;
-      top: -10%;
+      top: -14%;
       left: -10%;
       display: table;
       width: 120%;
@@ -266,7 +265,7 @@
       height: auto;
 
       .content {
-        padding-top: 14rem;
+        padding-top: 19rem;
       }
 
       .lists {
@@ -282,6 +281,10 @@
 
   @include max-width-480 {
     article.recongition {
+      .content {
+        padding-top: 16rem;
+      }
+
       .lists {
         margin-top: 3.5rem;
         width: calc(11rem + 15vw);

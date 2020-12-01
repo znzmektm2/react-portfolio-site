@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import "./About.scss";
 import useIO from "./../../../lib/useIO";
 import introUseIO from "./../../../lib/useIO";
@@ -14,9 +14,6 @@ const About = () => {
     root: null,
     rootMargin: "10%",
   });
-
-  const [translateY, setTranslateY] = useState("translateY(0%)");
-  const [opacity, setOpacity] = useState("0.2");
 
   // 스크롤 이벤트
   const scrollEvent = () => {
@@ -35,11 +32,6 @@ const About = () => {
     const recongitionOffsetBottom =
       recongitionOffsetTop + recongition.offsetHeight;
 
-    // 인트로 bg 애니메이션
-    if (scrollLocation > 0 && scrollLocation <= introOffsetBottom - margin) {
-      setTranslateY("translateY(-" + scrollLocation * 0.01 + "%)");
-      setOpacity(0.38 - scrollLocation * 0.0002);
-    }
     // 인트로 진입시 로고 밑 메뉴버튼 색 바꾸기
     if (
       scrollLocation >= introOffsetTop - margin &&
@@ -58,45 +50,12 @@ const About = () => {
     }
     // 타겟 지점이 아닌 경우
     else {
-      header.classList.remove("effective");
+      // header.classList.remove("effective");
       header.classList.remove("scroll");
     }
   };
 
-  // 키 다운 이벤트
-  const ieOnKeyDownEvent = (e) => {
-    e.preventDefault();
-    const currentScrollPosition = window.pageYOffset;
-
-    switch (e.which) {
-      case 35: // End
-        window.scrollTo(0, document.body.scrollHeight);
-        break;
-      case 36: // Home
-        window.scrollTo(0, 0);
-        break;
-      case 38: // up
-        window.scrollTo(0, currentScrollPosition - 120);
-        break;
-      case 40: // down
-        window.scrollTo(0, currentScrollPosition + 120);
-        break;
-      case 116: // F5
-        window.location.reload();
-        break;
-      default:
-        return;
-    }
-  };
-
-  // window 마우스 휠 이벤트
-  const windowWheelEvent = (e) => {
-    const wheelDelta = e.deltaY;
-    const currentScrollPosition = window.pageYOffset;
-    window.scrollTo(0, currentScrollPosition + wheelDelta);
-  };
-
-  // .clients ul 마우스 휠 이벤트
+   // .clients ul 마우스 휠 이벤트
   const clientsUlWheelEvent = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -111,14 +70,8 @@ const About = () => {
 
   // ie 스크롤 이벤트
   const ieScrollEvent = useCallback(() => {
-    const body = document.getElementsByTagName("body")[0];
     const clientsListUl = document.querySelectorAll(".clientsList")[0];
-
     if (navigator.userAgent.match(/Trident\/7\./)) {
-      // position: fixed 사용시 ie 떨림 현상 방지 이벤트
-      body.onkeydown = ieOnKeyDownEvent;
-      body.addEventListener("wheel", windowWheelEvent);
-
       // ie에서 .clients ul 마우스 휠 이벤트 적용
       clientsListUl.addEventListener("wheel", clientsUlWheelEvent);
     }
@@ -143,11 +96,9 @@ const About = () => {
     ieScrollEvent();
 
     return () => {
-      const body = document.getElementsByTagName("body")[0];
       const clientsListUl = document.querySelectorAll(".clientsList ul")[0];
 
       window.removeEventListener("scroll", scrollEvent);
-      body.removeEventListener("wheel", windowWheelEvent);
       clientsListUl.removeEventListener("wheel", clientsUlWheelEvent);
     };
   }, [setElements, setIntroElement, ieScrollEvent]);
@@ -313,7 +264,6 @@ const About = () => {
             <img
               src="/images/about.jpg"
               alt="about"
-              style={{ opacity: opacity, transform: translateY }}
             />
           </div>
         </div>
