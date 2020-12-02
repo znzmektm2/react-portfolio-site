@@ -50,32 +50,9 @@ const About = () => {
     }
     // 타겟 지점이 아닌 경우
     else {
-      // header.classList.remove("effective");
       header.classList.remove("scroll");
     }
   };
-
-   // .clients ul 마우스 휠 이벤트
-  const clientsUlWheelEvent = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const wheelDelta = e.deltaY;
-    const scrollTarget = document.querySelectorAll(
-      ".clientsList .scrollBars"
-    )[0].firstChild;
-    const scrollValue = wheelDelta / 5.344444557472511 + scrollTarget.scrollTop;
-    scrollTarget.scrollTop = scrollValue;
-  };
-
-  // ie 스크롤 이벤트
-  const ieScrollEvent = useCallback(() => {
-    const clientsListUl = document.querySelectorAll(".clientsList")[0];
-    if (navigator.userAgent.match(/Trident\/7\./)) {
-      // ie에서 .clients ul 마우스 휠 이벤트 적용
-      clientsListUl.addEventListener("wheel", clientsUlWheelEvent);
-    }
-  }, []);
 
   useEffect(() => {
     // IntersectionObserver 타겟 관리
@@ -92,16 +69,10 @@ const About = () => {
     scrollEvent();
     window.addEventListener("scroll", scrollEvent);
 
-    // ie 스크롤 이벤트 적용
-    ieScrollEvent();
-
     return () => {
-      const clientsListUl = document.querySelectorAll(".clientsList ul")[0];
-
       window.removeEventListener("scroll", scrollEvent);
-      clientsListUl.removeEventListener("wheel", clientsUlWheelEvent);
     };
-  }, [setElements, setIntroElement, ieScrollEvent]);
+  }, [setElements, setIntroElement]);
 
   useEffect(() => {
     // 타겟 노출시 이벤트

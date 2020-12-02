@@ -21,6 +21,7 @@
       height: 100%;
       overflow: hidden;
     }
+
     .content h2 {
       position: absolute;
       top: 6.5vh;
@@ -116,7 +117,7 @@
 
     .bg {
       position: absolute;
-      top: -14%;
+      top: -25%;
       left: -10%;
       display: table;
       width: 120%;
@@ -195,10 +196,6 @@
       font-size: 16px;
       padding: calc(0.868em + 1.7vw);
 
-      &.intro .content {
-        padding-top: 20rem;
-      }
-
       .content {
         padding-top: 15rem;
       }
@@ -207,8 +204,16 @@
         font-size: calc(7rem + 1.7vw);
       }
 
+      &.intro .content {
+        padding-top: 20rem;
+      }
+
       &.intro .content h2 {
         top: 6rem;
+      }
+
+      &.intro .bg{
+        top: -10%;
       }
     }
   }
