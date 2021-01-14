@@ -15,6 +15,9 @@ React와 node.js를 공부하여 기획, 디자인, 구축 및 배포하여 개�
   - 반응형
 - 개발환경 : React, Node.js, Javascript(ES6), HTML5, SCSS, CSS3, MongoDB, Visual Studio Code, GitHub
 
+# View Image
+![portfolio](https://user-images.githubusercontent.com/35294456/104563094-94fdc000-568c-11eb-8e0b-b2178659f660.jpg)
+
 # 원격서버
 - 원격서버 프로세스 정지
 ```
