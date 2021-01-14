@@ -1,6 +1,8 @@
 # 개인 포트폴리오 사이트
 React와 node.js를 공부하여 기획, 디자인, 구축 및 배포하여 개인 포트폴리오 사이트 오픈
 
+![portfolio](https://user-images.githubusercontent.com/35294456/104563094-94fdc000-568c-11eb-8e0b-b2178659f660.jpg)
+
 - 기간 : 2020.6.19 ~ 2020.10.30
 - 기능 :
   - JWT를 이용한 어드민 인증
@@ -14,9 +16,6 @@ React와 node.js를 공부하여 기획, 디자인, 구축 및 배포하여 개�
   - 크로스 브라우징
   - 반응형
 - 개발환경 : React, Node.js, Javascript(ES6), HTML5, SCSS, CSS3, MongoDB, Visual Studio Code, GitHub
-
-# View Image
-![portfolio](https://user-images.githubusercontent.com/35294456/104563094-94fdc000-568c-11eb-8e0b-b2178659f660.jpg)
 
 # 원격서버
 - 원격서버 프로세스 정지
