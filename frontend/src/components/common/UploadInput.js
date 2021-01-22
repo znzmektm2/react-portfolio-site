@@ -111,7 +111,7 @@ const UploadInput = ({
         removeclientImage();
       }
 
-      for (let i = 0; i < acceptedFiles.length; i++) {
+      for (let i in acceptedFiles){
         // 이미지 확장자만 가능
         if (!acceptedFiles[i].type.match("image.*")) {
           alert("이미지 확장자만 가능합니다.");
