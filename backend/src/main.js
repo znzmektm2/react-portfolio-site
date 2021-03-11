@@ -1,6 +1,5 @@
 require("dotenv").config();
 import Koa from "koa";
-import koaHelmet from "koa-helmet";
 import Router from "koa-router";
 import api from "./api";
 import mongoose from "mongoose";
@@ -10,6 +9,7 @@ import serve from "koa-static";
 import fs from "fs";
 import path from "path";
 import send from "koa-send";
+import koaHelmet from "koa-helmet";
 
 const { PORT, MONGO_URI } = process.env;
 mongoose
@@ -24,6 +24,9 @@ mongoose
 const app = new Koa();
 const router = new Router();
 
+app.use(koaHelmet({
+  hsts: false
+}));
 app.use(jwtMiddleware);
 app.use(
   koaBody({
