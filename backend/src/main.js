@@ -24,9 +24,6 @@ mongoose
 const app = new Koa();
 const router = new Router();
 
-app.use(koaHelmet({
-  dnsPrefetchControl: false
-}));
 app.use(jwtMiddleware);
 app.use(
   koaBody({
