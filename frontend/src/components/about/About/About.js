@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import "./About.scss";
 import useIO from "./../../../lib/useIO";
 import introUseIO from "./../../../lib/useIO";
