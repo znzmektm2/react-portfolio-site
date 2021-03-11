@@ -24,8 +24,6 @@ mongoose
 const app = new Koa();
 const router = new Router();
 
-app.use(koaHelmet.frameguard());
-app.use(koaHelmet.xssFilter());
 app.use(jwtMiddleware);
 app.use(
   koaBody({
