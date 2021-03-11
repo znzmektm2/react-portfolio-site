@@ -25,7 +25,7 @@ const app = new Koa();
 const router = new Router();
 
 app.use(koaHelmet({
-  hsts: false
+  dnsPrefetchControl: false
 }));
 app.use(jwtMiddleware);
 app.use(
